@@ -1,0 +1,39 @@
+{% extends '../base.html' %} {% block content %}
+<style>
+  table,
+  th,
+  td {
+    border: 1px solid black;
+  }
+</style>
+<h1>Dit zijn alle leden, waaw wat mooi</h1>
+<table style="width: 100%">
+  <tr>
+    <th>Naam</th>
+    <th>Voornaam</th>
+    <th>E-mailadres</th>
+    <th>Geboortdatum</th>
+    <th>Gender</th>
+    <th>Adres</th>
+    <th>Stad</th>
+    <th>Discord id</th>
+    <th>Media</th>
+  </tr>
+  {% for lid in leden %}
+  <tr>
+    <td>{{ lid.user.last_name }}</td>
+    <td>{{ lid.user.first_name }}</td>
+    <td>{{ lid.user.email }}</td>
+    <td>{{ lid.date_of_birth|date:"" }}</td>
+    <td>
+      {% if lid.gender == "M" %} Man {% elif lid.gender == "F"%} Vrouw {% else%}
+      Anders {% endif %}
+    </td>
+    <td>{{ lid.street}} {{ lid.house_number }}</td>
+    <td>{{ lid.residence}} {{ lid.zipcode }}</td>
+    <td>{{ lid.discord_id }}</td>
+    <td>{{ lid.media }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
