@@ -9,9 +9,10 @@
 <h1>Dit zijn alle leden, waaw wat mooi</h1>
 <table style="width: 100%">
   <tr>
-    <th>Naam</th>
+    <th>Achternaam</th>
     <th>Voornaam</th>
     <th>E-mailadres</th>
+    <th>Telefoonnummer</th>
     <th>Geboortdatum</th>
     <th>Gender</th>
     <th>Adres</th>
@@ -24,6 +25,7 @@
     <td>{{ lid.user.last_name }}</td>
     <td>{{ lid.user.first_name }}</td>
     <td>{{ lid.user.email }}</td>
+    <td>{{ lid.tel }}</td>
     <td>{{ lid.date_of_birth|date:"" }}</td>
     <td>
       {% if lid.gender == "M" %} Man {% elif lid.gender == "F"%} Vrouw {% else%}
