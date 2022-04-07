@@ -26,19 +26,23 @@ class UserSignUpForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'password1', 'password2',)
+        fields = ('username', 'first_name', 'last_name', 
+                  'email', 'password1', 'password2',)
 
-    def save(self, commit=True):
-        user = super(UserSignUpForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-        return User
+    # def save(self, commit=True):
+    #     user = super(UserSignUpForm, self).save(commit=False)
+    #     user.email = self.cleaned_data['email']
+    #     if commit:
+    #         user.save()
+    #     return User
 
 class LidSignUpForm(ModelForm):
+    tel = forms.RegexField(regex=r'^\+?1?\d{9,15}$')
+
     class Meta:
         model = Lid
-        fields = ('tel', 'date_of_birth', 'gender', 'street', 'house_number', 'zipcode', 'residence', 'discord_id', 'media',)
+        fields = ('tel', 'date_of_birth', 'gender', 'street',
+                  'house_number', 'zipcode', 'residence', 'media', 'discord_id',)
         labels = {
             'tel': _('Phone number'),
             'date_of_birth': _('Date of birth'),

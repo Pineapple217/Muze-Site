@@ -21,12 +21,14 @@ def signup(request):
             if user_form.is_valid() and lid_form.is_valid():
                 user = user_form.save()
                 user.refresh_from_db()
-                # raw_password = user_form.cleaned_data.get('password1')
-                # user = authenticate(username=user.username, password=raw_password)
-                # login(request, user)
-                lid_form = LidSignUpForm(request.POST, initial=user.lid)
+                lid_form = LidSignUpForm(request.POST, instance = Lid(user=user))
                 lid_form.full_clean()
                 lid_form.save()
+
+
+                raw_password = user_form.cleaned_data.get('password1')
+                user = authenticate(username=user.username, password=raw_password)
+                login(request, user)
     else:
         user_form = UserSignUpForm()
         lid_form = LidSignUpForm()

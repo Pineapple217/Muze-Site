@@ -1,2 +1,6 @@
 <h1>Dit is de base layout en zo</h1>
-{% block content %} {% endblock %}
+{% if user.is_authenticated %}
+<p>Ingelogt als: {{ user.get_username }}.</p>
+{% else %}
+<p>New user. Please log in.</p>
+{% endif %} {% block content %} {% endblock %}

@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from django.utils.translation import gettext as _
-# Create your models here.
+
 class Lid(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -31,15 +31,15 @@ class Lid(models.Model):
     class Meta:
         verbose_name_plural = "Leden"
     # @receiver(post_save, sender=User)
-    # def create_user_profile(sender, instance, created, **kwargs):
+    # def create_user_lid(sender, instance, created, **kwargs):
     #     if created:
     #         Lid.objects.create(user=instance)
 
     # @receiver(post_save, sender=User)
     # def save_user_profile(sender, instace, **kwargs):
-    #     instace.profile.save()
-    @receiver(post_save, sender=User)
-    def update_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Lid.objects.create(user=instance)
-        instance.profile.save()
+    #     instace.lid.save()
+    # @receiver(post_save, sender=User)
+    # def update_lid_signal(sender, instance, created, **kwargs):
+    #     if created:
+    #         Lid.objects.create(user=instance)
+    #     instance.lid.save()
