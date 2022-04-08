@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',  # dit is legacy en word niet echt meer gebruikt
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ledenlijst'
+    'leden',
+    'django_rename_app'
+    
 ]
 
 MIDDLEWARE = [
