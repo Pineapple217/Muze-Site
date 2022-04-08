@@ -15,21 +15,22 @@ def ledenlijst(request, *args, **kwargs):
     return render(request, 'ledenlijst/ledenlijst.html', context)
 
 def signup(request):
-    if request.method == 'POST':
-            user_form = UserSignUpForm(request.POST)
-            lid_form = LidSignUpForm(request.POST)
-            if user_form.is_valid() and lid_form.is_valid():
-                user = user_form.save()
-                user.refresh_from_db()
-                lid_form = LidSignUpForm(request.POST, instance = Lid(user=user))
-                lid_form.full_clean()
-                lid_form.save()
-
-
-                raw_password = user_form.cleaned_data.get('password1')
-                user = authenticate(username=user.username, password=raw_password)
-                login(request, user)
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+                user_form = UserSignUpForm(request.POST)
+                lid_form = LidSignUpForm(request.POST)
+                if user_form.is_valid() and lid_form.is_valid():
+                    user = user_form.save()
+                    user.refresh_from_db()
+                    lid_form = LidSignUpForm(request.POST, instance = Lid(user=user))
+                    lid_form.full_clean()
+                    lid_form.save()
+                    raw_password = user_form.cleaned_data.get('password1')
+                    user = authenticate(username=user.username, password=raw_password)
+                    login(request, user)
+        else:
+            user_form = UserSignUpForm()
+            lid_form = LidSignUpForm()
+        return render(request, 'ledenlijst/signup.html', {'forms': (user_form, lid_form)})
     else:
-        user_form = UserSignUpForm()
-        lid_form = LidSignUpForm()
-    return render(request, 'ledenlijst/signup.html', {'forms': (user_form, lid_form)})
+        return render(request,  'ledenlijst/already_logged_in.html')

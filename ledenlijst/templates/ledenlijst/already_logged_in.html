@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Je bent al ingelogd</h1>
+<p>
+  De pagina die je probeerde te bekijken is alleenmaar beschikbaar als je nog
+  niet ingelogd bent.<br />
+  Jij bent ingelogd als {{ user.get_username }}.
+</p>
+{% endblock %}
