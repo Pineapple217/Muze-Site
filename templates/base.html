@@ -1,6 +1,12 @@
 <h1>Dit is de base layout en zo</h1>
 {% if user.is_authenticated %}
-<p>Ingelogt als: {{ user.get_username }}.</p>
+<p>
+  Ingelogt als {{ user.get_username }} |
+  <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
+</p>
 {% else %}
-<p>New user. Please log in.</p>
+<p>
+  New user |
+  <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+</p>
 {% endif %} {% block content %} {% endblock %}

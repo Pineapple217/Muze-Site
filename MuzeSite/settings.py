@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'leden',
-    'django_rename_app'
-    
+    'main',
 ]
 
 MIDDLEWARE = [

@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from .models import Lid
 from .forms import UserSignUpForm, LidSignUpForm
-
-# Create your views here.
-from django.shortcuts import render
+from django.utils.translation import gettext as _
 
 def ledenlijst(request, *args, **kwargs):
     leden = Lid.objects.all()

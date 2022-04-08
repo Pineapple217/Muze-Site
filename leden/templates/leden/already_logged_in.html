@@ -5,4 +5,5 @@
   niet ingelogd bent.<br />
   Jij bent ingelogd als {{ user.get_username }}.
 </p>
+<a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
 {% endblock %}

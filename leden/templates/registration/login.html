@@ -1,0 +1,16 @@
+{% if form.errors %}
+<p>Your username and password didnt match. Please try agian.</p>
+{% endif %} {% if next %} {% if user.is_authenticated %}
+<p>
+  Your account doesn't have access to this page. To proceed, please login with
+  an account that has acces.
+</p>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %} {% endif %}
+
+<form method="POST" action="{% url 'login' %}">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="Login" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
