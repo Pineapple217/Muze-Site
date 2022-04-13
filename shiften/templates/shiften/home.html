@@ -1,1 +1,7 @@
-{% extends 'base.html' %} {% block content %} {% endblock%}
+{% extends 'base.html' %}
+{% block content %}
+{% for shiftlist in shiftlists %}
+<a href="{{ shiftlist.id }}">{{ shiftlist }} - id: {{ shiftlist.id }}</a>
+
+{% endfor %}
+{% endblock%}

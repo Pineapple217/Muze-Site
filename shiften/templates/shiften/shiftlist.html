@@ -12,8 +12,11 @@
   <div class = "shift">
     <p>{{ shift.start }}-{{ shift.end }}</p>
     {% for shifter in shift.shifters.all %}
-      <p>{{ shifter }}</p> 
+      <p>{{ shifter.user.first_name }} {{ shifter.user.last_name }}</p> 
     {% endfor %}
+    {% if shift.shifters.all.count == max_shifters and request.user.lid not in shift.shifters.all%}
+    <p>Shift zit vol</p>
+    {% else %}
     <form action="{% url 'signup_shift' list.id %}" method ="POST">
       {% csrf_token %}
       <button type="submit", name="shift_id" value="{{ shift.id }}">
@@ -24,7 +27,15 @@
         {% endif %}
       </button>
     </form>
+    {% endif %}
   </div>
   {% endfor %}
 </div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}
