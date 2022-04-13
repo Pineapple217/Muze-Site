@@ -3,7 +3,9 @@ from django.contrib.auth import login, logout, authenticate
 from .models import Lid
 from .forms import UserSignUpForm, LidSignUpForm
 from django.utils.translation import gettext as _
+from django.contrib.auth.decorators import login_required
 
+@login_required()
 def ledenlijst(request, *args, **kwargs):
     leden = Lid.objects.all()
     context = {

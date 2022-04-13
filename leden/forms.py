@@ -6,35 +6,11 @@ from django.forms import ModelForm
 from django.forms.widgets import DateInput 
 from django.utils.translation import gettext as _
 class UserSignUpForm(UserCreationForm):
-    # first_name = forms.CharField()
-    # first_name.label = 'Voornaam'
-
-    # last_name = forms.CharField()
-    # last_name.label = 'Achternaam'
-
-    # email = forms.EmailField()
-    # email.label = 'E-mailadres'
-
-    # tel = forms.RegexField(regex=r'^\+?1?\d{9,15}$')
-    # tel.label = 'Telefoonnummer'
-
-    # date_of_birth = forms.DateField()
-    # date_of_birth.label = 'Geboortedatum'
-
-    # gender = forms.ChoiceField()
-    # gender.label = 'Gender'
-    
+  
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 
                   'email', 'password1', 'password2',)
-
-    # def save(self, commit=True):
-    #     user = super(UserSignUpForm, self).save(commit=False)
-    #     user.email = self.cleaned_data['email']
-    #     if commit:
-    #         user.save()
-    #     return User
 
 class LidSignUpForm(ModelForm):
     tel = forms.RegexField(regex=r'^\+[0-9]{2,3}\ [0-9]{3}(\ [0-9]{2}){3}$',

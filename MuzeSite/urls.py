@@ -20,5 +20,6 @@ urlpatterns = [
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
     path('leden/', include('leden.urls')),
-    path('leden/', include('django.contrib.auth.urls'))
+    path('leden/', include('django.contrib.auth.urls')),
+    path('shiften/', include('shiften.urls')),
 ]

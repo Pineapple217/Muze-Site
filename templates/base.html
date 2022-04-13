@@ -9,4 +9,6 @@
   New user |
   <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
 </p>
-{% endif %} {% block content %} {% endblock %}
+{% endif %}
+<hr />
+{% block content %} {% endblock %}

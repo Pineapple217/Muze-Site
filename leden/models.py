@@ -30,16 +30,4 @@ class Lid(models.Model):
 
     class Meta:
         verbose_name_plural = "Leden"
-    # @receiver(post_save, sender=User)
-    # def create_user_lid(sender, instance, created, **kwargs):
-    #     if created:
-    #         Lid.objects.create(user=instance)
 
-    # @receiver(post_save, sender=User)
-    # def save_user_profile(sender, instace, **kwargs):
-    #     instace.lid.save()
-    # @receiver(post_save, sender=User)
-    # def update_lid_signal(sender, instance, created, **kwargs):
-    #     if created:
-    #         Lid.objects.create(user=instance)
-    #     instance.lid.save()

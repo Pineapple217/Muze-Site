@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'leden',
     'main',
+    'shiften',
 ]
 
 MIDDLEWARE = [
@@ -123,9 +124,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    # '/var/www/static/',
+]
+
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+LOGIN_URL = '/leden/login'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

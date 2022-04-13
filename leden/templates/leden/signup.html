@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load static %}
   <h2>Sign up</h2>
   <form method="POST">
     {% csrf_token %}
@@ -21,4 +22,5 @@
     <button type="submit">Sign up</button>
     <button type="reset">Clear form</button>
   </form>
+  <script src= "{% static 'leden/main.js' %}"></script>
 {% endblock %}

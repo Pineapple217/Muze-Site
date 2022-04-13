@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'shiften/css/shiftlist.css' %}">
+<p>{{ list.id}} {{ list.date }} {{ list.type }}</p>
+
+<div id="shiftlist">
+  {% for shift in shifts %}
+  {% ifchanged shift.date %}</div><div class="day">
+    <h3>{{ shift.date }}</h3>
+  {% endifchanged %}
+  <div class = "shift">
+    <p>{{ shift.start }}-{{ shift.end }}</p>
+    {% for shifter in shift.shifters.all %}
+      <p>{{ shifter }}</p> 
+    {% endfor %}
+    <form action="{% url 'signup_shift' list.id %}" method ="POST">
+      {% csrf_token %}
+      <button type="submit", name="shift_id" value="{{ shift.id }}">
+        {% if request.user.lid in shift.shifters.all %}
+          Maak shift vrij
+        {% else %}
+          Neem Shift
+        {% endif %}
+      </button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
