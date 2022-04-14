@@ -1,7 +1,15 @@
 .day {
     display: flex;
     gap: 2rem;
-    /* grid-template-columns: repeat(4, 1fr); */
-    /* grid-template-rows: repeat(auto-fill); */
-    /* grid-auto-flow: row; */
+    border-style: solid;
+    border-width: 0.3rem;
+    border-color: var(--primary);
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 0.75rem;
+    width: fit-content;
+}
+
+.day>* {
+    flex-shrink: 0;
 }

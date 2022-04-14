@@ -10,11 +10,55 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --body-bg: #212124;
+        /* --body-bg: #3F3B3B; */
         --body-color: #d6d6d6;
+    }
+}
+
+
+:root {
+    --primary: #7AFCA1;
+
+    --button-primary: #ffffff;
+    --button-text: #000000;
+}
+
+body, input, textarea, button {
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+@media screen and (max-width: 1100px) {
+    body {
+        font-size: 2rem;
     }
 }
 
 body {
     background: var(--body-bg);
     color: var(--body-color);
+    margin: 0;
+}
+
+.content {
+    padding-top: 6rem;
+    padding-left: 2rem;
+}
+
+button {
+    background-color: var(--button-primary);
+    border: none;
+    color: var(--button-text);
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.4em;
+    padding: 0.6em;
+    transition-duration: 0.15s;
+}
+
+button:hover {
+    filter: brightness(0.8);
+}
+
+button:active {
+    filter: brightness(1.2);
 }
