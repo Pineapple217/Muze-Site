@@ -5,11 +5,24 @@
     border-width: 0.3rem;
     border-color: var(--primary);
     border-radius: 1rem;
-    margin: 1rem;
     padding: 0.75rem;
-    width: fit-content;
+    /* width: fit-content; */
+    position: relative;
+    height: calc(fit-content);
+    flex-wrap: wrap;
 }
 
 .day>* {
-    flex-shrink: 0;
+    /* flex-shrink: 0; */
+}
+
+.shift {
+    margin-right: 3rem;
+    /* width: 25%; */
+}
+
+.shift-button-status {
+    /* height: 4rem; */
+    /* position: absolute; */
+    bottom: 0;
 }

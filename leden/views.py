@@ -5,6 +5,9 @@ from .forms import UserSignUpForm, LidSignUpForm
 from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required
 
+def home(request):
+    return render(request, 'leden/home.html')
+
 @login_required()
 def ledenlijst(request, *args, **kwargs):
     leden = Lid.objects.all()

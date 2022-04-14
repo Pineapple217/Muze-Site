@@ -21,16 +21,11 @@
 
     --button-primary: #ffffff;
     --button-text: #000000;
+
 }
 
 body, input, textarea, button {
     font-family: 'Trebuchet MS', sans-serif;
-}
-
-@media screen and (max-width: 1100px) {
-    body {
-        font-size: 2rem;
-    }
 }
 
 body {
@@ -40,8 +35,8 @@ body {
 }
 
 .content {
-    padding-top: 6rem;
-    padding-left: 2rem;
+    padding: 6rem 3rem;
+
 }
 
 button {
@@ -61,4 +56,14 @@ button:hover {
 
 button:active {
     filter: brightness(1.2);
+}
+
+@media screen and (max-width: 860px) {
+    body {
+        font-size: 2rem;
+    }
+
+    .content {
+        padding-top: 16rem;
+    }
 }

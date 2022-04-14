@@ -6,14 +6,16 @@
 
 <div id="shiftlist">
   {% for shift in shifts %}
-  {% ifchanged shift.date %}</div><div class="day">
-    <h3>{{ shift.date }}</h3>
+  {% ifchanged shift.date %}</div>
+  <h3>{{ shift.date }}</h3>
+  <div class="day">
   {% endifchanged %}
   <div class = "shift">
     <p>{{ shift.start }}-{{ shift.end }}</p>
     {% for shifter in shift.shifters.all %}
       <p>{{ shifter.user.first_name }} {{ shifter.user.last_name }}</p> 
     {% endfor %}
+    <div class="shift-button-status">
     {% if shift.shifters.all.count == max_shifters and request.user.lid not in shift.shifters.all%}
     <p>Shift zit vol</p>
     {% else %}
@@ -28,6 +30,7 @@
       </button>
     </form>
     {% endif %}
+    </div>
   </div>
   {% endfor %}
 </div>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block content %}
 {% if form.errors %}
 <p>Your username and password didnt match. Please try agian.</p>
 {% endif %} {% if next %} {% if user.is_authenticated %}
@@ -15,3 +16,4 @@
   <input type="submit" value="Login" />
   <input type="hidden" name="next" value="{{ next }}" />
 </form>
+{% endblock content %}
