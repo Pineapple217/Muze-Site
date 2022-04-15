@@ -1,10 +1,10 @@
 .day {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     border-style: solid;
     border-width: 0.3rem;
     border-color: var(--primary);
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     padding: 0.75rem;
     /* width: fit-content; */
     position: relative;
@@ -12,17 +12,31 @@
     flex-wrap: wrap;
 }
 
-.day>* {
-    /* flex-shrink: 0; */
-}
-
 .shift {
     margin-right: 3rem;
     /* width: 25%; */
+}
+
+.shift h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.shift li {
+    margin: 0.5rem 0 0.5rem 0;
 }
 
 .shift-button-status {
     /* height: 4rem; */
     /* position: absolute; */
     bottom: 0;
+}
+
+.shift-button-status p {
+    margin-bottom: 0;
+}
+
+.shifters {
+    padding: 0;
+    list-style-type: none;
 }

@@ -48,7 +48,7 @@ nav a {
 }
 
 .nav-user {
-    font-size: 2rem;
+    font-size: 1.25rem;
     display: block;
     text-align: center;
     padding: 1em;
@@ -107,11 +107,11 @@ nav a {
 }
 
 .nav-toggle-label span::before {
-    bottom: 15px;
+    bottom: 12px;
 }
 
 .nav-toggle-label span::after {
-    top: 15px;
+    top: 12px;
 }
 
 @media screen and (min-width: 860px) {

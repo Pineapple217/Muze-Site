@@ -59,11 +59,11 @@ button:active {
 }
 
 @media screen and (max-width: 860px) {
-    body {
-        font-size: 2rem;
-    }
+    /* body, input, textarea, button { */
+    /* font-size: 2rem; */
+    /* } */
 
     .content {
-        padding-top: 16rem;
+        padding-top: 10em;
     }
 }
