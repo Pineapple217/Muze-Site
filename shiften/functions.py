@@ -39,7 +39,7 @@ def message_shifters():
 
     content = f"De shifts voor vandaag zijn:\n"
     for shift in shifts:
-        content += f"Van {shift.start} tot {shift.end}:"
+        content += f"Van {shift.start.isoformat(timespec = 'minutes')} tot {shift.end.isoformat(timespec = 'minutes')}:"
         for lid in shift.shifters.all():
             content += f" <@{lid.discord_id}>"
         content += "\n" 
