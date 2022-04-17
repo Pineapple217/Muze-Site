@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 {% block content%}
 {% load static %}
+{% load i18n %}
 <link rel="stylesheet" type="text/css" href="{% static 'shiften/css/shiftlist.css' %}">
 <p>{{ list.id}} {{ list.date }} {{ list.type }}</p>
 
 <div id="shiftlist">
   {% for shift in shifts %}
   {% ifchanged shift.date %}</div>
-  <h3>{{ shift.date }}</h3>
+  {% with date=shift.date|date:'l j F Y'%}
+  <h3>{% translate date %}</h3>
+  {% endwith %}
   <div class="day">
   {% endifchanged %}
   <div class = "shift">

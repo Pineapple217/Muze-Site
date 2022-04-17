@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-06 20:28+0200\n"
+"POT-Creation-Date: 2022-04-15 19:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,53 +18,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\ledenlijst\forms.py:43
+#: .\leden\forms.py:17
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
-#: .\ledenlijst\forms.py:44
+#: .\leden\forms.py:18
+msgid "Format example +32 989 91 23 12."
+msgstr ""
+
+#: .\leden\forms.py:25
 msgid "Date of birth"
 msgstr "Geboortedatum"
 
-#: .\ledenlijst\forms.py:45
+#: .\leden\forms.py:26
 msgid "Gender"
 msgstr "Gender"
 
-#: .\ledenlijst\forms.py:46
+#: .\leden\forms.py:27
 msgid "Street"
 msgstr "Straat"
 
-#: .\ledenlijst\forms.py:47
+#: .\leden\forms.py:28
 msgid "House nummer"
 msgstr "Huisnummer"
 
-#: .\ledenlijst\forms.py:48
+#: .\leden\forms.py:29
 msgid "Zipcode"
 msgstr "Postcode"
 
-#: .\ledenlijst\forms.py:49
+#: .\leden\forms.py:30
 msgid "Residenace"
 msgstr "Woonplaats"
 
-#: .\ledenlijst\forms.py:50
+#: .\leden\forms.py:31
 msgid "Discord id"
 msgstr "Discord id"
 
-#: .\ledenlijst\forms.py:51
+#: .\leden\forms.py:32
 msgid "Social media"
 msgstr "Sociale media"
 
-#: .\ledenlijst\models.py:15
+#: .\leden\models.py:15
 msgid "Male"
 msgstr "Man"
 
-#: .\ledenlijst\models.py:16
+#: .\leden\models.py:16
 msgid "Female"
 msgstr "Vrouw"
 
-#: .\ledenlijst\models.py:17
+#: .\leden\models.py:17
 msgid "Other"
 msgstr "Andere"
+
+#: .\shiften\models.py:10
+msgid "month"
+msgstr ""
+
+#: .\shiften\models.py:11
+msgid "event"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:7
 msgid "Messages"

@@ -1,3 +1,8 @@
+from gc import get_objects
+import os
+from discord_webhook import DiscordWebhook
+from django.shortcuts import get_object_or_404
+from dotenv import load_dotenv
 from shiften.models import Shift, Shiftlijst
 from datetime import date, time, timedelta
 
@@ -26,4 +31,18 @@ def make_shifts(date: date, list: Shiftlijst, shift_schedule):
                                     )
         date += timedelta(days = 7)
     
-   
+def message_shifters():
+    load_dotenv()
+    WEBHOOK_URL=os.getenv('WEBHOOK_URL')
+
+    shifts = Shift.objects.filter(date=date.today())
+
+    content = f"De shifts voor vandaag zijn:\n"
+    for shift in shifts:
+        content += f"Van {shift.start} tot {shift.end}:"
+        for lid in shift.shifters.all():
+            content += f" <@{lid.discord_id}>"
+        content += "\n" 
+
+    webhook = DiscordWebhook(url=WEBHOOK_URL, content=content)
+    response = webhook.execute() 
