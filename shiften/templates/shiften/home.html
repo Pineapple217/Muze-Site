@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'shiften/css/home.css' %}">
+<ul class= "shiftlistlist">
 {% for shiftlist in shiftlists %}
-<a href="{{ shiftlist.id }}">{{ shiftlist }} - id: {{ shiftlist.id }}</a>
-
+<li class = "shiftlist"><a href="{{ shiftlist.id }}">{{ shiftlist }} - type: {{ shiftlist.type }}</a></li>
 {% endfor %}
+</ul>
 {% endblock%}

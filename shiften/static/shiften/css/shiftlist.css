@@ -5,7 +5,7 @@
     border-width: 0.3rem;
     border-color: var(--primary);
     border-radius: 1.5rem;
-    padding: 0.75rem;
+    padding: 1.25rem;
     /* width: fit-content; */
     position: relative;
     height: calc(fit-content);
@@ -39,4 +39,12 @@
 .shifters {
     padding: 0;
     list-style-type: none;
+}
+
+.volle-shift {
+    color: rgb(255, 86, 86);
+}
+
+.loggedshifter {
+    color: var(--secondary);
 }

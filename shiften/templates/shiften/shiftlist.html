@@ -3,7 +3,7 @@
 {% load static %}
 {% load i18n %}
 <link rel="stylesheet" type="text/css" href="{% static 'shiften/css/shiftlist.css' %}">
-<p>{{ list.id}} {{ list.date }} {{ list.type }}</p>
+<h1>{{ list.id}} {{ list.date }} {{ list.type }}</h1>
 
 <div id="shiftlist">
   {% for shift in shifts %}
@@ -17,12 +17,14 @@
     <h4>{{ shift.start }}-{{ shift.end }}</h4>
     <ul class="shifters">
     {% for shifter in shift.shifters.all %}
-      <li>{{ shifter.user.first_name }} {{ shifter.user.last_name }}</li> 
+      <li {% if shifter.user.id == user.id %} class = "loggedshifter" {% endif %}>
+        
+        {{ shifter.user.first_name }} {{ shifter.user.last_name }}</li> 
     {% endfor %}
     </ul>
     <div class="shift-button-status">
     {% if shift.shifters.all.count == max_shifters and request.user.lid not in shift.shifters.all%}
-    <p>Shift zit vol</p>
+    <p class="volle-shift">Shift zit vol</p>
     {% else %}
     <form action="{% url 'signup_shift' list.id %}" method ="POST">
       {% csrf_token %}

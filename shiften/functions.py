@@ -36,13 +36,15 @@ def message_shifters():
     WEBHOOK_URL=os.getenv('WEBHOOK_URL')
 
     shifts = Shift.objects.filter(date=date.today())
+    if len(shifts) > 0:
+        content = f"De shifts voor vandaag zijn:\n"
+        for shift in shifts:
+            content += f"Van {shift.start.isoformat(timespec = 'minutes')} tot {shift.end.isoformat(timespec = 'minutes')}:"
+            for lid in shift.shifters.all():
+                content += f" <@{lid.discord_id}>"
+            content += "\n" 
 
-    content = f"De shifts voor vandaag zijn:\n"
-    for shift in shifts:
-        content += f"Van {shift.start.isoformat(timespec = 'minutes')} tot {shift.end.isoformat(timespec = 'minutes')}:"
-        for lid in shift.shifters.all():
-            content += f" <@{lid.discord_id}>"
-        content += "\n" 
-
-    webhook = DiscordWebhook(url=WEBHOOK_URL, content=content)
-    response = webhook.execute() 
+        webhook = DiscordWebhook(url=WEBHOOK_URL, content=content)
+        response = webhook.execute() 
+    else:
+        print('no shifts today')

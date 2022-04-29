@@ -37,3 +37,6 @@ def signup(request):
         return render(request, 'leden/signup.html', {'forms': (user_form, lid_form)})
     else:
         return render(request,  'leden/already_logged_in.html')
+
+def userinfo(request):
+    return render(request, "leden/userinfo.html")

@@ -1,25 +1,24 @@
 /* Light mode */
-@media (prefers-color-scheme: light) {
-    :root {
-        --body-bg: #FFFFFF;
-        --body-color: #000000;
-    }
+:root {
+    --body-bg: #FFFFFF;
+    --body-color: #000000;
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --body-bg: #212124;
-        /* --body-bg: #3F3B3B; */
-        --body-color: #d6d6d6;
-    }
+.darkmode {
+    --body-bg: #212124;
+    /* --body-bg: #3F3B3B; */
+    --body-color: #d6d6d6;
 }
 
 
 :root {
     --primary: #7AFCA1;
+    --secondary: #06FB00;
+    --accent: #168586;
+    --dark: #212124;
 
-    --button-primary: #ffffff;
+
+    --button-primary: #dadada;
     --button-text: #000000;
 
 }
