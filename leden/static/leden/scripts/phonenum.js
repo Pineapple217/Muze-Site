@@ -12,7 +12,7 @@ const formatnummer = function (event) {
   if (l > 16) event.target.value = event.target.value.slice(0, -1);
   oldL = event.target.value;
 };
-const nummer = document.getElementsByName("tel");
-console.log(nummer);
+
+const nummer = document.getElementById("id_tel");
 nummer.onfocus = formatnummer;
 nummer.oninput = formatnummer;

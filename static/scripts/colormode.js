@@ -18,10 +18,10 @@ if (colormode === "dark") {
   enableDarkMode();
 }
 
-const init = function () {
+const colormodeInit = function () {
   const darkModeToggle = document.getElementById("color-mode-btn");
   if (darkModeToggle !== null)
     darkModeToggle.addEventListener("click", switchColor);
 };
 
-window.onload = init;
+addLoadEvent(colormodeInit);

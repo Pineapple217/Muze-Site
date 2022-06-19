@@ -1,14 +1,16 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .models import Lid
 from .forms import UserSignUpForm, LidSignUpForm
 from django.utils.translation import gettext as _
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required , permission_required
 
 def home(request):
     return render(request, 'leden/home.html')
 
 @login_required()
+@permission_required('ledden.view_lid')
 def ledenlijst(request, *args, **kwargs):
     leden = Lid.objects.all()
     context = {
@@ -31,6 +33,8 @@ def signup(request):
                     raw_password = user_form.cleaned_data.get('password1')
                     user = authenticate(username=user.username, password=raw_password)
                     login(request, user)
+                    messages.success(request, "Welkom bij d e muze familie.")
+                    return redirect('home')
         else:
             user_form = UserSignUpForm()
             lid_form = LidSignUpForm()

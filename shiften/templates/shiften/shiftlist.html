@@ -3,18 +3,23 @@
 {% load static %}
 {% load i18n %}
 <link rel="stylesheet" type="text/css" href="{% static 'shiften/css/shiftlist.css' %}">
-<h1>{{ list.id}} {{ list.date }} {{ list.type }}</h1>
+
+<h1>{{ list.id}} {{ list.date }} ({% trans list.type %})</h1>
 
 <div id="shiftlist">
   {% for shift in shifts %}
   {% ifchanged shift.date %}</div>
   {% with date=shift.date|date:'l j F Y'%}
-  <h3>{% translate date %}</h3>
+  <h3>{% trans date %}</h3>
   {% endwith %}
   <div class="day">
   {% endifchanged %}
   <div class = "shift">
-    <h4>{{ shift.start }}-{{ shift.end }}</h4>
+    <h4>{{ shift.start }}-{{ shift.end }}
+      {% if perms.shiften.change_shift %}
+       &nbsp;<button class="edit-button" value="{{ shift.id }}">&#9881;</button>
+      {% endif %}
+    </h4>
     <ul class="shifters">
     {% for shifter in shift.shifters.all %}
       <li {% if shifter.user.id == user.id %} class = "loggedshifter" {% endif %}>
@@ -26,7 +31,7 @@
     {% if shift.shifters.all.count == max_shifters and request.user.lid not in shift.shifters.all%}
     <p class="volle-shift">Shift zit vol</p>
     {% else %}
-    <form action="{% url 'signup_shift' list.id %}" method ="POST">
+    <form class="shift-form" action="{% url 'signup_shift' list.id %}" method ="POST">
       {% csrf_token %}
       <button type="submit", name="shift_id" value="{{ shift.id }}">
         {% if request.user.lid in shift.shifters.all %}
@@ -47,5 +52,13 @@
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
+{% endif %}
+      
+{% if perms.shiften.change_shift %}
+  <dialog id="shiften-settings-popup">
+    dit is een test
+    <button id="shiften-settings-close">Save</button>
+  </dialog>
+  <script src="{% static 'shiften/scripts/main.js' %}"></script>
 {% endif %}
 {% endblock %}

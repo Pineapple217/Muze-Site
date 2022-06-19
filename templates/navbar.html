@@ -14,7 +14,9 @@
         <li><a href="/">Home</a></li>
         <li><a href="/leden">Leden</a></li>
         <li><a href="/shiften">Shiften</a></li>
-        <li><a href="/admin">Admin</a></li>
+        {% if request.user.is_superuser %}
+            <li><a href="/admin">Admin</a></li>
+        {% endif %}
     </ul>
 </nav>
 <div class="nav-user">

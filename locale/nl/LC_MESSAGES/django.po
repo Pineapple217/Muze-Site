@@ -18,13 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+
 #: .\leden\forms.py:17
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
 #: .\leden\forms.py:18
 msgid "Format example +32 989 91 23 12."
-msgstr ""
+msgstr "Formaat voorbeeld +32 989 91 23 12."
 
 #: .\leden\forms.py:25
 msgid "Date of birth"
@@ -72,11 +73,11 @@ msgstr "Andere"
 
 #: .\shiften\models.py:10
 msgid "month"
-msgstr ""
+msgstr "maand"
 
 #: .\shiften\models.py:11
 msgid "event"
-msgstr ""
+msgstr "evenement"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:7
 msgid "Messages"
@@ -746,55 +747,55 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:77
 msgid "p.m."
-msgstr ""
+msgstr "p.m."
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:78
 msgid "a.m."
-msgstr ""
+msgstr "a.m."
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:83
 msgid "PM"
-msgstr ""
+msgstr "PM"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:84
 msgid "AM"
-msgstr ""
+msgstr "AM"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:155
 msgid "midnight"
-msgstr ""
+msgstr "middernacht"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:157
 msgid "noon"
-msgstr ""
+msgstr "middag"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:7
 msgid "Monday"
-msgstr ""
+msgstr "Maandag"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:8
 msgid "Tuesday"
-msgstr ""
+msgstr "Dinsdag"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:9
 msgid "Wednesday"
-msgstr ""
+msgstr "Woensdag"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Thursday"
-msgstr ""
+msgstr "Donderdag"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:11
 msgid "Friday"
-msgstr ""
+msgstr "Vrijdag"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:12
 msgid "Saturday"
-msgstr ""
+msgstr "Zaterdag"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:13
 msgid "Sunday"
-msgstr ""
+msgstr "Zondag"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:16
 msgid "Mon"

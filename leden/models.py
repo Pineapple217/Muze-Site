@@ -31,3 +31,4 @@ class Lid(models.Model):
     class Meta:
         verbose_name_plural = "Leden"
 
+
