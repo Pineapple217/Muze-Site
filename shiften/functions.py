@@ -27,7 +27,8 @@ def make_shifts(date: date, list: Shiftlijst, shift_schedule):
                 Shift.objects.create(date  = q,
                                     start = i[1][s],
                                     end = i[1][s + 1],
-                                    shift_list = list
+                                    shift_list = list,
+                                    max_shifters = 3
                                     )
         date += timedelta(days = 7)
     

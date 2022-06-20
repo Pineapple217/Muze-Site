@@ -18,6 +18,7 @@ Main
 
 - [ ] Profiel fotos
 - [ ] Ons bestuur overzicht
+- [ ] Profiel, shift geschiedenins
 
 Domme shift
 
