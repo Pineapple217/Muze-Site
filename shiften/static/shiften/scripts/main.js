@@ -1,5 +1,5 @@
-import { ShiftApp } from "./shiftApp.js";
+import { main } from "./shiftlist.js";
 const shiftenInit = function () {
-  const app = new ShiftApp();
+  main();
 };
 addLoadEvent(shiftenInit);

@@ -60,3 +60,7 @@
 .shift-form {
     margin: 0;
 }
+
+#shiftlist h3 {
+    margin-left: 0.5rem;
+}

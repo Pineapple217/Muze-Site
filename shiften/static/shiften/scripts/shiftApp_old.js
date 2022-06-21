@@ -9,8 +9,6 @@ export class ShiftApp {
 
   async initHTML() {
     await this.haalData();
-    console.log(this.#shiftRepository.shifts);
-    console.log(this.#shiftRepository.list);
     this.shiftsToHTML();
   }
 
@@ -23,6 +21,7 @@ export class ShiftApp {
       const json = await request.json();
       this.#shiftRepository.list = json.list;
       this.#user = json.user;
+      console.log(json.shifts);
       json.shifts.forEach((shift) => {
         this.#shiftRepository.addShift(
           shift.date,
@@ -37,14 +36,33 @@ export class ShiftApp {
       alert(error);
     }
   }
-
+  getCookie(cookieName) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, cookieName.length + 1) === cookieName + "=") {
+          cookieValue = decodeURIComponent(
+            cookie.substring(cookieName.length + 1)
+          );
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
   shiftsToHTML() {
     const body = document.querySelector(".content");
     const h1 = document.createElement("h1");
     const list = this.#shiftRepository.list;
     // h1.innerText = `${list.id} | ${list.date} (${list.type})`;
-    h1.innerText = gettext(`${list.id} | ${list.date} (${list.type})`);
-    console.log(gettext("Choose"));
+    h1.innerText = gettext(
+      `${list.date.charAt(0).toUpperCase() + list.date.slice(1)} (${
+        list.type
+      }) | ${list.id}`
+    );
     body.appendChild(h1);
     let shiftdate = "";
     let day;
@@ -67,18 +85,34 @@ export class ShiftApp {
       shift.shifters.forEach((s) => {
         li = document.createElement("li");
         li.innerText = s.name;
+        if (s.id == this.#user) li.classList.add("loggedshifter");
         ul.appendChild(li);
       });
       shiftDiv.appendChild(ul);
       const buttonDiv = document.createElement("div");
       buttonDiv.classList.add("shift-button-status");
       if (shift.shifters.map((s) => s.id).includes(this.#user)) {
+        // Clearshift
+        const button = document.createElement("button");
+        button.value = shift.id;
+        button.innerText = gettext("Clear shift");
+        buttonDiv.appendChild(button);
+      } else if (shift.max <= shift.shifters.length) {
+        // Shift FULL
+        const vol = document.createElement("p");
+        vol.classList.add("volle-shift");
+        vol.innerText = gettext("Shift Full");
+        buttonDiv.appendChild(vol);
+      } else {
+        // Take shift
         const button = document.createElement("button");
         button.value = shift.id;
         button.innerText = gettext("Take shift");
+        // button.addEventListener("click", this.takeShift);
+        button.onclick = () => {
+          this.takeShift();
+        };
         buttonDiv.appendChild(button);
-      } else if (shift.max <= shift.shifters.length) {
-        console.log("max");
       }
       shiftDiv.appendChild(buttonDiv);
       day.appendChild(shiftDiv);
@@ -87,5 +121,38 @@ export class ShiftApp {
         body.appendChild(day);
       }
     });
+  }
+
+  async takeShift(event) {
+    event.preventDefault();
+    this.getCookie("csrftoken");
+    const shiftId = event.target.value;
+    let body = {
+      shiftId: shiftId,
+    };
+    let props = {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": cookieValue,
+      },
+      mode: "same-origin",
+    };
+
+    if (body !== null && body !== undefined) {
+      props.body = JSON.stringify(body);
+    }
+
+    try {
+      const response = await fetch("signup_shift", props);
+      const result_1 = await response.json();
+      const resultObj = {
+        ok: response.ok,
+        body: result_1,
+      };
+      console.log(resultObj);
+      this.shiftsToHTML();
+    } catch (error) {
+      throw error;
+    }
   }
 }

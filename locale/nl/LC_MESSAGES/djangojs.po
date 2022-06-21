@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-20 19:22+0200\n"
+"POT-Creation-Date: 2022-06-21 13:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\shiften\static\shiften\scripts\shiftApp.js:47
-msgid "Choose"
-msgstr ""
+#: .\shiften\static\shiften\scripts\shiftApp.js:81
+msgid "Clear shift"
+msgstr "Maak shift vrij"
 
-#: .\shiften\static\shiften\scripts\shiftApp.js:78
+#: .\shiften\static\shiften\scripts\shiftApp.js:87
+msgid "Shift Full"
+msgstr "Shift is vol"
+
+#: .\shiften\static\shiften\scripts\shiftApp.js:92
 msgid "Take shift"
 msgstr "Neem shift"

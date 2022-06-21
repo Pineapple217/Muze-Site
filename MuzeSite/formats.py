@@ -1,0 +1,1 @@
+WEEKDAY_DAY_MOTH_FORMAT = "l j F"
