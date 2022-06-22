@@ -1,13 +1,20 @@
 import { Shift } from "./shift.js";
-import { shiftRequest } from "./toServer.js";
+import { request, EditShiftRequest } from "./toServer.js";
+
+let list;
+let user;
+let shifts;
+let leden;
 
 export async function main() {
   const json = await getData();
-  console.log(json);
-  let list = json.list;
-  let user = json.user;
-  let shifts = maakShifts(json.shifts);
-  shiftsToHTML(shifts, list, user);
+  list = json.list;
+  user = json.user;
+  shifts = maakShifts(json.shifts);
+  if (user.perms.shift_change) {
+    leden = json.leden;
+  }
+  shiftsToHTML();
 }
 
 async function getData() {
@@ -36,7 +43,7 @@ function maakShifts(shifts) {
   });
 }
 
-function shiftsToHTML(shifts, list, user) {
+function shiftsToHTML() {
   const body = document.querySelector(".content");
   const h1 = document.querySelector(".content h1");
   const shiftList = document.getElementById("shiftlist");
@@ -62,12 +69,22 @@ function shiftsToHTML(shifts, list, user) {
     shiftDiv.classList.add("shift");
     const h4 = document.createElement("h4");
     h4.innerText = `${shift.start} - ${shift.end}`;
+    if (user.perms.shift_change) {
+      //Can EDIT
+      h4.innerText += " ";
+      const button = document.createElement("button");
+      button.classList.add("edit-button");
+      button.value = shift.id;
+      button.onclick = () => {
+        showEditPopup(shift);
+      };
+      h4.appendChild(button);
+    }
     shiftDiv.appendChild(h4);
     const ul = document.createElement("ul");
     ul.classList.add("shifters");
-    let li;
     shift.shifters.forEach((s) => {
-      li = document.createElement("li");
+      let li = document.createElement("li");
       li.innerText = s.name;
       if (s.id == user.id) li.classList.add("loggedshifter");
       ul.appendChild(li);
@@ -81,8 +98,7 @@ function shiftsToHTML(shifts, list, user) {
       button.value = shift.id;
       button.innerText = gettext("Clear shift");
       button.onclick = () => {
-        console.log(shift);
-        clearShift(shift.id, shift, shifts, list, user);
+        clearShift(shift);
       };
       buttonDiv.appendChild(button);
     } else if (shift.max <= shift.shifters.length) {
@@ -96,10 +112,8 @@ function shiftsToHTML(shifts, list, user) {
       const button = document.createElement("button");
       button.value = shift.id;
       button.innerText = gettext("Take shift");
-      // button.addEventListener("click", this.takeShift);
       button.onclick = () => {
-        console.log(shift);
-        takeShift(shift.id, shift, shifts, list, user);
+        takeShift(shift);
       };
       buttonDiv.appendChild(button);
     }
@@ -110,20 +124,120 @@ function shiftsToHTML(shifts, list, user) {
       shiftList.appendChild(day);
     }
   });
+  if (user.perms.shift_change) {
+    const popup = document.createElement("dialog");
+    popup.classList.add("shift-edit-popup");
+    shiftList.appendChild(popup);
+  }
+}
+function showEditPopup(shift) {
+  const popup = document.querySelector(".shift-edit-popup");
+  popup.replaceChildren();
+  // title
+  const title = document.createElement("h2");
+  title.innerText = `${shift.date} ${shift.start} - ${shift.end}`;
+  popup.appendChild(title);
+  // delete
+  if (user.perms.shift_del) {
+    title.innerText += " ";
+    const del = document.createElement("button");
+    del.innerText = gettext("Delete");
+    del.onclick = () => {
+      if (confirm(gettext("Are you sure you want to delete this shift?"))) {
+        console.log("del"); //TODO del db
+      }
+    };
+    title.append(del);
+  }
+  // shifters
+  const ul = document.createElement("ul");
+  for (let i = 0; shift.max > i; i++) {
+    const li = document.createElement("li");
+    const select = document.createElement("select");
+    select.appendChild(document.createElement("option"));
+    leden.forEach((lid) => {
+      const option = document.createElement("option");
+      option.innerText = lid.name;
+      option.value = lid.id;
+      if (shift.shifters.length > i && shift.shifters[i].id == lid.id) {
+        option.selected = true;
+      }
+      select.appendChild(option);
+    });
+    li.appendChild(select);
+    ul.appendChild(li);
+  }
+  popup.appendChild(ul);
+  // Safe button
+  const safe = document.createElement("button");
+  safe.innerText = gettext("Safe");
+  shift.shifters = [];
+  safe.onclick = () => {
+    safeShift(shift, ul);
+  };
+  popup.appendChild(safe);
+  // close button
+  const close = document.createElement("button");
+  close.innerText = gettext("Close");
+  close.onclick = () => {
+    popup.close();
+  };
+  popup.appendChild(close);
+  // show
+  popup.showModal();
+}
+async function safeShift(shift, ul) {
+  [...ul.children].forEach((li) => {
+    const select = li.firstChild;
+    const selected = select.options[select.selectedIndex];
+    if (select.value) {
+      const shifter = {
+        id: selected.value,
+        name: selected.innerText,
+      };
+      shift.shifters.push(shifter);
+    }
+  });
+  // dit hier onder verwijdert dupplicate object
+  // dit moet zo omdat objecten nie werken met set voor de dubs weg te halen
+  // dit kan mss beter maar maakt niet super veel uit denk ik
+  const newShifters = Array.from(
+    new Set(shift.shifters.map(JSON.stringify))
+  ).map(JSON.parse);
+  const shiftersIds = shift.shifters.map((s) => parseInt(s.id));
+  const actionInfo = {
+    shiftId: shift.id,
+    shifters: shiftersIds,
+    // shifters: JSON.stringify(shiftersIds),
+  };
+  // {"action":"shifters_safe",
+  // "actionInfo":{"shiftId":365,
+  //             "shifters":["4"]}}
+  // {"action":"shifters_safe",
+  // "actionInfo":{"shiftId":365,
+  //             "shifters":"[\"4\"]"}}
+  //  " {"action":"shifters_safe","actionInfo":{"shiftId":365,"shifters":[4]}}"
+  const response = await EditShiftRequest(actionInfo, "shifters_safe");
+  if (response.body.status == "succes") {
+    shift.shifters = newShifters;
+    shiftsToHTML();
+  } else {
+    alert(`Error: ${response.body.status}`);
+  }
 }
 
-async function takeShift(shiftId, shift, shifts, list, user) {
-  const response = await shiftRequest(shiftId, "add_shifter");
-  if (response.body.status == "done") {
+async function takeShift(shift) {
+  const response = await request(shift.id, "add_shifter");
+  if (response.body.status == "succes") {
     shift.shifters.push(user);
     shiftsToHTML(shifts, list, user);
   } else {
     alert(`Error: ${response.body.status}`);
   }
 }
-async function clearShift(shiftId, shift, shifts, list, user) {
-  const response = await shiftRequest(shiftId, "remove_shifter");
-  if (response.body.status == "done") {
+async function clearShift(shift) {
+  const response = await request(shift.id, "remove_shifter");
+  if (response.body.status == "succes") {
     shift.shifters = shift.shifters.filter((u) => u.id != user.id);
     shiftsToHTML(shifts, list, user);
   } else {

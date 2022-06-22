@@ -1,9 +1,19 @@
-export async function shiftRequest(shiftId, action) {
-  let requestBody = {
+export async function request(shiftId, action) {
+  //actions: add_shifter, remove_shifter
+  const requestBody = {
     action: action,
     shiftId: shiftId,
   };
   const response = await sendHttpAsync("signup_shift", "POST", requestBody);
+  return response;
+}
+
+export async function EditShiftRequest(actionInfo, action) {
+  const requestBody = {
+    action: action,
+    actionInfo: actionInfo,
+  };
+  const response = await sendHttpAsync("edit_shift", "POST", requestBody);
   return response;
 }
 

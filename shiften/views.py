@@ -1,19 +1,16 @@
-from dataclasses import dataclass
-from email import message
 import json
-from django.core import serializers
 from django.contrib import messages
-from django.forms import model_to_dict
-from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from MuzeSite.settings import MAX_SHIFTERS_MONTHSHIFT
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from leden.models import Lid
 from shiften.models import Shift, Shiftlijst
 from django.utils.translation import gettext as _
 from django.utils import formats
+from django.contrib.auth.models import User
 
-# Create your views here.
+@login_required()
 def home(request):
     shiftlists = Shiftlijst.objects.all()
     context = {
@@ -23,51 +20,64 @@ def home(request):
 
 @login_required()
 def shift_list(request, list_id):
-    if request.method == "POST":
-        data = json.loads(request.body)
-        message = data.get('message', None)
-
-    list = get_object_or_404(Shiftlijst, id  = list_id)
-    shifts = list.shift_set.all().order_by('date', 'start')
-    context = {
-        'list': list,
-        'shifts': shifts,
-        'max_shifters': MAX_SHIFTERS_MONTHSHIFT,
-    }
-
-    return render(request, 'shiften/shiftlist.html', context)
+    return render(request, 'shiften/shiftlist.html')
 
 @login_required()
 def signup_shift(request):
     if request.method == "POST":
         data = json.loads(request.body)
         action = data.get("action")
-        id = data.get("shiftId", None)
+        id = data.get("shiftId")
         shift = get_object_or_404(Shift, id=id)
-        if action == "add_shifter":
-            if shift.shifters.count() < shift.max_shifters:
-                shift.shifters.add(request.user.lid)
-                status = "done"
-            else:
-                status = "Shift full"
-        if action == "remove_shifter":
-            if shift.shifters.contains(request.user.lid):
-                shift.shifters.remove(request.user.lid)     
-                status = "done"
-            else:
-                status = "Shift does not contain given user"
-        return JsonResponse({"status": status},status = 200)
-# @login_required()
-# def signup_shift(request, list_id):
-#     shift = get_object_or_404(Shift, id = request.POST.get('shift_id'))
-#     if shift.shifters.contains(request.user.lid):
-#         shift.shifters.remove(request.user.lid)
-#     elif(shift.shifters.count() < MAX_SHIFTERS_MONTHSHIFT):
-#         shift.shifters.add(request.user.lid)
-#     return HttpResponseRedirect(reverse('shiftlist', args=[str(list_id)])) 
+        match action:
+            case "add_shifter":
+                if shift.shifters.count() < shift.max_shifters:
+                    shift.shifters.add(request.user.lid)
+                    status_msg = "succes"
+                    status = 200 # OK
+                else:
+                    status_msg = "Shift is full"
+                    status = 409 # Conflict 
+            case "remove_shifter":
+                if shift.shifters.contains(request.user.lid):
+                    shift.shifters.remove(request.user.lid)     
+                    status_msg = "succes"
+                    status = 200 # OK
+                else:
+                    status_msg = "Shift does not contain given user"
+                    status = 409 # Conflict
+            case _:
+                status_msg = f"{action}: this action does not exits"
+                status = 400 # Bad Request
 
+        return JsonResponse({"status": status_msg},status = status)
+
+# @permission_required('shiften.change_shift')
+@login_required
+def edit_shift(request):
+    if request.method == "POST":
+        data = json.loads(request.body) 
+        action = data.get("action")
+        actionInfo = data.get("actionInfo")
+        id = actionInfo.get("shiftId")
+        shift = Shift.objects.get(id=id)
+        status_msg = "euhhh"
+        status = 418
+        match action:
+            case "shifters_safe":
+                shifters_ids = actionInfo.get("shifters")
+                shift.shifters.clear();
+                for id in shifters_ids:
+                    shift.shifters.add(User.objects.get(id=id).lid)
+                status_msg = "succes"
+                status = 200
+            case _:
+                status_msg = f"{action}: this action does not exits"
+                status = 400 # Bad Request 
+        return JsonResponse({"status": status_msg}, status = status)
 
 @login_required() 
+@permission_required('shiften.view_shift')
 def ajax_shift_list(request, list_id): 
     list = get_object_or_404(Shiftlijst, id  = list_id)
     shifts = list.shift_set.all().order_by('date', 'start')
@@ -94,8 +104,19 @@ def ajax_shift_list(request, list_id):
     user_dict = {
        "id": request.user.id,
        "name": request.user.first_name + " " + request.user.last_name,
+       "perms": {"shift_change": request.user.has_perm("shiften.change_shift")if 1 else 0,
+                 "shift_add"   : request.user.has_perm("shiften.add_shift")if 1 else 0,
+                 "shift_del"   : request.user.has_perm("shiften.delete_shift"if 1 else 0),}
     }
     dict = {"shifts": shifts_dict,
             "list": list_dict,
-            "user": user_dict}
+            "user": user_dict,}
+    if request.user.has_perm("shiften.change_shift"):
+        dict["leden"] = []
+        for lid in Lid.objects.all():
+            user = lid.user
+            dict["leden"].append(
+                {"name": user.first_name + " " + user.last_name,
+                 "id": user.id,}
+            )
     return JsonResponse(dict)

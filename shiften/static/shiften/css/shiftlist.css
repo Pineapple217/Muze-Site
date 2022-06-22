@@ -49,12 +49,17 @@
     color: var(--secondary);
 }
 
+.edit-button::after {
+    content: ' \2699';
+}
+
 .edit-button {
     font-weight: bold;
     padding-left: 0.2rem;
     padding-right: 0.2rem;
     padding-top: 0;
     padding-bottom: 0;
+    /* border-radius: 1rem; */
 }
 
 .shift-form {

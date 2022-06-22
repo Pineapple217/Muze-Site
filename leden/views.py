@@ -5,18 +5,18 @@ from .models import Lid
 from .forms import UserSignUpForm, LidSignUpForm
 from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required , permission_required
+from django.contrib.auth.models import Group
 
 def home(request):
     return render(request, 'leden/home.html')
 
 @login_required()
-@permission_required('ledden.view_lid')
+@permission_required('leden.view_lid')
 def ledenlijst(request, *args, **kwargs):
     leden = Lid.objects.all()
     context = {
         'leden': leden,
     }
-    
     return render(request, 'leden/ledenlijst.html', context)
 
 def signup(request):
@@ -33,7 +33,9 @@ def signup(request):
                     raw_password = user_form.cleaned_data.get('password1')
                     user = authenticate(username=user.username, password=raw_password)
                     login(request, user)
-                    messages.success(request, "Welkom bij d e muze familie.")
+                    lid_group = Group.objects.get(name='Lid')
+                    lid_group.user_set.add(user)
+                    messages.success(request, "Welkom bij de muze familie.")
                     return redirect('home')
         else:
             user_form = UserSignUpForm()
