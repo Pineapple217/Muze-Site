@@ -1,5 +1,5 @@
 import { Shift } from "./shift.js";
-import { request, EditShiftRequest } from "./toServer.js";
+import { request, manageShiftRequest, createShiftRequest } from "./toServer.js";
 
 let list;
 let user;
@@ -54,7 +54,6 @@ function shiftsToHTML() {
       list.type
     }) | ${list.id}`
   );
-  // body.appendChild(h1);
   let shiftdate = "";
   let day;
   shifts.forEach((shift) => {
@@ -129,7 +128,72 @@ function shiftsToHTML() {
     popup.classList.add("shift-edit-popup");
     shiftList.appendChild(popup);
   }
+  if (user.perms.shift_add) {
+    const add = document.createElement("button");
+    add.innerText = gettext("Add shift");
+    add.onclick = () => {
+      showCreatePopup();
+    };
+    h1.appendChild(add);
+    const popup = document.createElement("dialog");
+    popup.classList.add("shift-create-popup");
+    shiftList.appendChild(popup);
+  }
 }
+
+function showCreatePopup() {
+  const popup = document.querySelector(".shift-create-popup");
+  popup.replaceChildren();
+  // title
+  const title = document.createElement("h1");
+  title.innerText = gettext("Create shift");
+  popup.appendChild(title);
+  // opties
+  const list = document.createElement("ul");
+  // date
+  const date = document.createElement("input");
+  const dateLi = document.createElement("li");
+  date.type = "date";
+  dateLi.appendChild(date);
+  list.appendChild(dateLi);
+  //start
+  const start = document.createElement("input");
+  const startLi = document.createElement("li");
+  start.type = "time";
+  startLi.appendChild(start);
+  list.appendChild(startLi);
+  //end
+  const end = document.createElement("input");
+  const endLi = document.createElement("li");
+  end.type = "time";
+  endLi.appendChild(end);
+  list.appendChild(endLi);
+  // max
+  const max = document.createElement("input");
+  const maxLi = document.createElement("li");
+  max.type = "number";
+  maxLi.appendChild(max);
+  list.appendChild(maxLi);
+  //
+  popup.appendChild(list);
+  // safe button
+  const safe = document.createElement("button");
+  safe.innerText = gettext("safe");
+  safe.onclick = () => {
+    createShift(date.value, start.value, end.value, max.value);
+  };
+  popup.appendChild(safe);
+  // close button
+  const close = document.createElement("button");
+  close.innerText = gettext("Close");
+  close.onclick = () => {
+    popup.close();
+  };
+  popup.appendChild(close);
+  // show
+  popup.showModal();
+}
+
 function showEditPopup(shift) {
   const popup = document.querySelector(".shift-edit-popup");
   popup.replaceChildren();
@@ -144,34 +208,39 @@ function showEditPopup(shift) {
     del.innerText = gettext("Delete");
     del.onclick = () => {
       if (confirm(gettext("Are you sure you want to delete this shift?"))) {
-        console.log("del"); //TODO del db
+        deleteShift(shift);
       }
     };
     title.append(del);
   }
   // shifters
   const ul = document.createElement("ul");
+  const li = document.createElement("li");
+  const select = document.createElement("select");
+  select.appendChild(document.createElement("option"));
+  leden.forEach((lid) => {
+    const option = document.createElement("option");
+    option.innerText = lid.name;
+    option.value = lid.id;
+    select.appendChild(option);
+  });
+  // const div = document.createElement("div");
+  // div.classList.add("related-widget-wrapper");
+  // div.appendChild(select);
+  // li.appendChild(div);
+  li.appendChild(select);
   for (let i = 0; shift.max > i; i++) {
-    const li = document.createElement("li");
-    const select = document.createElement("select");
-    select.appendChild(document.createElement("option"));
-    leden.forEach((lid) => {
-      const option = document.createElement("option");
-      option.innerText = lid.name;
-      option.value = lid.id;
-      if (shift.shifters.length > i && shift.shifters[i].id == lid.id) {
-        option.selected = true;
-      }
-      select.appendChild(option);
-    });
-    li.appendChild(select);
-    ul.appendChild(li);
+    const liC = li.cloneNode(true);
+    const shifter = shift.shifters[i];
+    if (shifter) {
+      liC.firstChild.value = shifter.id;
+    }
+    ul.appendChild(liC);
   }
   popup.appendChild(ul);
-  // Safe button
+  // safe button
   const safe = document.createElement("button");
-  safe.innerText = gettext("Safe");
-  shift.shifters = [];
+  safe.innerText = gettext("safe");
   safe.onclick = () => {
     safeShift(shift, ul);
   };
@@ -186,13 +255,41 @@ function showEditPopup(shift) {
   // show
   popup.showModal();
 }
+
+async function createShift(date, start, end, max) {
+  const shiftInfo = {
+    date: date,
+    start: start,
+    end: end,
+    max: max,
+    shiftList: list.id,
+  };
+  const response = await createShiftRequest(shiftInfo);
+  if (response.body.status == "succes") {
+    shifts.push(
+      new Shift(
+        response.body.shift_info.date,
+        start,
+        end,
+        [],
+        response.body.shift_info.id,
+        max
+      )
+    );
+    shiftsToHTML();
+  } else {
+    alert(`Error: ${response.body.status}`);
+  }
+}
+
 async function safeShift(shift, ul) {
+  shift.shifters = [];
   [...ul.children].forEach((li) => {
     const select = li.firstChild;
     const selected = select.options[select.selectedIndex];
     if (select.value) {
       const shifter = {
-        id: selected.value,
+        id: parseInt(selected.value),
         name: selected.innerText,
       };
       shift.shifters.push(shifter);
@@ -208,18 +305,23 @@ async function safeShift(shift, ul) {
   const actionInfo = {
     shiftId: shift.id,
     shifters: shiftersIds,
-    // shifters: JSON.stringify(shiftersIds),
   };
-  // {"action":"shifters_safe",
-  // "actionInfo":{"shiftId":365,
-  //             "shifters":["4"]}}
-  // {"action":"shifters_safe",
-  // "actionInfo":{"shiftId":365,
-  //             "shifters":"[\"4\"]"}}
-  //  " {"action":"shifters_safe","actionInfo":{"shiftId":365,"shifters":[4]}}"
-  const response = await EditShiftRequest(actionInfo, "shifters_safe");
+  const response = await manageShiftRequest(actionInfo, "safe_shifters");
   if (response.body.status == "succes") {
     shift.shifters = newShifters;
+    shiftsToHTML();
+  } else {
+    alert(`Error: ${response.body.status}`);
+  }
+}
+
+async function deleteShift(shift) {
+  const actionInfo = {
+    shiftId: shift.id,
+  };
+  const response = await manageShiftRequest(actionInfo, "delete_shift");
+  if (response.body.status == "succes") {
+    shifts.splice(shifts.indexOf(shift), 1);
     shiftsToHTML();
   } else {
     alert(`Error: ${response.body.status}`);

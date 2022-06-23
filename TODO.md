@@ -1,4 +1,7 @@
 Main
+vertaling checking
+delelte werkten grijgen
+add shift knop toevoegen
 
 - [x] tel nummer defig formateren en zo
 - [x] login form en scherm en zo

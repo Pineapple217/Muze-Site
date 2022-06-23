@@ -1,3 +1,4 @@
+from datetime import date
 import json
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
@@ -52,29 +53,51 @@ def signup_shift(request):
 
         return JsonResponse({"status": status_msg},status = status)
 
-# @permission_required('shiften.change_shift')
 @login_required
-def edit_shift(request):
+def manage_shift(request):
     if request.method == "POST":
         data = json.loads(request.body) 
         action = data.get("action")
         actionInfo = data.get("actionInfo")
         id = actionInfo.get("shiftId")
         shift = Shift.objects.get(id=id)
-        status_msg = "euhhh"
-        status = 418
         match action:
-            case "shifters_safe":
-                shifters_ids = actionInfo.get("shifters")
-                shift.shifters.clear();
-                for id in shifters_ids:
-                    shift.shifters.add(User.objects.get(id=id).lid)
-                status_msg = "succes"
-                status = 200
+            case "safe_shifters":
+                if request.user.has_perm("shiften.change_shift"):
+                    shifters_ids = actionInfo.get("shifters")
+                    shift.shifters.clear();
+                    for id in shifters_ids:
+                        shift.shifters.add(User.objects.get(id=id).lid)
+                    status_msg = "succes"
+                    status = 200
+            case "delete_shift":
+                if request.user.has_perm("shiften.delete_shift"):
+                    shift.delete()
+                    status_msg = "succes"
+                    status = 200
             case _:
                 status_msg = f"{action}: this action does not exits"
                 status = 400 # Bad Request 
         return JsonResponse({"status": status_msg}, status = status)
+
+@login_required() 
+@permission_required('shiften.add_shift')
+def create_shift(request):
+    if request.method == "POST":
+        shiftInfo= json.loads(request.body)
+        shift = Shift.objects.create(date = date.fromisoformat(shiftInfo["date"]),
+                             start =  shiftInfo["start"],
+                             end = shiftInfo["end"],
+                             max_shifters = shiftInfo["max"],
+                             shift_list = Shiftlijst.objects.get(id = shiftInfo["shiftList"]),)
+        shift_info ={
+            "id": shift.id,
+            "date": _(formats.date_format(shift.date, format="l j F")),
+        }
+        status_msg = "succes"
+        status = 200
+        return JsonResponse({"status": status_msg, "shift_info": shift_info }, status = status)
+    
 
 @login_required() 
 @permission_required('shiften.view_shift')
@@ -106,7 +129,7 @@ def ajax_shift_list(request, list_id):
        "name": request.user.first_name + " " + request.user.last_name,
        "perms": {"shift_change": request.user.has_perm("shiften.change_shift")if 1 else 0,
                  "shift_add"   : request.user.has_perm("shiften.add_shift")if 1 else 0,
-                 "shift_del"   : request.user.has_perm("shiften.delete_shift"if 1 else 0),}
+                 "shift_del"   : request.user.has_perm("shiften.delete_shift")if 1 else 0,}
     }
     dict = {"shifts": shifts_dict,
             "list": list_dict,

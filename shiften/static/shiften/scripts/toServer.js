@@ -8,12 +8,17 @@ export async function request(shiftId, action) {
   return response;
 }
 
-export async function EditShiftRequest(actionInfo, action) {
+export async function manageShiftRequest(actionInfo, action) {
   const requestBody = {
     action: action,
     actionInfo: actionInfo,
   };
-  const response = await sendHttpAsync("edit_shift", "POST", requestBody);
+  const response = await sendHttpAsync("manage_shift", "POST", requestBody);
+  return response;
+}
+
+export async function createShiftRequest(shiftInfo) {
+  const response = await sendHttpAsync("create_shift", "POST", shiftInfo);
   return response;
 }
 
