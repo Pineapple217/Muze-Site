@@ -1,8 +1,6 @@
 Main
-vertaling checking
-delelte werkten grijgen
-add shift knop toevoegen
 
+- [ ] light mode contrast problemen
 - [x] tel nummer defig formateren en zo
 - [x] login form en scherm en zo
 - [x] login knop in base.html

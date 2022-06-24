@@ -45,15 +45,17 @@ function maakShifts(shifts) {
 
 function shiftsToHTML() {
   const body = document.querySelector(".content");
-  const h1 = document.querySelector(".content h1");
+  const header = document.querySelector(".header");
+  const h1 = document.createElement("h1");
   const shiftList = document.getElementById("shiftlist");
   shiftList.replaceChildren();
-  h1.innerHTML = "";
+  header.replaceChildren();
   h1.innerText = gettext(
     `${list.date.charAt(0).toUpperCase() + list.date.slice(1)} (${
       list.type
     }) | ${list.id}`
   );
+  header.appendChild(h1);
   let shiftdate = "";
   let day;
   shifts.forEach((shift) => {
@@ -131,10 +133,11 @@ function shiftsToHTML() {
   if (user.perms.shift_add) {
     const add = document.createElement("button");
     add.innerText = gettext("Add shift");
+    add.classList.add("add-shift-btn");
     add.onclick = () => {
       showCreatePopup();
     };
-    h1.appendChild(add);
+    header.appendChild(add);
     const popup = document.createElement("dialog");
     popup.classList.add("shift-create-popup");
     shiftList.appendChild(popup);
@@ -176,20 +179,24 @@ function showCreatePopup() {
   list.appendChild(maxLi);
   //
   popup.appendChild(list);
+  //bottom buttons
+  const bottom = document.createElement("div");
+  bottom.classList.add("bottom-btns");
   // safe button
   const safe = document.createElement("button");
   safe.innerText = gettext("safe");
   safe.onclick = () => {
     createShift(date.value, start.value, end.value, max.value);
   };
-  popup.appendChild(safe);
+  bottom.appendChild(safe);
   // close button
   const close = document.createElement("button");
   close.innerText = gettext("Close");
   close.onclick = () => {
     popup.close();
   };
-  popup.appendChild(close);
+  bottom.appendChild(close);
+  popup.appendChild(bottom);
   // show
   popup.showModal();
 }
@@ -198,21 +205,25 @@ function showEditPopup(shift) {
   const popup = document.querySelector(".shift-edit-popup");
   popup.replaceChildren();
   // title
-  const title = document.createElement("h2");
+  const head = document.createElement("div");
+  head.classList.add("header");
+  const title = document.createElement("h1");
   title.innerText = `${shift.date} ${shift.start} - ${shift.end}`;
-  popup.appendChild(title);
+  head.appendChild(title);
   // delete
   if (user.perms.shift_del) {
     title.innerText += " ";
     const del = document.createElement("button");
     del.innerText = gettext("Delete");
+    del.classList.add("delete-btn");
     del.onclick = () => {
       if (confirm(gettext("Are you sure you want to delete this shift?"))) {
         deleteShift(shift);
       }
     };
-    title.append(del);
+    head.append(del);
   }
+  popup.appendChild(head);
   // shifters
   const ul = document.createElement("ul");
   const li = document.createElement("li");
@@ -238,20 +249,24 @@ function showEditPopup(shift) {
     ul.appendChild(liC);
   }
   popup.appendChild(ul);
+  // bottom buttons
+  const bottom = document.createElement("div");
+  bottom.classList.add("bottom-btns");
   // safe button
   const safe = document.createElement("button");
-  safe.innerText = gettext("safe");
+  safe.innerText = gettext("Safe");
   safe.onclick = () => {
     safeShift(shift, ul);
   };
-  popup.appendChild(safe);
+  bottom.appendChild(safe);
   // close button
   const close = document.createElement("button");
   close.innerText = gettext("Close");
   close.onclick = () => {
     popup.close();
   };
-  popup.appendChild(close);
+  bottom.appendChild(close);
+  popup.appendChild(bottom);
   // show
   popup.showModal();
 }

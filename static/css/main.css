@@ -17,10 +17,9 @@
     --accent: #168586;
     --dark: #212124;
 
-
+    --red: #ff5656;
     --button-primary: #dadada;
     --button-text: #000000;
-
 }
 
 body, input, textarea, button {
