@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-21 13:08+0200\n"
+"POT-Creation-Date: 2022-06-24 19:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,14 +18,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\shiften\static\shiften\scripts\shiftApp.js:81
+#: .\shiften\static\shiften\scripts\shiftApp_old.js:98
+#: .\shiften\static\shiften\scripts\shiftlist.js:100
 msgid "Clear shift"
 msgstr "Maak shift vrij"
 
-#: .\shiften\static\shiften\scripts\shiftApp.js:87
+#: .\shiften\static\shiften\scripts\shiftApp_old.js:104
+#: .\shiften\static\shiften\scripts\shiftlist.js:109
 msgid "Shift Full"
 msgstr "Shift is vol"
 
-#: .\shiften\static\shiften\scripts\shiftApp.js:92
+#: .\shiften\static\shiften\scripts\shiftApp_old.js:110
+#: .\shiften\static\shiften\scripts\shiftlist.js:115
 msgid "Take shift"
 msgstr "Neem shift"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:135
+msgid "Add shift"
+msgstr "Voeg shift toe"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:152
+msgid "Create shift"
+msgstr "Maak shift"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:160
+msgid "Date"
+msgstr "Datum"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:169
+msgid "Start"
+msgstr "Start"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:178
+msgid "End"
+msgstr "Einde"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:187
+msgid "Max shifters"
+msgstr "Max shifters"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:200
+#: .\shiften\static\shiften\scripts\shiftlist.js:270
+msgid "Safe"
+msgstr "Opslaan"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:207
+#: .\shiften\static\shiften\scripts\shiftlist.js:277
+msgid "Close"
+msgstr "Sluiten"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:230
+msgid "Delete"
+msgstr "Verwijder"
+
+#: .\shiften\static\shiften\scripts\shiftlist.js:233
+msgid "Are you sure you want to delete this shift?"
+msgstr "Ben je zeker dat je deze shift wilt verwijderen?"
+
+#~ msgid "safe"
+#~ msgstr "opslaan"

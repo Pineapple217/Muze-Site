@@ -45,7 +45,7 @@ function maakShifts(shifts) {
 
 function shiftsToHTML() {
   const body = document.querySelector(".content");
-  const header = document.querySelector(".header");
+  const header = document.querySelector(".main-header");
   const h1 = document.createElement("h1");
   const shiftList = document.getElementById("shiftlist");
   shiftList.replaceChildren();
@@ -152,39 +152,52 @@ function showCreatePopup() {
   title.innerText = gettext("Create shift");
   popup.appendChild(title);
   // opties
-  const list = document.createElement("ul");
+  const opties = document.createElement("div");
+  opties.classList.add("opties");
   // date
   const date = document.createElement("input");
-  const dateLi = document.createElement("li");
+  const dateLbl = document.createElement("label");
+  dateLbl.innerText = gettext("Date");
+  dateLbl.htmlFor = "date";
   date.type = "date";
-  dateLi.appendChild(date);
-  list.appendChild(dateLi);
+  date.id = "date";
+  opties.appendChild(dateLbl);
+  opties.appendChild(date);
   //start
   const start = document.createElement("input");
-  const startLi = document.createElement("li");
+  const startLbl = document.createElement("label");
+  startLbl.innerText = gettext("Start");
+  startLbl.htmlFor = "start";
   start.type = "time";
-  startLi.appendChild(start);
-  list.appendChild(startLi);
+  start.id = "start";
+  opties.appendChild(startLbl);
+  opties.appendChild(start);
   //end
   const end = document.createElement("input");
-  const endLi = document.createElement("li");
+  const endLbl = document.createElement("label");
+  endLbl.innerText = gettext("End");
+  endLbl.htmlFor = "end";
   end.type = "time";
-  endLi.appendChild(end);
-  list.appendChild(endLi);
+  end.id = "end";
+  opties.appendChild(endLbl);
+  opties.appendChild(end);
   // max
   const max = document.createElement("input");
-  const maxLi = document.createElement("li");
+  const maxLbl = document.createElement("label");
+  maxLbl.innerText = gettext("Max shifters");
+  maxLbl.htmlFor = "max";
   max.type = "number";
-  maxLi.appendChild(max);
-  list.appendChild(maxLi);
+  max.id = "max";
+  opties.appendChild(maxLbl);
+  opties.appendChild(max);
   //
-  popup.appendChild(list);
+  popup.appendChild(opties);
   //bottom buttons
   const bottom = document.createElement("div");
   bottom.classList.add("bottom-btns");
   // safe button
   const safe = document.createElement("button");
-  safe.innerText = gettext("safe");
+  safe.innerText = gettext("Safe");
   safe.onclick = () => {
     createShift(date.value, start.value, end.value, max.value);
   };
