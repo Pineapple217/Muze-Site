@@ -1,5 +1,6 @@
 import { Shift } from "./shift.js";
 import { request, manageShiftRequest, createShiftRequest } from "./toServer.js";
+import { getData } from "/static/scripts/ajaxTools.js";
 
 let list;
 let user;
@@ -7,7 +8,7 @@ let shifts;
 let leden;
 
 export async function main() {
-  const json = await getData();
+  const json = await getData("/ajax");
   list = json.list;
   user = json.user;
   shifts = maakShifts(json.shifts);
@@ -15,19 +16,6 @@ export async function main() {
     leden = json.leden;
   }
   shiftsToHTML();
-}
-
-async function getData() {
-  try {
-    const request = await fetch(window.location.href + "/ajax");
-    if (!request.ok) {
-      throw new Error(`HTTP error: ${request.status}`);
-    }
-    const json = await request.json();
-    return json;
-  } catch (error) {
-    alert(error);
-  }
 }
 
 function maakShifts(shifts) {
@@ -283,6 +271,8 @@ function showEditPopup(shift) {
   // show
   popup.showModal();
 }
+
+function generateBottomButtons() {}
 
 async function createShift(date, start, end, max) {
   const shiftInfo = {

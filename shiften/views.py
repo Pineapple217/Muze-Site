@@ -3,7 +3,7 @@ import json
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from MuzeSite.settings import MAX_SHIFTERS_MONTHSHIFT
+# from MuzeSite.settings import MAX_SHIFTERS_MONTHSHIFT
 from django.contrib.auth.decorators import login_required, permission_required
 from leden.models import Lid
 from shiften.models import Shift, Shiftlijst
@@ -97,11 +97,10 @@ def create_shift(request):
         status_msg = "succes"
         status = 200
         return JsonResponse({"status": status_msg, "shift_info": shift_info }, status = status)
-    
 
 @login_required() 
 @permission_required('shiften.view_shift')
-def ajax_shift_list(request, list_id): 
+def ajax_shifts(request, list_id): 
     list = get_object_or_404(Shiftlijst, id  = list_id)
     shifts = list.shift_set.all().order_by('date', 'start')
     shifts_dict = []
@@ -143,3 +142,24 @@ def ajax_shift_list(request, list_id):
                  "id": user.id,}
             )
     return JsonResponse(dict)
+
+@login_required    
+@permission_required('shiften.view_shiftlijst')
+def ajax_shift_list(request):
+    shiftlijsten = []
+    for shiftlijst in  Shiftlijst.objects.all():
+       shiftlijsten.append({
+            "date": _(formats.date_format(shiftlijst.date , format="F Y")),
+            "type": _(shiftlijst.type),
+            "id": shiftlijst.id, 
+       }) 
+    user_dict = {
+       "id": request.user.id,
+       "name": request.user.first_name + " " + request.user.last_name,
+       "perms": {"shiftlijst_add": request.user.has_perm("shiften.add_shiftlijst")if 1 else 0,}
+    }
+    dict = {
+        "shiftlists": shiftlijsten,
+        "user": user_dict,
+    }
+    return JsonResponse(dict)   

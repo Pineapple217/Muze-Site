@@ -1,27 +1,3 @@
-export async function request(shiftId, action) {
-  //actions: add_shifter, remove_shifter
-  const requestBody = {
-    action: action,
-    shiftId: shiftId,
-  };
-  const response = await sendHttpAsync("signup_shift", "POST", requestBody);
-  return response;
-}
-
-export async function manageShiftRequest(actionInfo, action) {
-  const requestBody = {
-    action: action,
-    actionInfo: actionInfo,
-  };
-  const response = await sendHttpAsync("manage_shift", "POST", requestBody);
-  return response;
-}
-
-export async function createShiftRequest(shiftInfo) {
-  const response = await sendHttpAsync("create_shift", "POST", shiftInfo);
-  return response;
-}
-
 function getCookie(cookieName) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
@@ -40,7 +16,7 @@ function getCookie(cookieName) {
   return cookieValue;
 }
 
-async function sendHttpAsync(path, method, body) {
+export async function sendHttpAsync(path, method, body) {
   let props = {
     method: method,
     headers: {
@@ -63,5 +39,18 @@ async function sendHttpAsync(path, method, body) {
     return resultObj;
   } catch (error) {
     throw error;
+  }
+}
+
+export async function getData(path) {
+  try {
+    const request = await fetch(window.location.href + path);
+    if (!request.ok) {
+      throw new Error(`HTTP error: ${request.status}`);
+    }
+    const json = await request.json();
+    return json;
+  } catch (error) {
+    alert(error);
   }
 }
