@@ -84,13 +84,14 @@ def manage_shift(request):
 @permission_required('shiften.add_shift')
 def create_shift(request):
     if request.method == "POST":
-        shiftInfo= json.loads(request.body)
-        shift = Shift.objects.create(date = date.fromisoformat(shiftInfo["date"]),
-                             start =  shiftInfo["start"],
-                             end = shiftInfo["end"],
-                             max_shifters = shiftInfo["max"],
-                             shift_list = Shiftlijst.objects.get(id = shiftInfo["shiftList"]),)
-        shift_info ={
+        shift_info = json.loads(request.body)
+        shift = Shift.objects.create(
+                            date = date.fromisoformat(shift_info["date"]),
+                            start =  shift_info["start"],
+                            end = shift_info["end"],
+                            max_shifters = shift_info["max"],
+                            shift_list = Shiftlijst.objects.get(id = shift_info["shiftList"]),)
+        shift_info = {
             "id": shift.id,
             "date": _(formats.date_format(shift.date, format="l j F")),
         }
@@ -149,9 +150,11 @@ def ajax_shift_list(request):
     shiftlijsten = []
     for shiftlijst in  Shiftlijst.objects.all():
        shiftlijsten.append({
-            "date": _(formats.date_format(shiftlijst.date , format="F Y")),
+            # "date": _(formats.date_format(shiftlijst.date , format="F Y")),
             "type": _(shiftlijst.type),
             "id": shiftlijst.id, 
+            "name": shiftlijst.name,
+            "string": str(shiftlijst),
        }) 
     user_dict = {
        "id": request.user.id,
@@ -162,4 +165,26 @@ def ajax_shift_list(request):
         "shiftlists": shiftlijsten,
         "user": user_dict,
     }
+    if request.user.has_perm("shiften.change_shift"):
+        dict["types"] = Shiftlijst.type.field.choices
     return JsonResponse(dict)   
+
+@login_required
+@permission_required('shiften.add_shiftlijst')
+def create_shiftlist(request):
+    if request.method == "POST":
+        shiftlist_info = json.loads(request.body)
+        shiftlist = Shiftlijst.objects.create(
+                                    date = date.fromisoformat(shiftlist_info["date"]),
+                                    type = shiftlist_info["type"],
+                                    name = shiftlist_info["name"],)
+        shiftlist_info = {
+           "id": shiftlist.id,
+        #    "date": shiftlist.date,
+           "type": _(shiftlist.type),
+           "string": str(shiftlist),
+        }
+
+        status_msg = "succes"
+        status = 200
+        return JsonResponse({"status": status_msg, "shiftlist_info": shiftlist_info}, status = status)

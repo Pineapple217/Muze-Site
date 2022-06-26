@@ -1,12 +1,16 @@
 import { getData } from "/static/scripts/ajaxTools.js";
+import { creatShiftlistrequest } from "./toServer.js";
 
 let shiftlists;
 let user;
+let types;
 
 export async function main() {
   const json = await getData("ajax");
   shiftlists = json.shiftlists;
+  console.log(shiftlists);
   user = json.user;
+  types = json.types;
   toHTML();
 }
 
@@ -31,8 +35,9 @@ function toHTML() {
     li.classList.add("shiftlist");
     const link = document.createElement("a");
     link.href = shiftlist.id;
+    const listName = shiftlist.string;
     link.innerText = `${
-      shiftlist.date.charAt(0).toUpperCase() + shiftlist.date.slice(1)
+      listName.charAt(0).toUpperCase() + listName.slice(1)
     } | ${shiftlist.type}`;
     li.appendChild(link);
     list.appendChild(li);
@@ -42,17 +47,71 @@ function toHTML() {
 
 function createShiftlistPopupHTML() {
   const popup = document.createElement("dialog");
-  // bottom buttons
+  popup.classList.add("create-shiftlist-popup");
+
+  const h1 = document.createElement("h1");
+  h1.innerText = gettext("Create Shiftlist");
+  popup.appendChild(h1);
+
+  const options = document.createElement("div");
+  options.classList.add("options");
+
+  const name = document.createElement("input");
+  const nameLbl = document.createElement("label");
+  name.id = "name";
+  name.type = "text";
+  name.maxLength = 300;
+  name.classList.add("hidden");
+  nameLbl.classList.add("hidden");
+  nameLbl.htmlFor = "name";
+  nameLbl.innerText = gettext("Name");
+  options.appendChild(nameLbl);
+  options.appendChild(name);
+
+  const date = document.createElement("input");
+  const dateLbl = document.createElement("label");
+  date.id = "date";
+  date.type = "date";
+  dateLbl.htmlFor = "date";
+  dateLbl.innerText = gettext("Date");
+  options.appendChild(dateLbl);
+  options.appendChild(date);
+
+  const typeLbl = document.createElement("label");
+  const type = document.createElement("select");
+  type.id = "type";
+  typeLbl.htmlFor = "type";
+  typeLbl.innerText = gettext("Type");
+  types.forEach((t) => {
+    const option = document.createElement("option");
+    option.innerText = t[1];
+    option.value = t[0];
+    type.appendChild(option);
+  });
+  type.onchange = () => {
+    const selected = type.options[type.selectedIndex].value;
+    if (selected == "month") {
+      name.classList.add("hidden");
+      nameLbl.classList.add("hidden");
+      name.value = "";
+    } else {
+      name.classList.remove("hidden");
+      nameLbl.classList.remove("hidden");
+    }
+  };
+  options.appendChild(typeLbl);
+  options.appendChild(type);
+
+  popup.appendChild(options);
+
   const bottom = document.createElement("div");
   bottom.classList.add("bottom-btns");
-  // safe button
   const safe = document.createElement("button");
   safe.innerText = gettext("Safe");
   safe.onclick = () => {
-    createShiftlist();
+    createShiftlist(name.value, date.value, type.value);
   };
   bottom.appendChild(safe);
-  // close button
   const close = document.createElement("button");
   close.innerText = gettext("Close");
   close.onclick = () => {
@@ -60,5 +119,27 @@ function createShiftlistPopupHTML() {
   };
   bottom.appendChild(close);
   popup.appendChild(bottom);
+
   return popup;
+}
+
+async function createShiftlist(name, date, type) {
+  const info = {
+    name: name,
+    date: date,
+    type: type,
+  };
+  const response = await creatShiftlistrequest(info);
+  if (response.body.status == "succes") {
+    shiftlists.push({
+      // date: response.body.shiftlist_info.date,
+      type: response.body.shiftlist_info.type,
+      name: name,
+      id: response.body.shiftlist_info.id,
+      string: response.body.shiftlist_info.string,
+    });
+    toHTML();
+  } else {
+    alert(`Error: ${response.body.status}`);
+  }
 }

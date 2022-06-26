@@ -3,8 +3,10 @@ from django.db import models
 
 from leden.models import Lid
 from django.utils.translation import gettext as _
+from django.utils import formats
 
 class Shiftlijst(models.Model):
+    name = models.CharField(max_length = 300, null = True, blank = True)
     date = models.DateField()
     TYPES = [
         ('month', _('month')),
@@ -13,7 +15,10 @@ class Shiftlijst(models.Model):
     type = models.CharField(max_length = 100, choices=TYPES)
 
     def __str__(self):
-        return self.date.strftime('%Y %B')
+        if self.type == 'month':
+            return _(formats.date_format(self.date , format="F Y"))
+        else:
+            return self.name
     
     class Meta:
        verbose_name_plural = "Shiftlijsten" 

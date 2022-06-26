@@ -176,6 +176,8 @@ function showCreatePopup() {
   maxLbl.htmlFor = "max";
   max.type = "number";
   max.id = "max";
+  max.min = 0;
+  max.max = 99;
   opties.appendChild(maxLbl);
   opties.appendChild(max);
   //
@@ -350,7 +352,7 @@ async function takeShift(shift) {
   const response = await request(shift.id, "add_shifter");
   if (response.body.status == "succes") {
     shift.shifters.push(user);
-    shiftsToHTML(shifts, list, user);
+    shiftsToHTML();
   } else {
     alert(`Error: ${response.body.status}`);
   }

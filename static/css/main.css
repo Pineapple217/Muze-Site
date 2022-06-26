@@ -56,6 +56,19 @@ button:active {
     filter: brightness(1.2);
 }
 
+dialog {
+    background-color: var(--body-bg);
+    color: var(--body-color);
+    border-width: 0.3rem;
+    border-color: var(--primary);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+}
+
+dialog::backdrop {
+    background: rgb(0 0 0 / 0.4);
+}
+
 @media screen and (max-width: 860px) {
     /* body, input, textarea, button { */
     /* font-size: 2rem; */
@@ -64,4 +77,8 @@ button:active {
     .content {
         padding-top: 10em;
     }
+}
+
+.hidden {
+    display: none;
 }
