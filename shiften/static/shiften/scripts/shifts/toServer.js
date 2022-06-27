@@ -22,3 +22,12 @@ export async function createShiftRequest(shiftInfo) {
   const response = await sendHttpAsync("create_shift", "POST", shiftInfo);
   return response;
 }
+
+export async function manageShiftlistRequest(actionInfo, action) {
+  const requestBody = {
+    action: action,
+    actionInfo: actionInfo,
+  };
+  const response = await sendHttpAsync("manage_shiftlist", "POST", requestBody);
+  return response;
+}

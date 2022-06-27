@@ -8,7 +8,7 @@ let types;
 export async function main() {
   const json = await getData("ajax");
   shiftlists = json.shiftlists;
-  console.log(shiftlists);
+  // console.log(shiftlists);
   user = json.user;
   types = json.types;
   toHTML();
@@ -30,6 +30,11 @@ function toHTML() {
 
   const list = document.createElement("ul");
   list.classList.add("shiftlist-list");
+  shiftlists.sort((a, b) => {
+    if (a.date > b.date) return 1;
+    if (a.date < b.date) return -1;
+    return 0;
+  });
   shiftlists.forEach((shiftlist) => {
     const li = document.createElement("li");
     li.classList.add("shiftlist");
@@ -132,7 +137,7 @@ async function createShiftlist(name, date, type) {
   const response = await creatShiftlistrequest(info);
   if (response.body.status == "succes") {
     shiftlists.push({
-      // date: response.body.shiftlist_info.date,
+      date: date,
       type: response.body.shiftlist_info.type,
       name: name,
       id: response.body.shiftlist_info.id,

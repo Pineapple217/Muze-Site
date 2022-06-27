@@ -1,20 +1,26 @@
 import { Shift } from "./shift.js";
-import { request, manageShiftRequest, createShiftRequest } from "./toServer.js";
+import {
+  request,
+  manageShiftRequest,
+  createShiftRequest,
+  manageShiftlistRequest,
+} from "./toServer.js";
 import { getData } from "/static/scripts/ajaxTools.js";
 
 let list;
 let user;
 let shifts;
 let leden;
+let types;
 
 export async function main() {
   const json = await getData("/ajax");
   list = json.list;
   user = json.user;
   shifts = maakShifts(json.shifts);
-  if (user.perms.shift_change) {
-    leden = json.leden;
-  }
+  leden = json.leden;
+  types = json.types;
+
   shiftsToHTML();
 }
 
@@ -32,16 +38,16 @@ function maakShifts(shifts) {
 }
 
 function shiftsToHTML() {
-  const body = document.querySelector(".content");
+  // const body = document.querySelector(".content");
   const header = document.querySelector(".main-header");
   const h1 = document.createElement("h1");
   const shiftList = document.getElementById("shiftlist");
   shiftList.replaceChildren();
   header.replaceChildren();
   h1.innerText = gettext(
-    `${list.date.charAt(0).toUpperCase() + list.date.slice(1)} (${
+    `${list.string.charAt(0).toUpperCase() + list.string.slice(1)} (${
       list.type
-    }) | ${list.id}`
+    })`
   );
   header.appendChild(h1);
   let shiftdate = "";
@@ -118,10 +124,21 @@ function shiftsToHTML() {
     popup.classList.add("shift-edit-popup");
     shiftList.appendChild(popup);
   }
+  if (user.perms.shiftlist_edit) {
+    const edit = document.createElement("button");
+    edit.innerText = gettext("Edit");
+    edit.classList.add("title-btns");
+    edit.onclick = () => {
+      const listEditPopup = createListEditPopup();
+      shiftList.appendChild(listEditPopup);
+      listEditPopup.showModal();
+    };
+    header.appendChild(edit);
+  }
   if (user.perms.shift_add) {
     const add = document.createElement("button");
     add.innerText = gettext("Add shift");
-    add.classList.add("add-shift-btn");
+    add.classList.add("title-btns");
     add.onclick = () => {
       showCreatePopup();
     };
@@ -130,6 +147,90 @@ function shiftsToHTML() {
     popup.classList.add("shift-create-popup");
     shiftList.appendChild(popup);
   }
+}
+
+function createListEditPopup() {
+  const popup = document.createElement("dialog");
+  popup.classList.add("create-shiftlist-popup");
+
+  const h1 = document.createElement("h1");
+  h1.innerText = gettext("Edit Shiftlist");
+  popup.appendChild(h1);
+
+  const options = document.createElement("div");
+  options.classList.add("options");
+
+  const name = document.createElement("input");
+  const nameLbl = document.createElement("label");
+  name.id = "name";
+  name.type = "text";
+  name.maxLength = 300;
+  name.value = list.name;
+  name.classList.add("hidden");
+  nameLbl.classList.add("hidden");
+  nameLbl.htmlFor = "name";
+  nameLbl.innerText = gettext("Name");
+  options.appendChild(nameLbl);
+  options.appendChild(name);
+
+  const date = document.createElement("input");
+  const dateLbl = document.createElement("label");
+  date.id = "date";
+  date.type = "date";
+  date.value = list.date;
+  dateLbl.htmlFor = "date";
+  dateLbl.innerText = gettext("Date");
+  options.appendChild(dateLbl);
+  options.appendChild(date);
+
+  const typeLbl = document.createElement("label");
+  const type = document.createElement("select");
+  type.id = "type";
+  type.value = list.type;
+  typeLbl.htmlFor = "type";
+  typeLbl.innerText = gettext("Type");
+  types.forEach((t) => {
+    const option = document.createElement("option");
+    option.innerText = t[1];
+    option.value = t[0];
+    if (t[0] == list.type) option.selected = true;
+    type.appendChild(option);
+  });
+  const changeVisName = () => {
+    const selected = type.options[type.selectedIndex].value;
+    if (selected == "month") {
+      name.classList.add("hidden");
+      nameLbl.classList.add("hidden");
+      name.value = "";
+    } else {
+      name.classList.remove("hidden");
+      nameLbl.classList.remove("hidden");
+    }
+  };
+  changeVisName();
+  type.onchange = changeVisName;
+  options.appendChild(typeLbl);
+  options.appendChild(type);
+
+  popup.appendChild(options);
+
+  const bottom = document.createElement("div");
+  bottom.classList.add("bottom-btns");
+  const safe = document.createElement("button");
+  safe.innerText = gettext("Safe");
+  safe.onclick = () => {
+    safeShiftlist(name.value, date.value, type.value);
+  };
+  bottom.appendChild(safe);
+  const close = document.createElement("button");
+  close.innerText = gettext("Close");
+  close.onclick = () => {
+    popup.close();
+  };
+  bottom.appendChild(close);
+  popup.appendChild(bottom);
+
+  return popup;
 }
 
 function showCreatePopup() {
@@ -141,7 +242,7 @@ function showCreatePopup() {
   popup.appendChild(title);
   // opties
   const opties = document.createElement("div");
-  opties.classList.add("opties");
+  opties.classList.add("options");
   // date
   const date = document.createElement("input");
   const dateLbl = document.createElement("label");
@@ -238,10 +339,6 @@ function showEditPopup(shift) {
     option.value = lid.id;
     select.appendChild(option);
   });
-  // const div = document.createElement("div");
-  // div.classList.add("related-widget-wrapper");
-  // div.appendChild(select);
-  // li.appendChild(div);
   li.appendChild(select);
   for (let i = 0; shift.max > i; i++) {
     const liC = li.cloneNode(true);
@@ -274,7 +371,27 @@ function showEditPopup(shift) {
   popup.showModal();
 }
 
-function generateBottomButtons() {}
+async function safeShiftlist(name, date, type) {
+  const actionInfo = {
+    id: list.id,
+    name: name,
+    date: date,
+    type: type,
+  };
+  const response = await manageShiftlistRequest(actionInfo, "safe_shiftlist");
+  if (response.body.status == "succes") {
+    list = {
+      date: date,
+      type: response.body.shiftlist_info.type,
+      name: name,
+      id: list.id,
+      string: response.body.shiftlist_info.string,
+    };
+    shiftsToHTML();
+  } else {
+    alert(`Error: ${response.body.status}`);
+  }
+}
 
 async function createShift(date, start, end, max) {
   const shiftInfo = {

@@ -7,7 +7,7 @@
     margin: 0;
 }
 
-.main-header .add-shift-btn {
+.main-header .title-btns {
     margin-left: 1rem;
     padding: 0.4rem;
 }
@@ -60,7 +60,8 @@
 }
 
 .loggedshifter {
-    color: var(--secondary);
+    /* color: var(--secondary); */
+    font-weight: bold;
 }
 
 .edit-button::after {
@@ -136,24 +137,31 @@ dialog ul {
     margin-right: 1.25rem;
 }
 
-.shift-create-popup h1 {
+dialog h1 {
     margin-top: 0;
 }
 
-.shift-create-popup .opties label {
+.options label {
     font-size: 1rem;
 }
 
-.shift-create-popup .opties input {
+dialog .options input {
     font-size: 1rem;
     width: 8em;
 }
 
-.shift-create-popup .opties {
+dialog .options {
     margin-bottom: 0;
     display: grid;
     grid-template-columns: auto auto;
     row-gap: 1rem;
     column-gap: 1rem;
     margin-bottom: 1rem;
+}
+
+
+dialog .options select {
+    font-size: 1rem;
+    padding: 2px;
+    width: 8rem;
 }

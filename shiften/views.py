@@ -1,5 +1,6 @@
 from datetime import date
 import json
+from urllib import response
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -120,16 +121,20 @@ def ajax_shifts(request, list_id):
         # "shift_list": shift.shift_list.id,
         })
     list_dict = {
-       "date": _(formats.date_format(list.date , format="F Y")),
+       "date": list.date,
        "id" : list.id,
-       "type": _(list.type), 
+       "type": list.type, 
+       "name": list.name,
+       "string": str(list),
     }
     user_dict = {
        "id": request.user.id,
        "name": request.user.first_name + " " + request.user.last_name,
-       "perms": {"shift_change": request.user.has_perm("shiften.change_shift")if 1 else 0,
-                 "shift_add"   : request.user.has_perm("shiften.add_shift")if 1 else 0,
-                 "shift_del"   : request.user.has_perm("shiften.delete_shift")if 1 else 0,}
+       "perms": {"shift_change"  : request.user.has_perm("shiften.change_shift")if 1 else 0,
+                 "shift_add"     : request.user.has_perm("shiften.add_shift")if 1 else 0,
+                 "shift_del"     : request.user.has_perm("shiften.delete_shift")if 1 else 0,
+                 "shiftlist_edit": request.user.has_perm("shiften.change_shiftlijst")if 1 else 0,
+                 "shiftlist_del" : request.user.has_perm("shiften.delete_shiftlijst")if 1 else 0}
     }
     dict = {"shifts": shifts_dict,
             "list": list_dict,
@@ -142,6 +147,8 @@ def ajax_shifts(request, list_id):
                 {"name": user.first_name + " " + user.last_name,
                  "id": user.id,}
             )
+    if request.user.has_perm("shiften.change_shift"):
+        dict["types"] = Shiftlijst.type.field.choices
     return JsonResponse(dict)
 
 @login_required    
@@ -150,7 +157,7 @@ def ajax_shift_list(request):
     shiftlijsten = []
     for shiftlijst in  Shiftlijst.objects.all():
        shiftlijsten.append({
-            # "date": _(formats.date_format(shiftlijst.date , format="F Y")),
+            "date": shiftlijst.date,
             "type": _(shiftlijst.type),
             "id": shiftlijst.id, 
             "name": shiftlijst.name,
@@ -180,7 +187,6 @@ def create_shiftlist(request):
                                     name = shiftlist_info["name"],)
         shiftlist_info = {
            "id": shiftlist.id,
-        #    "date": shiftlist.date,
            "type": _(shiftlist.type),
            "string": str(shiftlist),
         }
@@ -188,3 +194,36 @@ def create_shiftlist(request):
         status_msg = "succes"
         status = 200
         return JsonResponse({"status": status_msg, "shiftlist_info": shiftlist_info}, status = status)
+
+@login_required
+def manage_shiftlist(request):
+    if request.method == "POST":
+        data = json.loads(request.body) 
+        action = data.get("action")
+        actionInfo = data.get("actionInfo")
+        id = actionInfo.get("id")
+        shiftlijst = Shiftlijst.objects.get(id=id)
+        response = {}
+        match action:
+            case "safe_shiftlist":
+                if request.user.has_perm("shiften.change_shiftlijst"):
+                    shiftlijst.name = actionInfo.get("name")
+                    shiftlijst.date = date.fromisoformat(actionInfo.get("date"))
+                    shiftlijst.type = actionInfo.get("type")
+                    shiftlijst.save()
+                    response["shiftlist_info"] = {
+                        "type": shiftlijst.type,
+                        "string": str(shiftlijst),
+                    }
+                    status_msg = "succes"
+                    status = 200
+            case "delete_shiftlist":
+                if request.user.has_perm("shiften.delete_shift"):
+                    shift.delete()
+                    status_msg = "succes"
+                    status = 200
+            case _:
+                status_msg = f"{action}: this action does not exits"
+                status = 400 # Bad Request 
+        response["status"] = status_msg
+        return JsonResponse(response, status = status)

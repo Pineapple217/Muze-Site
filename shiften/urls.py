@@ -8,6 +8,7 @@ urlpatterns = [
    path('<int:list_id>/ajax', views.ajax_shifts),
    path('signup_shift', views.signup_shift, name='signup_shift'),
    path('manage_shift', views.manage_shift),
+   path('manage_shiftlist', views.manage_shiftlist),
    path('create_shift', views.create_shift),
    path('create_shiftlist', views.create_shiftlist),
 ]
