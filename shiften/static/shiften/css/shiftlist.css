@@ -103,17 +103,17 @@ dialog ul {
     padding: 0;
 }
 
-.shift-edit-popup .header>* {
+dialog .header>* {
     margin: 0;
 }
 
-.shift-edit-popup .header {
+dialog .header {
     display: flex;
     /* margin-top: 1.25rem; */
     margin-bottom: 1.25rem;
 }
 
-.shift-edit-popup .delete-btn {
+dialog .delete-btn {
     background-color: var(--red);
     padding: 0.4rem;
     margin-left: 1rem;

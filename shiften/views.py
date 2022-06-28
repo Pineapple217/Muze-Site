@@ -219,9 +219,11 @@ def manage_shiftlist(request):
                     status = 200
             case "delete_shiftlist":
                 if request.user.has_perm("shiften.delete_shift"):
-                    shift.delete()
+                    shiftlijst.delete()
+                    # mesage dat shift gone is
                     status_msg = "succes"
                     status = 200
+                    # return redirect('shiftlist_home')
             case _:
                 status_msg = f"{action}: this action does not exits"
                 status = 400 # Bad Request 

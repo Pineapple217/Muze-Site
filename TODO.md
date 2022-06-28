@@ -1,5 +1,7 @@
 Main
 
+- Mesage dingen
+- popup checks of als ingevult is en geldig is
 - [ ] profiel shiftgeschiedenis en aankomende shiften
 - [ ] Sociale media integratie https://pypi.org/project/django-instagram/
 - [ ] registratie conpled mesage

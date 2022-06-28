@@ -153,9 +153,26 @@ function createListEditPopup() {
   const popup = document.createElement("dialog");
   popup.classList.add("create-shiftlist-popup");
 
-  const h1 = document.createElement("h1");
-  h1.innerText = gettext("Edit Shiftlist");
-  popup.appendChild(h1);
+  const head = document.createElement("div");
+  head.classList.add("header");
+  const title = document.createElement("h1");
+  title.innerText = gettext("Edit Shiftlist");
+  head.appendChild(title);
+  // delete
+  if (user.perms.shift_del) {
+    const del = document.createElement("button");
+    del.innerText = gettext("Delete");
+    del.classList.add("delete-btn");
+    del.onclick = () => {
+      if (
+        prompt(gettext("Type 'DELETE' to delete this shiftlist")) == "DELETE"
+      ) {
+        deleteShiftlist();
+      }
+    };
+    head.append(del);
+  }
+  popup.appendChild(head);
 
   const options = document.createElement("div");
   options.classList.add("options");
@@ -316,7 +333,6 @@ function showEditPopup(shift) {
   head.appendChild(title);
   // delete
   if (user.perms.shift_del) {
-    title.innerText += " ";
     const del = document.createElement("button");
     del.innerText = gettext("Delete");
     del.classList.add("delete-btn");
@@ -460,6 +476,18 @@ async function deleteShift(shift) {
   if (response.body.status == "succes") {
     shifts.splice(shifts.indexOf(shift), 1);
     shiftsToHTML();
+  } else {
+    alert(`Error: ${response.body.status}`);
+  }
+}
+
+async function deleteShiftlist() {
+  const actionInfo = {
+    id: list.id,
+  };
+  const response = await manageShiftlistRequest(actionInfo, "delete_shiftlist");
+  if (response.body.status == "succes") {
+    window.location.href = "/shiften";
   } else {
     alert(`Error: ${response.body.status}`);
   }
