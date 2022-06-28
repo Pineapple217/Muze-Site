@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-24 19:58+0200\n"
+"POT-Creation-Date: 2022-06-28 19:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,60 +18,97 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\shiften\static\shiften\scripts\shiftApp_old.js:98
-#: .\shiften\static\shiften\scripts\shiftlist.js:100
-msgid "Clear shift"
-msgstr "Maak shift vrij"
+#: .\shiften\static\shiften\scripts\shiftlists\shiftListApp.js:24
+msgid "Add Shiftlist"
+msgstr "Voeg shiftlijst toe"
 
-#: .\shiften\static\shiften\scripts\shiftApp_old.js:104
-#: .\shiften\static\shiften\scripts\shiftlist.js:109
-msgid "Shift Full"
-msgstr "Shift is vol"
+#: .\shiften\static\shiften\scripts\shiftlists\shiftListApp.js:58
+msgid "Create Shiftlist"
+msgstr "Maak shiftlijst"
 
-#: .\shiften\static\shiften\scripts\shiftApp_old.js:110
-#: .\shiften\static\shiften\scripts\shiftlist.js:115
-msgid "Take shift"
-msgstr "Neem shift"
+#: .\shiften\static\shiften\scripts\shiftlists\shiftListApp.js:72
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:189
+msgid "Name"
+msgstr "Naam"
 
-#: .\shiften\static\shiften\scripts\shiftlist.js:135
-msgid "Add shift"
-msgstr "Voeg shift toe"
-
-#: .\shiften\static\shiften\scripts\shiftlist.js:152
-msgid "Create shift"
-msgstr "Maak shift"
-
-#: .\shiften\static\shiften\scripts\shiftlist.js:160
+#: .\shiften\static\shiften\scripts\shiftlists\shiftListApp.js:81
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:199
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:266
 msgid "Date"
 msgstr "Datum"
 
-#: .\shiften\static\shiften\scripts\shiftlist.js:169
-msgid "Start"
-msgstr "Start"
+#: .\shiften\static\shiften\scripts\shiftlists\shiftListApp.js:89
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:208
+msgid "Type"
+msgstr "Type"
 
-#: .\shiften\static\shiften\scripts\shiftlist.js:178
-msgid "End"
-msgstr "Einde"
-
-#: .\shiften\static\shiften\scripts\shiftlist.js:187
-msgid "Max shifters"
-msgstr "Max shifters"
-
-#: .\shiften\static\shiften\scripts\shiftlist.js:200
-#: .\shiften\static\shiften\scripts\shiftlist.js:270
+#: .\shiften\static\shiften\scripts\shiftlists\shiftListApp.js:115
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:237
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:308
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:373
 msgid "Safe"
 msgstr "Opslaan"
 
-#: .\shiften\static\shiften\scripts\shiftlist.js:207
-#: .\shiften\static\shiften\scripts\shiftlist.js:277
+#: .\shiften\static\shiften\scripts\shiftlists\shiftListApp.js:121
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:243
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:315
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:380
 msgid "Close"
 msgstr "Sluiten"
 
-#: .\shiften\static\shiften\scripts\shiftlist.js:230
+#: .\shiften\static\shiften\scripts\shifts\shiftApp_old.js:98
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:94
+msgid "Clear shift"
+msgstr "Maak shift vrij"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftApp_old.js:104
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:103
+msgid "Shift Full"
+msgstr "Shift is vol"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftApp_old.js:110
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:109
+msgid "Take shift"
+msgstr "Neem shift"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:129
+msgid "Edit"
+msgstr "Bewerk"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:140
+msgid "Add shift"
+msgstr "Voeg shift toe"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:159
+msgid "Edit Shiftlist"
+msgstr "Bewerk Shiftlijst"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:164
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:337
 msgid "Delete"
 msgstr "Verwijder"
 
-#: .\shiften\static\shiften\scripts\shiftlist.js:233
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:168
+msgid "Type 'DELETE' to delete this shiftlist"
+msgstr "Type 'DELETE' om deze shiftlijst te verwijderen"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:258
+msgid "Create shift"
+msgstr "Maak shift"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:275
+msgid "Start"
+msgstr "Start"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:284
+msgid "End"
+msgstr "Einde"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:293
+msgid "Max shifters"
+msgstr "Max shifters"
+
+#: .\shiften\static\shiften\scripts\shifts\shiftlist.js:340
 msgid "Are you sure you want to delete this shift?"
 msgstr "Ben je zeker dat je deze shift wilt verwijderen?"
 
