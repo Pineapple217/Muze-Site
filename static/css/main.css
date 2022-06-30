@@ -37,6 +37,10 @@ body {
 
 }
 
+html {
+    scroll-padding-top: 8rem;
+}
+
 button {
     background-color: var(--button-primary);
     border: none;

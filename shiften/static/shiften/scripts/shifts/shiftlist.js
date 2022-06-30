@@ -13,6 +13,7 @@ let shifts;
 let leden;
 let types;
 
+let firstLoad = false;
 export async function main() {
   const json = await getData("/ajax");
   list = json.list;
@@ -62,6 +63,8 @@ function shiftsToHTML() {
     }
     const shiftDiv = document.createElement("div");
     shiftDiv.classList.add("shift");
+    shiftDiv.classList.add("anchor");
+    shiftDiv.id = shift.id;
     const h4 = document.createElement("h4");
     h4.innerText = `${shift.start} - ${shift.end}`;
     if (user.perms.shift_change) {
@@ -146,6 +149,15 @@ function shiftsToHTML() {
     const popup = document.createElement("dialog");
     popup.classList.add("shift-create-popup");
     shiftList.appendChild(popup);
+  }
+  if (!firstLoad) {
+    let hash = window.location.hash;
+    let url = location.href;
+    if (hash) {
+      location.href = hash;
+      history.replaceState(null, null, url);
+    }
+    firstLoad = true;
   }
 }
 

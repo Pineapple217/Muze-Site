@@ -44,7 +44,8 @@ export async function sendHttpAsync(path, method, body) {
 
 export async function getData(path) {
   try {
-    const request = await fetch(window.location.href + path);
+    const href = window.location.href.split("#")[0];
+    const request = await fetch(href + path);
     if (!request.ok) {
       throw new Error(`HTTP error: ${request.status}`);
     }

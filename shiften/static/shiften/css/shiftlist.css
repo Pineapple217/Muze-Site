@@ -165,3 +165,33 @@ dialog .options select {
     padding: 2px;
     width: 8rem;
 }
+
+/* * {
+    scroll-behavior: smooth !important;
+} */
+
+.anchor {
+    border: 1px;
+    border-radius: 0.5rem;
+    scroll-margin: 2rem;
+}
+
+.anchor:target {
+    animation-name: blink;
+    animation-direction: normal;
+    animation-duration: 0.7s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+@keyframes blink {
+    0% {
+        background-color: var(--body-color);
+        /* filter: invert(100%); */
+    }
+
+    100% {
+        background-color: var(--body-bg);
+        /* filter: invert(0%); */
+    }
+}

@@ -48,12 +48,13 @@ def signup(request):
         return render(request,  'leden/already_logged_in.html')
 
 def userinfo(request):
-    shifts = Shift.objects.filter(shifters__id = request.user.lid.id)
-    shift_history = shifts.filter(date__range = (start_date, today))
-    upcomming_shifts = shifts.filter(date__range = ())
+    shifts = Shift.objects.filter(shifters__id = request.user.lid.id).order_by('date')
+    today = date.today()
+    shift_history = shifts.filter(date__lt = today).reverse()
+    upcomming_shifts = shifts.filter(date__gt = today)
     print(shift_history)
     context = {
         'shift_history': shift_history,
-        'upcomming-shifts': upcomming_shifts,
+        'upcomming_shifts': upcomming_shifts,
     }
     return render(request, "leden/userinfo.html", context)
