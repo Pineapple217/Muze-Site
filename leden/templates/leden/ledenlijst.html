@@ -1,40 +1,28 @@
 {% extends '../base.html' %} {% block content %}
-<style>
-  table,
-  th,
-  td {
-    border: 1px solid black;
-  }
-</style>
-<table>
-  <tr>
-    <th>Achternaam</th>
-    <th>Voornaam</th>
-    <th>E-mailadres</th>
-    <th>Telefoonnummer</th>
-    <th>Geboortdatum</th>
-    <th>Gender</th>
-    <th>Adres</th>
-    <th>Stad</th>
-    <th>Discord id</th>
-    <th>Media</th>
-  </tr>
+{% load static %}
+<link rel="stylesheet" href="{% static 'leden/css/ledenlijst.css' %}">
+<div class = "ledenlijst">
+    <p>Achternaam</p>
+    <p>Voornaam</p>
+    <p>E-mailadres</p>
+    <p>Telefoonnummer</p>
+    <p>Geboortdatum</p>
+    <p>Gender</p>
+    <p>Adres</p>
+    <p>Stad</p>
+    <p>Discord id</p>
+    <p>Media</p>
   {% for lid in leden %}
-  <tr>
-    <td>{{ lid.user.last_name }}</td>
-    <td>{{ lid.user.first_name }}</td>
-    <td>{{ lid.user.email }}</td>
-    <td>{{ lid.tel }}</td>
-    <td>{{ lid.date_of_birth|date:"" }}</td>
-    <td>
-      {% if lid.gender == "M" %} Man {% elif lid.gender == "F"%} Vrouw {% else%}
-      Anders {% endif %}
-    </td>
-    <td>{{ lid.street}} {{ lid.house_number }}</td>
-    <td>{{ lid.residence}} {{ lid.zipcode }}</td>
-    <td>{{ lid.discord_id }}</td>
-    <td>{{ lid.media }}</td>
-  </tr>
+    <p>{{ lid.user.last_name }}</p>
+    <p>{{ lid.user.first_name }}</p>
+    <p>{{ lid.user.email }}</p>
+    <p>{{ lid.tel }}</p>
+    <p>{{ lid.date_of_birth|date:"" }}</p>
+    <p>{{ lid.get_gender_display }}</p>
+    <p>{{ lid.street}} {{ lid.house_number }}</p>
+    <p>{{ lid.residence}} {{ lid.zipcode }}</p>
+    <p>{{ lid.discord_id }}</p>
+    <p>{{ lid.media }}</p>
   {% endfor %}
-</table>
+</div>
 {% endblock %}

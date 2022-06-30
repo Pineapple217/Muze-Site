@@ -118,7 +118,6 @@ def ajax_shifts(request, list_id):
         "shifters": shifters,
         "id": shift.id,
         "max": shift.max_shifters,
-        # "shift_list": shift.shift_list.id,
         })
     list_dict = {
        "date": list.date,

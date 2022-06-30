@@ -126,11 +126,11 @@ nav a {
     header {
         display: grid;
         grid-template-rows: auto;
-        grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+        grid-template-columns: max-content auto max-content;
     }
 
     .page-title {
-        grid-column: 1/3;
+        padding-left: 2rem;
     }
 
     .nav-user {
@@ -154,7 +154,7 @@ nav a {
     }
 
     nav li {
-        margin-left: 2rem;
+        margin-left: 1.5rem;
         margin-bottom: 0;
     }
 

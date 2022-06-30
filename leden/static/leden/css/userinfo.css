@@ -19,9 +19,11 @@
     color: inherit;
     text-decoration: none;
     font-size: 1.25rem;
+    justify-self: end;
 }
 
 .shifts-link {
     display: grid;
     max-width: max-content;
+    row-gap: 0.2rem;
 }

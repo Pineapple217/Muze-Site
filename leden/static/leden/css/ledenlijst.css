@@ -1,0 +1,10 @@
+.ledenlijst {
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    row-gap: 1rem;
+    column-gap: 1rem;
+}
+
+.ledenlijst>* {
+    margin: 0;
+}
