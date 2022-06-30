@@ -236,7 +236,7 @@ function createListEditPopup() {
   const safe = document.createElement("button");
   safe.innerText = gettext("Safe");
   safe.onclick = () => {
-    safeShiftlist(name.value, date.value, type.value);
+    if (date.value != "") safeShiftlist(name.value, date.value, type.value);
   };
   bottom.appendChild(safe);
   const close = document.createElement("button");
@@ -307,7 +307,13 @@ function showCreatePopup() {
   const safe = document.createElement("button");
   safe.innerText = gettext("Safe");
   safe.onclick = () => {
-    createShift(date.value, start.value, end.value, max.value);
+    if (
+      date.value != "" &&
+      start.value != "" &&
+      end.value != "" &&
+      max.value != ""
+    )
+      createShift(date.value, start.value, end.value, max.value);
   };
   bottom.appendChild(safe);
   // close button
@@ -487,7 +493,7 @@ async function deleteShiftlist() {
   };
   const response = await manageShiftlistRequest(actionInfo, "delete_shiftlist");
   if (response.body.status == "succes") {
-    window.location.href = "/shiften";
+    // window.location.href = "/shiften";
   } else {
     alert(`Error: ${response.body.status}`);
   }

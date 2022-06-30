@@ -1,0 +1,16 @@
+.user-info .data-grid {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    border-style: solid;
+    border-width: 0.3rem;
+    border-color: var(--primary);
+    border-radius: 1.5rem;
+    padding: 0.75rem;
+    max-width: max-content;
+}
+
+.user-info .data-grid p {
+    margin: 0;
+}

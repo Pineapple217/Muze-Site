@@ -1,6 +1,9 @@
+from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+
+from shiften.models import Shift
 from .models import Lid
 from .forms import UserSignUpForm, LidSignUpForm
 from django.utils.translation import gettext as _
@@ -45,4 +48,12 @@ def signup(request):
         return render(request,  'leden/already_logged_in.html')
 
 def userinfo(request):
-    return render(request, "leden/userinfo.html")
+    shifts = Shift.objects.filter(shifters__id = request.user.lid.id)
+    shift_history = shifts.filter(date__range = (start_date, today))
+    upcomming_shifts = shifts.filter(date__range = ())
+    print(shift_history)
+    context = {
+        'shift_history': shift_history,
+        'upcomming-shifts': upcomming_shifts,
+    }
+    return render(request, "leden/userinfo.html", context)

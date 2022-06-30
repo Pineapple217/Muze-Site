@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-15 19:53+0200\n"
+"POT-Creation-Date: 2022-06-30 11:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-
-#: .\leden\forms.py:17
+#: .\leden\forms.py:17 .\leden\templates\leden\userinfo.html:11
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
@@ -27,11 +26,11 @@ msgstr "Telefoonnummer"
 msgid "Format example +32 989 91 23 12."
 msgstr "Formaat voorbeeld +32 989 91 23 12."
 
-#: .\leden\forms.py:25
+#: .\leden\forms.py:25 .\leden\templates\leden\userinfo.html:13
 msgid "Date of birth"
 msgstr "Geboortedatum"
 
-#: .\leden\forms.py:26
+#: .\leden\forms.py:26 .\leden\templates\leden\userinfo.html:17
 msgid "Gender"
 msgstr "Gender"
 
@@ -47,15 +46,15 @@ msgstr "Huisnummer"
 msgid "Zipcode"
 msgstr "Postcode"
 
-#: .\leden\forms.py:30
+#: .\leden\forms.py:30 .\leden\templates\leden\userinfo.html:21
 msgid "Residenace"
 msgstr "Woonplaats"
 
-#: .\leden\forms.py:31
+#: .\leden\forms.py:31 .\leden\templates\leden\userinfo.html:23
 msgid "Discord id"
 msgstr "Discord id"
 
-#: .\leden\forms.py:32
+#: .\leden\forms.py:32 .\leden\templates\leden\userinfo.html:25
 msgid "Social media"
 msgstr "Sociale media"
 
@@ -71,11 +70,19 @@ msgstr "Vrouw"
 msgid "Other"
 msgstr "Andere"
 
-#: .\shiften\models.py:10
+#: .\leden\templates\leden\userinfo.html:9
+msgid "Email"
+msgstr ""
+
+#: .\leden\templates\leden\userinfo.html:19
+msgid "Address"
+msgstr "Adres"
+
+#: .\shiften\models.py:12
 msgid "month"
 msgstr "maand"
 
-#: .\shiften\models.py:11
+#: .\shiften\models.py:13
 msgid "event"
 msgstr "evenement"
 
@@ -827,51 +834,51 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:25
 msgid "January"
-msgstr ""
+msgstr "januari"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:26
 msgid "February"
-msgstr ""
+msgstr "februari"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:27
 msgid "March"
-msgstr ""
+msgstr "maart"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:28
 msgid "April"
-msgstr ""
+msgstr "april"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:29
 msgid "May"
-msgstr ""
+msgstr "mei"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:30
 msgid "June"
-msgstr ""
+msgstr "juni"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:31
 msgid "July"
-msgstr ""
+msgstr "juli"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:32
 msgid "August"
-msgstr ""
+msgstr "augustus"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:33
 msgid "September"
-msgstr ""
+msgstr "september"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:34
 msgid "October"
-msgstr ""
+msgstr "october"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:35
 msgid "November"
-msgstr ""
+msgstr "november"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:36
 msgid "December"
-msgstr ""
+msgstr "december"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:39
 msgid "jan"

@@ -1,15 +1,36 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
 {% block content %}
-<h1>{{ user.last_name }} {{ user.first_name }}</h1>
-<ul>
-    <li>{{ user.email }}</li>
-    <li>{{ user.lid.tel }}</li>
-    <li>{{ user.lid.date_of_birth }}</li>
-    <li>{% if user.lid.gender == "M" %} Man {% elif user.lid.gender == "F"%} Vrouw {% else%} Anders {% endif %}
-    <li>{{ user.lid.street}} {{ user.lid.house_number }}</li>
-    <li>{{ user.lid.residence}} {{ user.lid.zipcode }}</li>
-    <li>{{ user.lid.discord_id }}</li>
-    <li>{{ user.lid.media }}</li>
-</ul>
+<link rel="stylesheet" href="{% static 'leden/css/userinfo.css' %}">
+<div class = "user-info">
+    <h1>{{ user.last_name }} {{ user.first_name }}</h1>
+    <div class = "data-grid">
+        <p>{% translate "Email" %}</p>
+        <p>{{ user.email }}</p>
+        <p>{% translate "Phone number" %}</p>
+        <p>{{ user.lid.tel }}</p>
+        <p>{% translate "Date of birth" %}</p>
+        {% with date=user.lid.date_of_birth|date:'d F Y'%}
+        <p>{% trans date %}</p>
+        {% endwith %}
+        <p>{% translate "Gender" %}</p>
+        <p>{% if user.lid.gender == "M" %} Man {% elif user.lid.gender == "F"%} Vrouw {% else%} Anders {% endif %}
+        <p>{% trans "Address" %}</p>
+        <p>{{ user.lid.street}} {{ user.lid.house_number }}</p>
+        <p>{% translate "Residenace" %}</p>
+        <p>{{ user.lid.residence}} {{ user.lid.zipcode }}</p>
+        <p>{% translate "Discord id" %}</p>
+        <p>{{ user.lid.discord_id }}</p>
+        <p>{% translate "Social media" %}</p>
+        <p>{{ user.lid.media }}</p>
+    </div>
+</div>
+<div class="shift-history">
+
+</div>
+<div class="upcomming-shifts">
+
+</div>
 
 {% endblock content %}
