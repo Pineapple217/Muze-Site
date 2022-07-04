@@ -4,7 +4,11 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'leden/css/userinfo.css' %}">
 <div class = "user-info">
-    <h1>{{ user.last_name }} {{ user.first_name }}</h1>
+    {% if user.lid.profile_picture %}
+        <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
+    {% endif %}
+    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+    <a href="profile/edit">edit</a>
     <div class = "data-grid">
         <p>{% translate "Email" %}</p>
         <p>{{ user.email }}</p>

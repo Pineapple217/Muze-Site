@@ -27,3 +27,11 @@
     max-width: max-content;
     row-gap: 0.2rem;
 }
+
+.pp-lid {
+    border-radius: 50%;
+    border: 0.3rem;
+    border-color: var(--primary);
+    border-style: solid;
+    width: 200px;
+}

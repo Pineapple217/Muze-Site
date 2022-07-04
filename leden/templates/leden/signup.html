@@ -1,26 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% load static %}
-  <h2>Sign up</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {% for form in forms %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    {% endfor %}
-    <button type="submit">Sign up</button>
-    <button type="reset">Clear form</button>
-  </form>
-  <script src= "{% static 'leden/scripts/phonenum.js' %}"></script>
+  <h1>Sign up</h1>
+  {% include  'form.html'%}
+
 {% endblock %}

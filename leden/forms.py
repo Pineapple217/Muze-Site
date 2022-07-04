@@ -1,3 +1,4 @@
+from pyexpat import model
 from django import forms
 from .models import Lid
 from django.contrib.auth.forms import UserCreationForm
@@ -33,4 +34,31 @@ class LidSignUpForm(ModelForm):
         }
         widgets = {
                 'date_of_birth': DateInput(attrs={'type': 'date'})
+            }
+
+class UserUpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 
+                  'email')
+
+class LidUpdateForm(ModelForm):
+    class Meta:
+        model = Lid
+        fields = ('profile_picture', 'tel', 'date_of_birth', 'gender', 'street',
+                  'house_number', 'zipcode', 'residence', 'discord_id', 'media',)
+        labels = {
+            'profile_picture': _('Profile picture'),
+            'date_of_birth': _('Date of birth'),
+            'gender': _('Gender'),
+            'street': _('Street'),
+            'house_number': _('House nummer'),
+            'zipcode': _('Zipcode'),
+            'residence': _('Residenace'),
+            'discord_id': _('Discord id'),
+            'media': _('Social media'),
+        }
+        widgets = {
+                'date_of_birth': DateInput(attrs={'type': 'date'},
+                                           format=('%Y-%m-%d'))
             }

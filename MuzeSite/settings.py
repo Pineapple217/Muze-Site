@@ -143,8 +143,8 @@ LOGIN_URL = '/leden/login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
+MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = 'media/'
 
 #==========custom settings==============
 MAX_SHIFTERS_MONTHSHIFT = 3
