@@ -13,12 +13,13 @@
 {% endblock %}
 </div> 
 {% if messages %}
-<ul>
+<ul class="messages">
     {% for message in messages %}
-    <li>
-        <dialog open>
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        <div class="message">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
             {{ message }}
-        </dialog>
+        </div>
     </li>
     {% endfor %}
 </ul>

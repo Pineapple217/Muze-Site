@@ -38,7 +38,7 @@ def signup(request):
                     login(request, user)
                     lid_group = Group.objects.get(name='Lid')
                     lid_group.user_set.add(user)
-                    messages.success(request, "Welkom bij de muze familie.")
+                    messages.success(request, _("Welkom to the muze"))
                     return redirect('home')
         else:
             user_form = UserSignUpForm()

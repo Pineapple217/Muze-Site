@@ -86,3 +86,33 @@ dialog::backdrop {
 .hidden {
     display: none;
 }
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+    z-index: 100;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.message {
+    padding: 20px;
+    background-color: var(--accent);
+    color: white;
+    margin-bottom: 15px;
+}
+
+
+
+.message .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
