@@ -1,13 +1,14 @@
 from datetime import date
 import json
+from textwrap import indent
 from urllib import response
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-# from MuzeSite.settings import MAX_SHIFTERS_MONTHSHIFT
 from django.contrib.auth.decorators import login_required, permission_required
 from leden.models import Lid
-from shiften.models import Shift, Shiftlijst
+from shiften.functions import create_month_shiftlist
+from shiften.models import Shift, Shiftlijst, Template
 from django.utils.translation import gettext as _
 from django.utils import formats
 from django.contrib.auth.models import User
@@ -154,7 +155,7 @@ def ajax_shifts(request, list_id):
 @permission_required('shiften.view_shiftlijst')
 def ajax_shift_list(request):
     shiftlijsten = []
-    for shiftlijst in  Shiftlijst.objects.all():
+    for shiftlijst in Shiftlijst.objects.all():
        shiftlijsten.append({
             "date": shiftlijst.date,
             "type": _(shiftlijst.type),
@@ -171,27 +172,58 @@ def ajax_shift_list(request):
         "shiftlists": shiftlijsten,
         "user": user_dict,
     }
-    if request.user.has_perm("shiften.change_shift"):
+    if request.user.has_perm("shiften.add_shiftlijst"):
         dict["types"] = Shiftlijst.type.field.choices
+        dict["templates"] = []
+        for template in Template.objects.all():
+            dict["templates"].append({
+                'name': template.name,
+                'id': template.id,
+            })
     return JsonResponse(dict)   
 
 @login_required
 @permission_required('shiften.add_shiftlijst')
 def create_shiftlist(request):
     if request.method == "POST":
-        shiftlist_info = json.loads(request.body)
-        shiftlist = Shiftlijst.objects.create(
-                                    date = date.fromisoformat(shiftlist_info["date"]),
-                                    type = shiftlist_info["type"],
-                                    name = shiftlist_info["name"],)
-        shiftlist_info = {
-           "id": shiftlist.id,
-           "type": _(shiftlist.type),
-           "string": str(shiftlist),
-        }
+        data = json.loads(request.body)
+        action = data.get("action")
+        match action:
+            case 'create_shiftlist':
+                shiftlist_info = data.get("actionInfo")
+                print(shiftlist_info)
+                shiftlist = Shiftlijst.objects.create(
+                                            date = date.fromisoformat(shiftlist_info["date"]),
+                                            type = shiftlist_info["type"],
+                                            name = shiftlist_info["name"],)
+                shiftlist_info = {
+                "id": shiftlist.id,
+                "type": _(shiftlist.type),
+                "string": str(shiftlist),
+                }
 
-        status_msg = "succes"
-        status = 200
+                status_msg = "succes"
+                status = 200
+            case 'create_shiftlist_template':
+                info = data.get("actionInfo")
+                template_id = info.get("id")
+                shiftlist_date = info.get("vars")
+                template = Template.objects.get(id=template_id)
+                shiftlist = create_month_shiftlist(template, shiftlist_date)
+
+                shiftlist_info = {
+                "date": shiftlist.date,
+                "id": shiftlist.id,
+                "type": _(shiftlist.type),
+                "string": str(shiftlist),
+                "name": shiftlist.name
+                }
+                status_msg = "succes"
+                status = 200
+
+            case _:
+                status_msg = f"{action}: this action does not exits"
+                status = 400 # Bad Request
         return JsonResponse({"status": status_msg, "shiftlist_info": shiftlist_info}, status = status)
 
 @login_required
@@ -220,6 +252,7 @@ def manage_shiftlist(request):
                 if request.user.has_perm("shiften.delete_shift"):
                     shiftlijst.delete()
                     # mesage dat shift gone is
+                    messages.success(request, _("Shiftlist is succesfully deleted"))
                     status_msg = "succes"
                     status = 200
                     # return redirect('shiftlist_home')
@@ -228,3 +261,37 @@ def manage_shiftlist(request):
                 status = 400 # Bad Request 
         response["status"] = status_msg
         return JsonResponse(response, status = status)
+
+        
+        
+@login_required    
+@permission_required('shiften.view_template')
+def templates(request):
+    templates = Template.objects.all()
+    context = {
+        'templates': templates,
+    }
+    return render(request, 'shiften/templates.html', context= context)
+
+@login_required    
+@permission_required('shiften.view_template')
+def template(request, template_id):
+    template = Template.objects.get(id=template_id)
+    template_json = json.dumps(template.template, indent=2)
+    print(template_json)
+    context = {
+       'template': template,
+       'json': template_json,
+    }
+
+    return render(request, 'shiften/template.html', context= context)
+
+@login_required    
+@permission_required('shiften.change_template')
+def template_edit(request, template_id):
+    return
+
+@login_required    
+@permission_required('shiften.add_template')
+def add_template(request):
+    return

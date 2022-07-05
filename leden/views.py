@@ -2,6 +2,7 @@ from datetime import date
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.urls import reverse_lazy
 
 from shiften.models import Shift
 from .models import Lid
@@ -9,6 +10,8 @@ from .forms import LidUpdateForm, UserSignUpForm, LidSignUpForm, UserUpdateForm
 from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required , permission_required
 from django.contrib.auth.models import Group
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 
 def home(request):
     return render(request, 'leden/home.html')

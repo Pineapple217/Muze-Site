@@ -34,3 +34,9 @@ class Shift(models.Model):
     def __str__(self):
        return f'{_(formats.date_format(self.date, format="l j F Y"))} | {self.start.isoformat(timespec = "minutes")} - {self.end.isoformat(timespec = "minutes")}'
     
+class Template(models.Model):
+    name = models.CharField(max_length= 200)
+    template = models.JSONField()
+
+    def __str__(self):
+        return self.name

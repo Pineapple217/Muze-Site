@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from . import views
 
 urlpatterns = [
@@ -11,4 +11,10 @@ urlpatterns = [
    path('manage_shiftlist', views.manage_shiftlist),
    path('create_shift', views.create_shift),
    path('create_shiftlist', views.create_shiftlist),
+   path('templates/', include([
+      path('', views.templates),
+      path('<int:template_id>', views.template),
+      path('<int:template_id>/edit', views.template_edit),
+   ])),
 ]
+

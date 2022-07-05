@@ -27,21 +27,22 @@
     margin-right: 1.25rem;
 }
 
-.create-shiftlist-popup h1 {
+dialog h1 {
     margin-top: 0;
 }
 
 dialog .options {
     margin-bottom: 0;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: max-content max-content;
     row-gap: 1rem;
     column-gap: 1rem;
     margin-bottom: 1rem;
 }
 
-.create-shiftlist-popup .options label {
+dialog .options label {
     font-size: 1rem;
+    /* width: max-content; */
 }
 
 .create-shiftlist-popup .options input {
@@ -49,9 +50,18 @@ dialog .options {
     width: 8em;
 }
 
+.create-shiftlist-template-popup .options input {
+    font-size: 1rem;
+}
+
 .create-shiftlist-popup .options select {
     font-size: 1rem;
     padding: 2px;
     width: 8rem;
+}
 
+.create-shiftlist-template-popup .options select {
+    font-size: 1rem;
+    padding: 2px;
+    /* width: 8rem; */
 }

@@ -1,5 +1,6 @@
 Main
 
+- change en reset passwoord
 - templates voor aanmaken van maandshifts en zo
 - popup checks of als ingevult is en geldig is
 - Sociale media integratie https://pypi.org/project/django-instagram/
@@ -11,6 +12,7 @@ Problemen voor later
 
 - apche voor deploy met docker en zo
 - image beveiliging
+- mail
 
 Opmaak
 

@@ -1,11 +1,11 @@
 {% load static %}
-{% comment %} <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}"> {% endcomment %}
+{% comment %} <link rel="shortcut icon" type="image/png" href="{% static 'unknown-5-1.png' %}"/> {% endcomment %}
+<link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>De Muze</title>
 <body>
-    
+   {% comment %} <p>{% static 'favicon.ico' %}</p>  {% endcomment %}
 <script src="{% static '/scripts/main.js' %}"></script>
 {% include 'navbar.html'%}
 <div class="content">

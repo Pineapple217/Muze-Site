@@ -521,7 +521,7 @@ async function deleteShiftlist() {
   };
   const response = await manageShiftlistRequest(actionInfo, "delete_shiftlist");
   if (response.body.status == "succes") {
-    // window.location.href = "/shiften";
+    window.location.href = "/shiften";
   } else {
     alert(`Error: ${response.body.status}`);
   }
