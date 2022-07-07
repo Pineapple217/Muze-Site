@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
 from leden.models import Lid
+from shiften.forms import TemplateForm
 from shiften.functions import create_month_shiftlist
 from shiften.models import Shift, Shiftlijst, Template
 from django.utils.translation import gettext as _
@@ -277,11 +278,8 @@ def templates(request):
 @permission_required('shiften.view_template')
 def template(request, template_id):
     template = Template.objects.get(id=template_id)
-    template_json = json.dumps(template.template, indent=2)
-    print(template_json)
     context = {
        'template': template,
-       'json': template_json,
     }
 
     return render(request, 'shiften/template.html', context= context)
@@ -289,9 +287,31 @@ def template(request, template_id):
 @login_required    
 @permission_required('shiften.change_template')
 def template_edit(request, template_id):
-    return
+    template = Template.objects.get(id=template_id)
+    if request.method == 'POST':
+        template_form = TemplateForm(request.POST, instance=template)
+        if template_form.is_valid():
+            template_form.save()
+            messages.success(request, _('Template updated successfully'))
+            url = "/".join(request.path.split("/")[:-1])
+            return redirect(url)
+    else:
+        template_form = TemplateForm(instance = template)
+
+    
+    return render(request, "shiften/template_edit.html", {'form': template_form})
 
 @login_required    
 @permission_required('shiften.add_template')
 def add_template(request):
-    return
+    if request.method == 'POST':
+        template_form = TemplateForm(request.POST)
+        if template_form.is_valid():
+            template_form.save()
+            messages.success(request, _('Template updated successfully'))
+            return redirect(to='templates')
+    else:
+        template_form = TemplateForm()
+
+    
+    return render(request, "shiften/template_edit.html", {'form': template_form})

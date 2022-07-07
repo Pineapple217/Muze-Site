@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load filters %}
 <h1>{{ template.name }}</h1>
-<a href="{{ template.id }}/edit">edit</a>
-<pre>{{ json }}</pre>
+<a href="{{ template.id }}/edit">Edit</a>
+<pre>{{ template.template | pretty_json:2 }}</pre>
 {% endblock %}

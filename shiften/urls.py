@@ -12,9 +12,10 @@ urlpatterns = [
    path('create_shift', views.create_shift),
    path('create_shiftlist', views.create_shiftlist),
    path('templates/', include([
-      path('', views.templates),
+      path('', views.templates, name='templates'),
       path('<int:template_id>', views.template),
       path('<int:template_id>/edit', views.template_edit),
+      path('add', views.add_template),
    ])),
 ]
 

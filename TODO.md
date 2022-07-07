@@ -1,5 +1,6 @@
 Main
 
+- forms is een beetje een rommel die moet worden opgeruimt
 - change en reset passwoord
 - templates voor aanmaken van maandshifts en zo
 - popup checks of als ingevult is en geldig is
@@ -22,6 +23,7 @@ Opmaak
 
 Lage prior
 
+- 2faq
 - registratie email confurm
 - Te lang nie geschift => mail
 - Ons bestuur overzicht
