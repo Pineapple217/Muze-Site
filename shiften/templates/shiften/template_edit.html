@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load filters %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'shiften/css/templates_edit.css' %}">
 <h1>Edit template</h1>
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}

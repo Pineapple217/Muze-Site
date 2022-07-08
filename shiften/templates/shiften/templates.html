@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'shiften/css/templates.css' %}">
+<div class="head">
+    <h1>Templates <span class="add-template-btn" onclick="location.href=location.href + 'add'">&plus;</span></h1>
+</div>
 {% for template in templates %}
     <a href="./{{ template.id }}">{{ template.name }}</a>
 {% endfor %}

@@ -2,10 +2,7 @@ Main
 
 - forms is een beetje een rommel die moet worden opgeruimt
 - change en reset passwoord
-- templates voor aanmaken van maandshifts en zo
-- popup checks of als ingevult is en geldig is
 - Sociale media integratie https://pypi.org/project/django-instagram/
-- registratie conpled mesage
 - een check of shift gedaan is geweest
 - shift onbeschbaare datums instellen als lid
 
@@ -23,7 +20,8 @@ Opmaak
 
 Lage prior
 
-- 2faq
+- 2fa
+- shiften bulk edit
 - registratie email confurm
 - Te lang nie geschift => mail
 - Ons bestuur overzicht

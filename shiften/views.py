@@ -1,7 +1,5 @@
-from datetime import date
+import datetime
 import json
-from textwrap import indent
-from urllib import response
 from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -192,9 +190,10 @@ def create_shiftlist(request):
         match action:
             case 'create_shiftlist':
                 shiftlist_info = data.get("actionInfo")
-                print(shiftlist_info)
+                date = datetime.date.fromisoformat(shiftlist_info["date"])
+                date = datetime.date(date.year, date.month, 1)
                 shiftlist = Shiftlijst.objects.create(
-                                            date = date.fromisoformat(shiftlist_info["date"]),
+                                            date = date,
                                             type = shiftlist_info["type"],
                                             name = shiftlist_info["name"],)
                 shiftlist_info = {
@@ -240,7 +239,7 @@ def manage_shiftlist(request):
             case "safe_shiftlist":
                 if request.user.has_perm("shiften.change_shiftlijst"):
                     shiftlijst.name = actionInfo.get("name")
-                    shiftlijst.date = date.fromisoformat(actionInfo.get("date"))
+                    shiftlijst.date = datetime.date.fromisoformat(actionInfo.get("date"))
                     shiftlijst.type = actionInfo.get("type")
                     shiftlijst.save()
                     response["shiftlist_info"] = {

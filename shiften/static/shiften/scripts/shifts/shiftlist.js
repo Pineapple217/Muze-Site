@@ -246,7 +246,11 @@ function createListEditPopup() {
   const safe = document.createElement("button");
   safe.innerText = gettext("Safe");
   safe.onclick = () => {
-    if (date.value != "") safeShiftlist(name.value, date.value, type.value);
+    if (date.value) {
+      if (type.value == "event" ? name.value : true) {
+        safeShiftlist(name.value, date.value, type.value);
+      }
+    }
   };
   bottom.appendChild(safe);
   const close = document.createElement("button");
@@ -346,24 +350,6 @@ function showEditPopup(shift) {
   head.classList.add("header");
   const title = document.createElement("h1");
   title.innerText = `${shift.date} ${shift.start} - ${shift.end}`;
-  // title.ondblclick = () => {
-  //   title.classList.add("hidden");
-  //   const date = document.createElement("input");
-  //   date.type = "date";
-  //   // date.value = shift.date;
-  //   const start = document.createElement("input");
-  //   start.type = "time";
-  //   const end = document.createElement("input");
-  //   end.type = "time";
-  //   const max = document.createElement("input");
-
-  //   const oldEnd = head.lastChild;
-  //   head.replaceChildren();
-  //   head.appendChild(date);
-  //   head.appendChild(start);
-  //   head.appendChild(end);
-  //   head.appendChild(oldEnd);
-  // };
   head.appendChild(title);
   // delete
   if (user.perms.shift_del) {
