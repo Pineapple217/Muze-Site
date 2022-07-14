@@ -1,7 +1,6 @@
-/.projectile
-/db.sqlite3
-/users
-/.prettierignore
-/.env
+django_app/db.sqlite3
+django_app/users
+django_app/.prettierignore
+.env
 /venv
-/uploads
+django_app/uploads

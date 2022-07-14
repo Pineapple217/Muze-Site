@@ -87,7 +87,7 @@ def create_shift(request):
     if request.method == "POST":
         shift_info = json.loads(request.body)
         shift = Shift.objects.create(
-                            date = date.fromisoformat(shift_info["date"]),
+                            date = datetime.date.fromisoformat(shift_info["date"]),
                             start =  shift_info["start"],
                             end = shift_info["end"],
                             max_shifters = shift_info["max"],

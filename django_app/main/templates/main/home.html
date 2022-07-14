@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% block content%}
+{% extends 'base.html' %}
+{% block content%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/css/home.css' %}">
 <button id="color-mode-btn">Toggle colormode</button>
 <iframe
   src="https://discord.com/widget?id=539096504237817866&theme=dark"
@@ -8,14 +11,6 @@
   frameborder="0"
   sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
 ></iframe>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <br>
 <br>
 <p>Sint laborum enim qui mollit sint do aute aute elit nostrud et mollit laboris dolor. Consectetur consequat est et non consequat ad consequat labore reprehenderit commodo ipsum irure. Reprehenderit cillum magna aliqua qui esse adipisicing adipisicing ullamco eu anim elit esse. Magna laboris veniam non amet veniam. Est adipisicing aliqua irure culpa magna pariatur. Nostrud amet laborum aute mollit et minim nostrud eu aute esse. Non nostrud cupidatat nostrud adipisicing minim incididunt consequat ea occaecat exercitation non ullamco deserunt est.
@@ -37,4 +32,6 @@ Laborum laborum cillum velit duis nisi aliquip dolore ad velit dolore elit dolor
 Amet veniam dolore ad commodo irure. Nostrud id ut sunt amet occaecat eiusmod id irure ullamco quis deserunt sunt. Veniam laborum laborum fugiat aliquip et dolor magna laboris eiusmod deserunt. Ea quis aliquip dolor cillum aliquip nisi nisi adipisicing quis excepteur.
 
 Laboris sunt fugiat deserunt do laboris est labore id incididunt est adipisicing ullamco. Consectetur non cillum occaecat occaecat. Voluptate quis eiusmod excepteur exercitation fugiat eiusmod deserunt fugiat excepteur ut laborum consectetur. Magna id excepteur cillum laboris.</p>
+
+<script src="{% static 'main/scripts/instagram/main.js' %}" type="module"></script>
 {% endblock %}
