@@ -8,6 +8,9 @@ COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy alle files van het Django project
-COPY . . 
+COPY ./django_app /app
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+WORKDIR /app
+
+COPY ./entrypoint.sh /
+ENTRYPOINT ["sh", "/entrypoint.sh"]
