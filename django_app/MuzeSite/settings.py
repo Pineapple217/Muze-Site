@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from distutils.debug import DEBUG
 from pathlib import Path
+import logging.config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,7 +35,7 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
-
+CSRF_TRUSTED_ORIGINS = ['http://kaz.sgr20.be','https://*.127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
@@ -166,5 +167,36 @@ MEDIA_URL = 'media/'
 # EMAIL_USE_TLS = False
 # EMAIL_USE_SSL = False
 
+
+
+# Logging Configuration
+
+# Clear prev config
+LOGGING_CONFIG = None
+
+# Get loglevel from env
+LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': LOGLEVEL,
+            'handlers': ['console',],
+        },
+    },
+})
 #==========custom settings==============
 MAX_SHIFTERS_MONTHSHIFT = 3

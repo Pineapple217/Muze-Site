@@ -1,7 +1,5 @@
 FROM python:3.10-alpine
 
-WORKDIR /app
-
 # installeert alle pip pakages
 RUN pip install --upgrade pip
 COPY ./requirements.txt .

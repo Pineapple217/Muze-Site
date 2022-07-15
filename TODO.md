@@ -1,5 +1,7 @@
 Main
 
+- docker compose datebase and upload doen en zo
+- dingen zoals shiftlijst JSON ding geeft een error als er geen zijn
 - forms is een beetje een rommel die moet worden opgeruimt
 - change en reset passwoord
 - Sociale media integratie https://pypi.org/project/django-instagram/
