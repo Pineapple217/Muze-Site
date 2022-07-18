@@ -1,9 +1,8 @@
-from pyexpat import model
 from django import forms
 from .models import Lid
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.forms import ClearableFileInput, ModelForm
 from django.forms.widgets import DateInput 
 from django.utils.translation import gettext as _
 class UserSignUpForm(UserCreationForm):
@@ -58,7 +57,13 @@ class LidUpdateForm(ModelForm):
             'discord_id': _('Discord id'),
             'media': _('Social media'),
         }
+
         widgets = {
                 'date_of_birth': DateInput(attrs={'type': 'date'},
-                                           format=('%Y-%m-%d'))
-            }
+                                           format=('%Y-%m-%d')),
+                'profile_picture': ClearableFileInput(attrs={'class': 'photo-upload'})
+        }
+
+        help_texts = {
+            'profile_picture': _('image size must be under 2MB.'),
+        }

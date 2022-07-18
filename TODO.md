@@ -1,8 +1,8 @@
 Main
 
-- docker compose datebase and upload doen en zo
-- TESTEN to grote profiel foto geeft problemen
-- JSON bekijken als rechten gewijgrt zijn
+- meer functies in edit shift
+- leden validatie ding
+- discord id zien mensen niet
 - forms is een beetje een rommel die moet worden opgeruimt
 - change en reset passwoord
 - Sociale media integratie https://pypi.org/project/django-instagram/
@@ -23,6 +23,8 @@ Opmaak
 
 Lage prior
 
+- shift leaderbord
+- deftige manier voor fotos te uploaden op client te verwerken
 - in browser image cutter
 - 2fa
 - shiften bulk edit
@@ -38,5 +40,4 @@ Domme shift
 
 Funnys
 
-- shift leaderbord
 - draaiman
