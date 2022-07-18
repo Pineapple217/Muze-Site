@@ -1,16 +1,17 @@
 Main
 
 - docker compose datebase and upload doen en zo
-- dingen zoals shiftlijst JSON ding geeft een error als er geen zijn
+- TESTEN to grote profiel foto geeft problemen
+- JSON bekijken als rechten gewijgrt zijn
 - forms is een beetje een rommel die moet worden opgeruimt
 - change en reset passwoord
 - Sociale media integratie https://pypi.org/project/django-instagram/
+- shiftlijst actief of niet
 - een check of shift gedaan is geweest
 - shift onbeschbaare datums instellen als lid
 
 Problemen voor later
 
-- apche voor deploy met docker en zo
 - image beveiliging
 - mail
 
@@ -22,6 +23,7 @@ Opmaak
 
 Lage prior
 
+- in browser image cutter
 - 2fa
 - shiften bulk edit
 - registratie email confurm

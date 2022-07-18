@@ -14,24 +14,25 @@ from distutils.debug import DEBUG
 from pathlib import Path
 import logging.config
 import os
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+DEPLOY = os.getenv('DEPLOY')
+# DEPLOY = False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # die hier in deze file staat is niet meer secret en is alleen voor development
-#SECRET_KEY = 'django-insecure-)(6i&+lg77#345nu(y4+0i9!gaam2w^ni3r2p-w&_b39b#r_vm'
+if not DEPLOY:
+    SECRET_KEY = 'django-insecure-)(6i&+lg77#345nu(y4+0i9!gaam2w^ni3r2p-w&_b39b#r_vm'
+    DEBUG = os.getenv('DEBUG')
+else:
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    DEBUG = True
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -134,10 +135,7 @@ FORMAT_MODULE_PATH = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-# dev
-#STATIC_URL = 'static/'
 
-#deploy
 STATIC_ROOT ='/static/'
 STATIC_URL = '/static/'
 
@@ -156,7 +154,7 @@ LOGIN_URL = '/leden/login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = 'media/'
 
 

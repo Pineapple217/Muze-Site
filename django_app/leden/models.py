@@ -1,15 +1,18 @@
-from distutils.command.upload import upload
-from  PIL import Image
+from wsgiref import validate
+from PIL import Image
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
+
+def file_size(value): # add this to some file where you can import it from
+    limit = 2 * 1024 * 1024
+    if value.size > limit:
+        raise ValidationError(_('File too large. Size should not exceed 2 MiB.'))
 
 class Lid(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = models.ImageField(null=True, blank=True, upload_to = 'images/profile/')
+    profile_picture = models.ImageField(null=True, blank=True, upload_to = 'images/profile/', validators=[file_size])
 
     date_of_birth = models.DateField()
     tel = models.CharField(max_length=50)
