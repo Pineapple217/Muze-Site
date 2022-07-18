@@ -1,4 +1,4 @@
-django_app/db.sqlite3
+django_app/db
 django_app/users
 django_app/.prettierignore
 .env
