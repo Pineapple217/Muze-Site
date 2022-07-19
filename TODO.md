@@ -1,6 +1,5 @@
 Main
 
-- meer functies in edit shift
 - leden validatie ding
 - discord id zien mensen niet
 - forms is een beetje een rommel die moet worden opgeruimt

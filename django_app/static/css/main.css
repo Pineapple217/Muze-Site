@@ -84,7 +84,7 @@ dialog::backdrop {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .messages {

@@ -62,6 +62,8 @@ def manage_shift(request):
         actionInfo = data.get("actionInfo")
         id = actionInfo.get("shiftId")
         shift = Shift.objects.get(id=id)
+
+        dict = {}
         match action:
             case "safe_shifters":
                 if request.user.has_perm("shiften.change_shift"):
@@ -69,17 +71,30 @@ def manage_shift(request):
                     shift.shifters.clear();
                     for id in shifters_ids:
                         shift.shifters.add(User.objects.get(id=id).lid)
-                    status_msg = "succes"
+                    dict["status"] = "succes"
+                    status = 200
+            case "safe_shift":
+                if request.user.has_perm("shiften.change_shift"):
+                    shift.date = datetime.date.fromisoformat(actionInfo["date"])
+                    shift.start = datetime.time.fromisoformat(actionInfo["start"])
+                    shift.end = datetime.time.fromisoformat(actionInfo["end"])
+                    shift.max_shifters = int(actionInfo["max"])
+                    shift.save()
+                    print(shift)
+                    dict["shift"] = {
+                        "string": str(shift).split(" | ")[0]
+                    }
+                    dict["status"] = "succes"
                     status = 200
             case "delete_shift":
                 if request.user.has_perm("shiften.delete_shift"):
                     shift.delete()
-                    status_msg = "succes"
+                    dict["status"] = "succes"
                     status = 200
             case _:
                 status_msg = f"{action}: this action does not exits"
                 status = 400 # Bad Request 
-        return JsonResponse({"status": status_msg}, status = status)
+        return JsonResponse(dict, status = status)
 
 @login_required() 
 @permission_required('shiften.add_shift')
@@ -112,12 +127,13 @@ def ajax_shifts(request, list_id):
             shifters.append({"name": u.user.first_name + " " + u.user.last_name,
                              "id": u.user.id})
         shifts_dict.append({
-        "date": _(formats.date_format(shift.date, format="l j F")),
+        "date": shift.date,
         "start":  shift.start.isoformat(timespec = "minutes"),
         "end":  shift.end.isoformat(timespec = "minutes"),
         "shifters": shifters,
         "id": shift.id,
         "max": shift.max_shifters,
+        "string": str(shift).split(" | ")[0],
         })
     list_dict = {
        "date": list.date,

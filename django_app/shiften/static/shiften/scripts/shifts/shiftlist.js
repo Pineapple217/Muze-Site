@@ -1,4 +1,3 @@
-import { Shift } from "./shift.js";
 import {
   request,
   manageShiftRequest,
@@ -18,23 +17,19 @@ export async function main() {
   const json = await getData("/ajax");
   list = json.list;
   user = json.user;
-  shifts = maakShifts(json.shifts);
+  shifts = json.shifts;
   leden = json.leden;
   types = json.types;
 
   shiftsToHTML();
 }
 
-function maakShifts(shifts) {
-  return shifts.map((shift) => {
-    return new Shift(
-      shift.date,
-      shift.start,
-      shift.end,
-      shift.shifters,
-      shift.id,
-      shift.max
-    );
+function sortShifts() {
+  shifts = shifts.sort((a, b) => {
+    const aD = a.date.replace("-", "") + a.start.replace(":", "");
+    const bD = b.date.replace("-", "") + b.start.replace(":", "");
+    if (aD > bD) return 1;
+    if (aD < bD) return -1;
   });
 }
 
@@ -54,7 +49,7 @@ function shiftsToHTML() {
   shifts.forEach((shift) => {
     if (shiftdate != shift.date) {
       const h3 = document.createElement("h3");
-      h3.innerText = `${shift.date}`;
+      h3.innerText = `${shift.string}`;
       shiftList.appendChild(h3);
       day = document.createElement("div");
       day.classList.add("day");
@@ -79,12 +74,22 @@ function shiftsToHTML() {
     shiftDiv.appendChild(h4);
     const ul = document.createElement("ul");
     ul.classList.add("shifters");
-    shift.shifters.forEach((s) => {
-      let li = document.createElement("li");
-      li.innerText = s.name;
-      if (s.id == user.id) li.classList.add("loggedshifter");
+    // shift.shifters.forEach((s) => {
+    //   let li = document.createElement("li");
+    //   li.innerText = s.name;
+    //   if (s.id == user.id) li.classList.add("loggedshifter");
+    //   ul.appendChild(li);
+    // });
+    for (let i = 0; i < shift.max; i++) {
+      const li = document.createElement("li");
+      if (shift.shifters[i]) {
+        li.innerText = shift.shifters[i].name;
+      } else {
+        li.innerHTML = "&#8203";
+        li.classList.add("empty");
+      }
       ul.appendChild(li);
-    });
+    }
     shiftDiv.appendChild(ul);
     const buttonDiv = document.createElement("div");
     buttonDiv.classList.add("shift-button-status");
@@ -349,7 +354,75 @@ function showEditPopup(shift) {
   const head = document.createElement("div");
   head.classList.add("header");
   const title = document.createElement("h1");
-  title.innerText = `${shift.date} ${shift.start} - ${shift.end}`;
+  title.innerText = `${shift.string.slice(0, -5)} ${shift.start} - ${
+    shift.end
+  }`;
+  // opties
+  const opties = document.createElement("div");
+  opties.classList.add("hidden");
+  opties.classList.add("options");
+  // date
+  const date = document.createElement("input");
+  const dateLbl = document.createElement("label");
+  dateLbl.innerText = gettext("Date");
+  dateLbl.htmlFor = "date";
+  date.type = "date";
+  date.id = "date";
+  date.value = shift.date;
+  opties.appendChild(dateLbl);
+  opties.appendChild(date);
+  //start
+  const start = document.createElement("input");
+  const startLbl = document.createElement("label");
+  startLbl.innerText = gettext("Start");
+  startLbl.htmlFor = "start";
+  start.type = "time";
+  start.id = "start";
+  start.value = shift.start;
+  opties.appendChild(startLbl);
+  opties.appendChild(start);
+  //end
+  const end = document.createElement("input");
+  const endLbl = document.createElement("label");
+  endLbl.innerText = gettext("End");
+  endLbl.htmlFor = "end";
+  end.type = "time";
+  end.id = "end";
+  end.value = shift.end;
+  opties.appendChild(endLbl);
+  opties.appendChild(end);
+  // max
+  const max = document.createElement("input");
+  const maxLbl = document.createElement("label");
+  maxLbl.innerText = gettext("Max shifters");
+  maxLbl.htmlFor = "max";
+  max.type = "number";
+  max.id = "max";
+  max.min = 0;
+  max.max = 99;
+  max.value = shift.max;
+  opties.appendChild(maxLbl);
+  opties.appendChild(max);
+
+  const saveMode = document.createElement("input");
+  saveMode.type = "hidden";
+  saveMode.value = "shifters";
+  popup.appendChild(saveMode);
+  const span = document.createElement("span");
+  span.innerText = " ⚙";
+  span.onclick = () => {
+    if (ul.classList.contains("hidden")) {
+      ul.classList.remove("hidden");
+      opties.classList.add("hidden");
+      saveMode.value = "shifters";
+    } else {
+      ul.classList.add("hidden");
+      opties.classList.remove("hidden");
+      saveMode.value = "settings";
+    }
+  };
+
+  title.appendChild(span);
   head.appendChild(title);
   // delete
   if (user.perms.shift_del) {
@@ -385,6 +458,7 @@ function showEditPopup(shift) {
     ul.appendChild(liC);
   }
   popup.appendChild(ul);
+  popup.appendChild(opties);
   // bottom buttons
   const bottom = document.createElement("div");
   bottom.classList.add("bottom-btns");
@@ -392,7 +466,9 @@ function showEditPopup(shift) {
   const safe = document.createElement("button");
   safe.innerText = gettext("Safe");
   safe.onclick = () => {
-    safeShift(shift, ul);
+    if (saveMode.value == "shifters") safeShifters(shift, ul);
+    else if (saveMode.value == "settings")
+      safeShift(shift, date.value, start.value, end.value, max.value);
   };
   bottom.appendChild(safe);
   // close button
@@ -455,7 +531,7 @@ async function createShift(date, start, end, max) {
   }
 }
 
-async function safeShift(shift, ul) {
+async function safeShifters(shift, ul) {
   shift.shifters = [];
   [...ul.children].forEach((li) => {
     const select = li.firstChild;
@@ -482,6 +558,29 @@ async function safeShift(shift, ul) {
   const response = await manageShiftRequest(actionInfo, "safe_shifters");
   if (response.body.status == "succes") {
     shift.shifters = newShifters;
+    shiftsToHTML();
+  } else {
+    alert(`Error: ${response.body.status}`);
+  }
+}
+
+async function safeShift(shift, date, start, end, max) {
+  const actionInfo = {
+    shiftId: shift.id,
+    date: date,
+    start: start,
+    end: end,
+    max: max,
+  };
+  console.log(shift);
+  const response = await manageShiftRequest(actionInfo, "safe_shift");
+  if (response.body.status == "succes") {
+    shift.date = date;
+    shift.start = start;
+    shift.end = end;
+    shift.max = max;
+    shift.string = response.body.shift.string;
+    sortShifts();
     shiftsToHTML();
   } else {
     alert(`Error: ${response.body.status}`);
