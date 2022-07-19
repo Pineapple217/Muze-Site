@@ -28,7 +28,7 @@ class Lid(models.Model):
     zipcode = models.CharField(max_length=4)
     residence = models.CharField(max_length=200)
 
-    discord_id = models.PositiveBigIntegerField()
+    discord_id = models.PositiveBigIntegerField(null=True, blank=True)
     media = models.BooleanField()
 
     def __str__(self):

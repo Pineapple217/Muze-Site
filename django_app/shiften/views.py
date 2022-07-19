@@ -103,13 +103,14 @@ def create_shift(request):
         shift_info = json.loads(request.body)
         shift = Shift.objects.create(
                             date = datetime.date.fromisoformat(shift_info["date"]),
-                            start =  shift_info["start"],
-                            end = shift_info["end"],
+                            start =  datetime.time.fromisoformat(shift_info["start"]),
+                            end = datetime.time.fromisoformat(shift_info["end"]),
                             max_shifters = shift_info["max"],
                             shift_list = Shiftlijst.objects.get(id = shift_info["shiftList"]),)
         shift_info = {
             "id": shift.id,
             "date": _(formats.date_format(shift.date, format="l j F")),
+            "string": str(shift).split(" | ")[0]
         }
         status_msg = "succes"
         status = 200
@@ -207,7 +208,8 @@ def create_shiftlist(request):
             case 'create_shiftlist':
                 shiftlist_info = data.get("actionInfo")
                 date = datetime.date.fromisoformat(shiftlist_info["date"])
-                date = datetime.date(date.year, date.month, 1)
+                if shiftlist_info["type"] == "month":
+                    date = datetime.date(date.year, date.month, 1)
                 shiftlist = Shiftlijst.objects.create(
                                             date = date,
                                             type = shiftlist_info["type"],
@@ -292,7 +294,7 @@ def templates(request):
 @login_required    
 @permission_required('shiften.view_template')
 def template(request, template_id):
-    template = Template.objects.get(id=template_id)
+    template = get_object_or_404(Template, id=template_id)
     context = {
        'template': template,
     }
@@ -302,7 +304,7 @@ def template(request, template_id):
 @login_required    
 @permission_required('shiften.change_template')
 def template_edit(request, template_id):
-    template = Template.objects.get(id=template_id)
+    template = get_object_or_404(Template, id=template_id)
     if request.method == 'POST':
         template_form = TemplateForm(request.POST, instance=template)
         if template_form.is_valid():
@@ -314,7 +316,7 @@ def template_edit(request, template_id):
         template_form = TemplateForm(instance = template)
 
     
-    return render(request, "shiften/template_edit.html", {'form': template_form})
+    return render(request, "shiften/template_edit.html", {'forms': template_form})
 
 @login_required    
 @permission_required('shiften.add_template')
@@ -329,4 +331,4 @@ def add_template(request):
         template_form = TemplateForm()
 
     
-    return render(request, "shiften/template_edit.html", {'form': template_form})
+    return render(request, "shiften/template_create.html", {'forms': template_form})

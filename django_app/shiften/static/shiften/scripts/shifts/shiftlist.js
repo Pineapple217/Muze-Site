@@ -515,16 +515,15 @@ async function createShift(date, start, end, max) {
   };
   const response = await createShiftRequest(shiftInfo);
   if (response.body.status == "succes") {
-    shifts.push(
-      new Shift(
-        response.body.shift_info.date,
-        start,
-        end,
-        [],
-        response.body.shift_info.id,
-        max
-      )
-    );
+    shifts.push({
+      date: response.body.shift_info.date,
+      start: start,
+      end: end,
+      shifters: [],
+      id: response.body.shift_info.id,
+      max: max,
+      string: response.body.shift_info.string,
+    });
     shiftsToHTML();
   } else {
     alert(`Error: ${response.body.status}`);

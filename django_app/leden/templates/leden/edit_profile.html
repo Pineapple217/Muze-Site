@@ -2,7 +2,11 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
-<h1>Edit profile</h1>
-{% include 'form.html' %}
-<script src="{% static 'leden/scripts/fileUpload.js' %}" type="module"></script>
+  <h1>{% trans "Edit profile" %}</h1>
+  <form method="POST" enctype="multipart/form-data">
+    {% include  'form.html'%}
+    <button type="submit">{% trans "Safe" %}</button>
+    <button type="reset">{% trans "Reset" %}</button>
+  </form>
+  <script src="{% static 'leden/scripts/fileUpload.js' %}" type="module"></script>
 {% endblock %}

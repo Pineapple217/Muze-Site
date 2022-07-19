@@ -1,6 +1,4 @@
 {% block content %}
-{% load static %}
-  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for form in forms %}
     {% for field in form %}
@@ -16,8 +14,4 @@
       </p>
     {% endfor %}
     {% endfor %}
-    <button type="submit">Submit</button>
-    <button type="reset">Clear form</button>
-  </form>
-  <script src= "{% static 'leden/scripts/phonenum.js' %}"></script>
 {% endblock %}

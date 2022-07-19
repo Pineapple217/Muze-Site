@@ -4,11 +4,11 @@
 {% load filters %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'shiften/css/templates_edit.css' %}">
-<h1>{% trans "Edit template" %}</h1>
+<h1>{% trans "Create template" %}</h1>
   <form method="POST">
     {% include  'form.html'%}
-    <button type="submit">{% trans "Save" %}</button>
-    <button type="reset">{% trans "Reset" %}</button>
+    <button type="submit">{% trans "Submit" %}</button>
+    <button type="reset">{% trans "Clear" %}</button>
   </form>
 <script src="{% static 'shiften/scripts/editTemplate.js' %}" type="module"></script>
 {% endblock %}

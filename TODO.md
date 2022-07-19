@@ -1,5 +1,6 @@
 Main
 
+- delete templates
 - leden validatie ding
 - discord id zien mensen niet
 - forms is een beetje een rommel die moet worden opgeruimt

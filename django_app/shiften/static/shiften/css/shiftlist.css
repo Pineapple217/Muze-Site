@@ -16,14 +16,14 @@
     display: flex;
     gap: 1rem;
     border-style: solid;
-    border-width: 0.3rem;
+    border-width: 0.2rem;
     border-color: var(--primary);
     border-radius: 1.5rem;
     padding: 1.25rem;
     position: relative;
     height: calc(fit-content);
     flex-wrap: wrap;
-    width: max-content;
+    /* width: max-content; */
 }
 
 .shift {
@@ -37,6 +37,7 @@
 
 .shift li {
     margin: 0.5rem 0 0.5rem 0;
+    height: 1.3em;
 }
 
 .shift-button-status {
@@ -51,7 +52,7 @@
     margin-bottom: calc(100% - 1px);
     /* margin-bottom: inherit; */
     border-color: var(--accent);
-    border-style: solid;
+    /* border-style: solid; */
 }
 
 .shift-button-status p {
@@ -193,4 +194,19 @@ dialog .options select {
     100% {
         background-color: var(--body-bg);
     }
+}
+
+.shift li::before {
+    content: "\2611";
+    margin: 0 6px 0 0;
+}
+
+.shift li.empty::before {
+    content: "\2610";
+    /* background: url("http://achim.be/jules/uploads/close.png") no-repeat;
+    width: 1em;
+    height: 1em;
+    display: block;
+    float: left;
+    margin: 0 6px 0 0; */
 }
