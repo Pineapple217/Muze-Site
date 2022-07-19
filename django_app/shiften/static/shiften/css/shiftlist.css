@@ -14,7 +14,7 @@
 
 .day {
     display: flex;
-    gap: 1rem;
+    gap: 3rem;
     border-style: solid;
     border-width: 0.2rem;
     border-color: var(--primary);
@@ -23,15 +23,18 @@
     position: relative;
     height: calc(fit-content);
     flex-wrap: wrap;
-    /* width: max-content; */
+    width: fit-content;
 }
 
 .shift {
-    margin-right: 3rem;
+    display: flex;
+    flex-direction: column;
+    /* margin: 0 auto; */
+    padding: 0 15px;
 }
 
-.shift h4 {
-    margin-top: 0;
+.shift h3 {
+    margin: 0;
     margin-bottom: 0.5rem;
 }
 
@@ -41,7 +44,7 @@
 }
 
 .shift-button-status {
-    /* height: 4rem; */
+    /* height: 4rem; *5
     /* position: absolute; */
     bottom: 0;
 }
@@ -61,7 +64,9 @@
 
 .shifters {
     padding: 0;
+    margin-top: 0;
     list-style-type: none;
+    flex: auto;
 }
 
 .volle-shift {
@@ -81,6 +86,7 @@
 
 .edit-button {
     font-weight: 700;
+    font-size: inherit;
     padding-left: 4px;
     padding-right: 0rem;
     padding-top: 0;
@@ -93,7 +99,7 @@
     margin: 0;
 }
 
-#shiftlist h3 {
+#shiftlist h2 {
     margin-left: 0.5rem;
 }
 

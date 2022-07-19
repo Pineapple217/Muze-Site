@@ -4,7 +4,7 @@
 {% load static %}
 {% block content %}
   <h1>{% trans "Sign up" %}</h1>
-  <form action="POST">
+  <form method="POST">
     {% include  'form.html'%}
 
     <button type="submit">{% trans "Submit" %}</button>

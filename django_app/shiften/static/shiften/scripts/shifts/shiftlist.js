@@ -48,7 +48,7 @@ function shiftsToHTML() {
   let day;
   shifts.forEach((shift) => {
     if (shiftdate != shift.date) {
-      const h3 = document.createElement("h3");
+      const h3 = document.createElement("h2");
       h3.innerText = `${shift.string}`;
       shiftList.appendChild(h3);
       day = document.createElement("div");
@@ -58,7 +58,7 @@ function shiftsToHTML() {
     shiftDiv.classList.add("shift");
     shiftDiv.classList.add("anchor");
     shiftDiv.id = shift.id;
-    const h4 = document.createElement("h4");
+    const h4 = document.createElement("h3");
     h4.innerText = `${shift.start} - ${shift.end}`;
     if (user.perms.shift_change) {
       //Can EDIT

@@ -301,9 +301,11 @@ def template(request, template_id):
 
     return render(request, 'shiften/template.html', context= context)
 
+from django.core.mail import EmailMessage
 @login_required    
 @permission_required('shiften.change_template')
 def template_edit(request, template_id):
+
     template = get_object_or_404(Template, id=template_id)
     if request.method == 'POST':
         template_form = TemplateForm(request.POST, instance=template)
