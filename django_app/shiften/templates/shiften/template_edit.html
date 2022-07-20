@@ -4,7 +4,13 @@
 {% load filters %}
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'shiften/css/templates_edit.css' %}">
-<h1>{% trans "Edit template" %}</h1>
+<script>
+function del() {
+  if (confirm(`{% trans "Are you sure want to delete this template" %}`))
+    window.location.href = 'del';
+}
+</script>
+<h1>{% trans "Edit template" %}<span onclick="del()">delete</span></h1>
   <form method="POST">
     {% include  'form.html'%}
     <button type="submit">{% trans "Save" %}</button>

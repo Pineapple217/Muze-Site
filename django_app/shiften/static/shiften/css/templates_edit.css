@@ -12,3 +12,12 @@ textarea {
     height: calc(100vh - 350px);
     resize: none;
 }
+
+span {
+    font-family: "Material Symbols Outlined";
+    font-size: inherit;
+    vertical-align: bottom;
+    font-weight: 400;
+    line-height: inherit;
+    color: var(--red);
+}

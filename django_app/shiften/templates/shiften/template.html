@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 {% load filters %}
-<h1>{{ template.name }}</h1>
-<a href="{{ template.id }}/edit">Edit</a>
+<link rel="stylesheet" href="{% static 'shiften/css/template.css' %}">
+<h1>{{ template.name }}<a class="edit" href="{{ template.id }}/edit">more_vert</a></h1>
 <pre>{{ template.template | pretty_json:2 }}</pre>
 {% endblock %}

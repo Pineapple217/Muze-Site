@@ -63,13 +63,13 @@ function shiftsToHTML() {
     if (user.perms.shift_change) {
       //Can EDIT
       h4.innerText += " ";
-      const button = document.createElement("button");
-      button.classList.add("edit-button");
-      button.value = shift.id;
-      button.onclick = () => {
+      const edit = document.createElement("span");
+      edit.classList.add("edit-button");
+      edit.value = shift.id;
+      edit.onclick = () => {
         showEditPopup(shift);
       };
-      h4.appendChild(button);
+      h4.appendChild(edit);
     }
     shiftDiv.appendChild(h4);
     const ul = document.createElement("ul");
@@ -85,7 +85,6 @@ function shiftsToHTML() {
       if (shift.shifters[i]) {
         li.innerText = shift.shifters[i].name;
       } else {
-        li.innerHTML = "&#8203";
         li.classList.add("empty");
       }
       ul.appendChild(li);
@@ -409,7 +408,8 @@ function showEditPopup(shift) {
   saveMode.value = "shifters";
   popup.appendChild(saveMode);
   const span = document.createElement("span");
-  span.innerText = " ⚙";
+  span.innerText = "settings";
+  span.classList.add("material-symbols-outlined");
   span.onclick = () => {
     if (ul.classList.contains("hidden")) {
       ul.classList.remove("hidden");

@@ -6,7 +6,10 @@ from django.forms import ClearableFileInput, ModelForm
 from django.forms.widgets import DateInput 
 from django.utils.translation import gettext as _
 class UserSignUpForm(UserCreationForm):
-  
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""  # Removes : as label suffix
+
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 
@@ -17,6 +20,9 @@ class LidSignUpForm(ModelForm):
                            label= _('Phone number'),
                            help_text= _('Format example +32 989 91 23 12.'))
 
+    def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.label_suffix = ""  # Removes : as label suffix
     class Meta:
         model = Lid
         fields = ('tel', 'date_of_birth', 'gender', 'street',
@@ -67,3 +73,5 @@ class LidUpdateForm(ModelForm):
         help_texts = {
             'profile_picture': _('image size must be under 2MB.'),
         }
+    
+        

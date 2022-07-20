@@ -3,10 +3,11 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'shiften/css/templates.css' %}">
 <div class="head">
-    <h1>Templates <span class="add-template-btn" onclick="location.href=location.href + 'add'">&plus;</span></h1>
+    <h1>Templates<span onclick="location.href=location.href + 'add'">add</span></h1>
 </div>
+<ul class='templates'>
 {% for template in templates %}
-    <a href="./{{ template.id }}">{{ template.name }}</a>
+    <li><a href="./{{ template.id }}" class="template">{{ template.name }}</a></li>
 {% endfor %}
-
+</ul>
 {% endblock %}

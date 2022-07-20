@@ -1,9 +1,8 @@
 Main
 
-- delete templates
+- css voor icon knoppen centraler maken
 - leden validatie ding
 - discord id zien mensen niet
-- forms is een beetje een rommel die moet worden opgeruimt
 - change en reset passwoord
 - Sociale media integratie https://pypi.org/project/django-instagram/
 - shiftlijst actief of niet
@@ -13,13 +12,13 @@ Main
 Problemen voor later
 
 - image beveiliging
-- mail
 
 Opmaak
 
 - profiel pagina
 - forms
 - ledenlijst
+- random link en navigatie
 
 Lage prior
 

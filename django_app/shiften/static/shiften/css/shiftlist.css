@@ -15,22 +15,32 @@
 .day {
     display: flex;
     gap: 3rem;
-    border-style: solid;
+    /* border-style: solid;
     border-width: 0.2rem;
     border-color: var(--primary);
-    border-radius: 1.5rem;
+    border-radius: 1.5rem; */
     padding: 1.25rem;
     position: relative;
-    height: calc(fit-content);
+    height: fit-content;
     flex-wrap: wrap;
     width: fit-content;
 }
+
+/* @media only screen and (max-width: 600px) {
+    .day {
+        flex-direction: column;
+    }
+} */
 
 .shift {
     display: flex;
     flex-direction: column;
     /* margin: 0 auto; */
     padding: 0 15px;
+    flex-shrink: 1;
+    flex-basis: content;
+    width: fit-content;
+    border-left: 3px solid var(--primary);
 }
 
 .shift h3 {
@@ -79,20 +89,15 @@
 }
 
 .edit-button::after {
-    /* content: ' \2699'; */
-    content: ' \2807';
-    /* font-size: 1.1em; */
+    content: ' \e5d4';
+    /* content: '\e5d7'; */
 }
 
 .edit-button {
-    font-weight: 700;
+    font-family: "Material Symbols Outlined";
     font-size: inherit;
-    padding-left: 4px;
-    padding-right: 0rem;
-    padding-top: 0;
-    padding-bottom: 0;
-    background-color: var(--body-bg);
-    color: var(--body-color);
+    vertical-align: bottom;
+    line-height: inherit;
 }
 
 .shift-form {
@@ -100,7 +105,8 @@
 }
 
 #shiftlist h2 {
-    margin-left: 0.5rem;
+    /* margin-left: 0.5rem; */
+    margin-bottom: 0;
 }
 
 dialog::backdrop {
@@ -119,6 +125,13 @@ dialog .header>* {
 dialog .header {
     display: flex;
     margin-bottom: 1.25rem;
+}
+
+dialog .header span {
+    margin-left: 0.2em;
+    font-size: inherit;
+    vertical-align: bottom;
+    line-height: inherit;
 }
 
 dialog .delete-btn {
@@ -174,17 +187,12 @@ dialog .options select {
     width: 8rem;
 }
 
-/* * {
+* {
     scroll-behavior: smooth !important;
-} */
-
-.anchor {
-    border: 1px;
-    border-radius: 0.5rem;
-    scroll-margin: 2rem;
 }
 
 .anchor:target {
+    animation-delay: 1000ms;
     animation-name: blink;
     animation-direction: normal;
     animation-duration: 0.7s;
@@ -203,16 +211,15 @@ dialog .options select {
 }
 
 .shift li::before {
-    content: "\2611";
-    margin: 0 6px 0 0;
+    margin: 4px 6px 0 0;
+    padding-top: 6px;
+    content: "check_box";
+    font-family: "Material Symbols Outlined";
+    font-size: inherit;
+    vertical-align: bottom;
+    line-height: inherit;
 }
 
 .shift li.empty::before {
-    content: "\2610";
-    /* background: url("http://achim.be/jules/uploads/close.png") no-repeat;
-    width: 1em;
-    height: 1em;
-    display: block;
-    float: left;
-    margin: 0 6px 0 0; */
+    content: "\e835";
 }

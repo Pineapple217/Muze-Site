@@ -42,13 +42,14 @@ html {
 }
 
 button {
-    background-color: var(--button-primary);
-    border: none;
-    color: var(--button-text);
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 0.4em;
-    padding: 0.6em;
+    background-color: transparent;
+    border-style: none;
+    border-bottom: 2px solid var(--body-color);
+    color: var(--body-color);
+    font-size: 1.1rem;
+    /* font-weight: 500; */
+    /* border-radius: 1em; */
+    padding-bottom: 0.4em;
     transition-duration: 0.15s;
 }
 

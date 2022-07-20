@@ -334,3 +334,12 @@ def add_template(request):
 
     
     return render(request, "shiften/template_create.html", {'forms': template_form})
+
+
+@login_required    
+@permission_required('shiften.remove_template')
+def template_del(request, template_id):
+    template = get_object_or_404(Template, id=template_id)
+    template.delete()
+
+    return redirect('templates')

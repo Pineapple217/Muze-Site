@@ -1,0 +1,24 @@
+span {
+    font-family: "Material Symbols Outlined";
+    font-size: inherit;
+    vertical-align: bottom;
+    font-weight: normal;
+    line-height: inherit;
+}
+
+.template {
+    text-decoration: none;
+    color: var(--body-color);
+    font-size: 1.2rem;
+}
+
+.templates li {
+    margin-bottom: 0.5em;
+}
+
+
+.templates {
+    border-left: 3px solid var(--primary);
+    padding-left: 5px;
+    list-style: none;
+}

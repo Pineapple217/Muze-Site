@@ -1,0 +1,7 @@
+form {
+    accent-color: var(--primary);
+}
+
+.required {
+    color: var(--red);
+}
