@@ -1,15 +1,11 @@
-{% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'leden/css/userinfo.css' %}">
-<div class = "user-info">
-    {% if user.lid.profile_picture %}
-        <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
-    {% endif %}
     <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-    <a href="profile/edit">edit</a>
     <div class = "data-grid">
+        <p>{% trans "Username" %}</p>
+        <p>{{ user.username }}</p>
         <p>{% translate "Email" %}</p>
         <p>{{ user.email }}</p>
         <p>{% translate "Phone number" %}</p>
@@ -24,24 +20,11 @@
         <p>{{ user.lid.street}} {{ user.lid.house_number }}</p>
         <p>{% translate "Residenace" %}</p>
         <p>{{ user.lid.residence}} {{ user.lid.zipcode }}</p>
-        <p>{% translate "Discord id" %}</p>
-        <p>{{ user.lid.discord_id }}</p>
+        {% if user.lid.discord_id %}
+            <p>{% translate "Discord id" %}</p>
+            <p>{{ user.lid.discord_id }}</p>
+        {% endif %}
         <p>{% translate "Social media" %}</p>
         <p>{{ user.lid.media }}</p>
     </div>
-</div>
-<div class="shift-history shifts-link">
-    <h1>{% trans "Shift history" %}</h1>
-    {% for shift in shift_history%}
-    <a href = "/shiften/{{ shift.shift_list.id }}#{{ shift.id }}">{{ shift }}</a>
-    {% endfor %}
-</div>
-<div class="upcomming-shifts shifts-link">
-    <h1>{% trans "Upcomming shifts" %}</h1>
-    {% for shift in upcomming_shifts %}
-    <a href = "/shiften/{{ shift.shift_list.id }}#{{ shift.id }}">{{ shift }}</a>
-
-    {% endfor %}
-</div>
-
 {% endblock content %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<form method="POST">
+{% csrf_token %}
+{% for lid in new %}
+    {% include 'leden/userinfo.html' with user=lid.user %}
+    <label for="accept">{% trans "Accept" %}</label>
+    <input id="accept" type="radio" value="accept" name="{{ lid.user.id }}">
+    <label for="del">{% trans "Delete" %}</label>
+    <input id="del" type="radio" value="del" name="{{ lid.user.id }}">
+    <br>
+{% endfor %}
+<button type="submit">{% trans "Submit" %}</button>
+<button type="reset">{% trans "Clear" %}</button>
+</form>
+{% endblock %}

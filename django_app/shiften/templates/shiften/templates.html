@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'shiften/css/templates.css' %}">
 <div class="head">
-    <h1>Templates<span onclick="location.href=location.href + 'add'">add</span></h1>
+    <h1>{% trans "Templates" %}<span onclick="location.href=location.href + 'add'">add</span></h1>
 </div>
 <ul class='templates'>
 {% for template in templates %}

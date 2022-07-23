@@ -31,6 +31,8 @@ class Lid(models.Model):
     discord_id = models.PositiveBigIntegerField(null=True, blank=True)
     media = models.BooleanField()
 
+    is_accepted = models.BooleanField(default=False)
+
     def __str__(self):
         return self.user.username
 
@@ -53,5 +55,9 @@ class Lid(models.Model):
 
     class Meta:
         verbose_name_plural = "Leden"
+
+        permissions = [
+            ("accept_lid", _("Can add new members who applied for membership"))
+        ]
 
 

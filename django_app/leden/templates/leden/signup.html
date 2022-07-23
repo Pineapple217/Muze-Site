@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-
 {% load i18n %}
 {% load static %}
 {% block content %}
   <link rel="stylesheet" href="{% static 'leden/css/signup.css' %}">
   <h1>{% trans "Sign up" %}</h1>
   <form method="POST">
+
     {% include  'form.html'%}
 
     <button type="submit">{% trans "Submit" %}</button>

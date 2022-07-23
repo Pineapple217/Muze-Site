@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'leden/css/profile.css' %}">
+<div class = "user-info">
+    {% if user.lid.profile_picture %}
+        <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
+    {% endif %}
+    <a href="profile/edit">edit</a>
+    {% include 'leden/userinfo.html' %}
+</div>
+<div class="shift-history shifts-link">
+    <h1>{% trans "Shift history" %}</h1>
+    {% for shift in shift_history%}
+    <a href = "/shiften/{{ shift.shift_list.id }}#{{ shift.id }}">{{ shift }}</a>
+    {% endfor %}
+</div>
+<div class="upcomming-shifts shifts-link">
+    <h1>{% trans "Upcomming shifts" %}</h1>
+    {% for shift in upcomming_shifts %}
+    <a href = "/shiften/{{ shift.shift_list.id }}#{{ shift.id }}">{{ shift }}</a>
+
+    {% endfor %}
+</div>
+
+{% endblock content %}
