@@ -13,6 +13,7 @@ class Shiftlijst(models.Model):
         ('event', _('event'))
     ]
     type = models.CharField(max_length = 100, choices=TYPES)
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         if self.type == 'month':

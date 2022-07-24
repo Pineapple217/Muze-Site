@@ -14,11 +14,14 @@ from django.contrib.auth.models import User
 
 @login_required()
 def home(request):
-    shiftlists = Shiftlijst.objects.all()
-    context = {
-       'shiftlists': shiftlists, 
-    }
-    return render(request, 'shiften/home.html', context= context)
+    if request.user.has_perm("shiften.add_shiftlijst") or request.user.has_perm("shiften.view_template"):
+        return render(request, 'shiften/home_perms.html',)
+    else:
+        shiftlists = Shiftlijst.objects.filter(is_active=True)
+        context = {
+        'shiftlists': shiftlists, 
+        }
+        return render(request, 'shiften/home.html', context= context)
 
 @login_required()
 def shift_list(request, list_id):
@@ -142,6 +145,7 @@ def ajax_shifts(request, list_id):
        "type": list.type, 
        "name": list.name,
        "string": str(list),
+        "is_active": int(list.is_active),
     }
     user_dict = {
        "id": request.user.id,
@@ -171,18 +175,24 @@ def ajax_shifts(request, list_id):
 @permission_required('shiften.view_shiftlijst')
 def ajax_shift_list(request):
     shiftlijsten = []
-    for shiftlijst in Shiftlijst.objects.all():
+    if  request.user.has_perm('shiften.change_shiftlijst'):
+        shiftlijst_query = Shiftlijst.objects.all()
+    else:
+        shiftlijst_query = Shiftlijst.objects.filter(is_active=True)
+    for shiftlijst in shiftlijst_query:
        shiftlijsten.append({
             "date": shiftlijst.date,
             "type": _(shiftlijst.type),
             "id": shiftlijst.id, 
             "name": shiftlijst.name,
             "string": str(shiftlijst),
+            "is_active": shiftlijst.is_active,
        }) 
     user_dict = {
        "id": request.user.id,
        "name": request.user.first_name + " " + request.user.last_name,
-       "perms": {"shiftlijst_add": request.user.has_perm("shiften.add_shiftlijst")if 1 else 0,}
+       "perms": {"shiftlijst_add": request.user.has_perm("shiften.add_shiftlijst")if 1 else 0,
+                 "template_view": request.user.has_perm("shiften.view_template")if 1 else 0,}
     }
     dict = {
         "shiftlists": shiftlijsten,
@@ -259,6 +269,7 @@ def manage_shiftlist(request):
                     shiftlijst.name = actionInfo.get("name")
                     shiftlijst.date = datetime.date.fromisoformat(actionInfo.get("date"))
                     shiftlijst.type = actionInfo.get("type")
+                    shiftlijst.is_active = bool(actionInfo.get("active"))
                     shiftlijst.save()
                     response["shiftlist_info"] = {
                         "type": shiftlijst.type,

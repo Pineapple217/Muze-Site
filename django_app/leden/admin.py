@@ -4,5 +4,8 @@ from django.contrib import admin
 
 from .models import Lid
 
+class LidAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "is_accepted")
+    list_filter = ("is_accepted", )
 
-admin.site.register(Lid)
+admin.site.register(Lid, LidAdmin)

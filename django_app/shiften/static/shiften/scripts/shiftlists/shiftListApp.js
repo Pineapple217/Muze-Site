@@ -9,7 +9,6 @@ let templates;
 export async function main() {
   const json = await getData("ajax");
   shiftlists = json.shiftlists;
-  // console.log(shiftlists);
   user = json.user;
   types = json.types;
   templates = json.templates;
@@ -38,6 +37,15 @@ function toHTML() {
     };
     shiftlist.appendChild(addTemplate);
   }
+  if (user.perms.template_view) {
+    const templates = document.createElement("button");
+    templates.innerText = gettext("Templates");
+    templates.classList.add("title-btns");
+    templates.onclick = () => {
+      window.location.href = "templates";
+    };
+    shiftlist.appendChild(templates);
+  }
 
   const list = document.createElement("ul");
   list.classList.add("shiftlist-list");
@@ -49,6 +57,9 @@ function toHTML() {
   shiftlists.forEach((shiftlist) => {
     const li = document.createElement("li");
     li.classList.add("shiftlist");
+    if (!shiftlist.is_active) {
+      li.classList.add("red");
+    }
     const link = document.createElement("a");
     link.href = shiftlist.id;
     const listName = shiftlist.string;

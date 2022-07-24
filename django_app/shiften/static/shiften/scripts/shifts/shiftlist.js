@@ -243,6 +243,16 @@ function createListEditPopup() {
   options.appendChild(typeLbl);
   options.appendChild(type);
 
+  const activeLbl = document.createElement("label");
+  const active = document.createElement("input");
+  active.id = "active";
+  active.type = "checkbox";
+  active.checked = list.is_active;
+  activeLbl.htmlFor = "active";
+  activeLbl.innerText = gettext("Active");
+  options.appendChild(activeLbl);
+  options.appendChild(active);
+
   popup.appendChild(options);
 
   const bottom = document.createElement("div");
@@ -252,7 +262,7 @@ function createListEditPopup() {
   safe.onclick = () => {
     if (date.value) {
       if (type.value == "event" ? name.value : true) {
-        safeShiftlist(name.value, date.value, type.value);
+        safeShiftlist(name.value, date.value, type.value, active.checked);
       }
     }
   };
@@ -483,12 +493,13 @@ function showEditPopup(shift) {
   popup.showModal();
 }
 
-async function safeShiftlist(name, date, type) {
+async function safeShiftlist(name, date, type, active) {
   const actionInfo = {
     id: list.id,
     name: name,
     date: date,
     type: type,
+    active: active,
   };
   const response = await manageShiftlistRequest(actionInfo, "safe_shiftlist");
   if (response.body.status == "succes") {
@@ -497,6 +508,7 @@ async function safeShiftlist(name, date, type) {
       type: response.body.shiftlist_info.type,
       name: name,
       id: list.id,
+      is_active: active,
       string: response.body.shiftlist_info.string,
     };
     shiftsToHTML();
@@ -571,7 +583,6 @@ async function safeShift(shift, date, start, end, max) {
     end: end,
     max: max,
   };
-  console.log(shift);
   const response = await manageShiftRequest(actionInfo, "safe_shift");
   if (response.body.status == "succes") {
     shift.date = date;
