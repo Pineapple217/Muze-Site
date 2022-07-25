@@ -1,6 +1,5 @@
 Main
 
-- discord id zien mensen niet
 - change en reset passwoord
 - shift onbeschbaare datums instellen als lid
 - Sociale media integratie https://pypi.org/project/django-instagram/
@@ -8,6 +7,8 @@ Main
 Problemen voor later
 
 - image beveiliging
+- voor betere perfomance icons als svg opslaan in plaats van font
+- discord id zien mensen niet
 
 Opmaak
 

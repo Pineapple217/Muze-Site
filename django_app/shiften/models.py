@@ -31,6 +31,7 @@ class Shift(models.Model):
 
     shifters = models.ManyToManyField(Lid, blank=True)
     max_shifters = models.PositiveSmallIntegerField()
+    extra_info = models.CharField(max_length=500, blank=True, null=True)
     shift_list = models.ForeignKey(Shiftlijst, on_delete=models.CASCADE)
     def __str__(self):
        return f'{_(formats.date_format(self.date, format="l j F Y"))} | {self.start.isoformat(timespec = "minutes")} - {self.end.isoformat(timespec = "minutes")}'

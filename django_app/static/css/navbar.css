@@ -12,7 +12,7 @@ header {
     color: var(--header-color);
     margin-bottom: 5rem;
     z-index: 999;
-    box-shadow: 0px 10px var(--accent);
+    /* box-shadow: 0px 10px var(--accent); */
 }
 
 nav {
@@ -115,6 +115,31 @@ nav a {
     top: 12px;
 }
 
+.breadcrumbs {
+    background-color: var(--accent);
+    width: 100%;
+    display: flex;
+    list-style-type: none;
+    font-size: 1.1rem;
+    margin: 0;
+    padding-left: 32px;
+}
+
+.breadcrumbs li a {
+    text-decoration: none;
+    color: var(--dark);
+}
+
+.breadcrumbs li:not(:first-child)::before {
+    content: "\e409";
+    font-family: "Material Symbols Outlined";
+    font-size: inherit;
+    vertical-align: bottom;
+    font-weight: 400;
+    line-height: inherit;
+    /* color: var(--header-color); */
+}
+
 @media screen and (min-width: 860px) {
     .nav-toggle-label {
         display: none;
@@ -124,7 +149,7 @@ nav a {
         padding-top: 1rem;
     }
 
-    header {
+    header .main {
         display: grid;
         grid-template-rows: auto;
         grid-template-columns: max-content auto max-content;

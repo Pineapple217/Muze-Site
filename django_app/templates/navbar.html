@@ -1,37 +1,49 @@
 {% load static%}
+{% load nav %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 <header>
-<h1 class="page-title">
-    {% if request.path == '/'%}
-        Home/
-    {% else %}
-        {{ request.path|slice:"1:"|capfirst }}
-    {% endif %}
-</h1>
-<input type="checkbox" id="nav-toggle" class="nav-toggle">
-<nav>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/leden">Leden</a></li>
-        <li><a href="/shiften">Shiften</a></li>
-        {% if request.user.is_staff %}
-            <li><a href="/admin">Admin</a></li>
+<div class="main">
+    <h1 class="page-title">
+        {% if request.path == '/'%}
+            Home/
+        {% else %}
+            {{ request.path|slice:"1:"|capfirst }}
         {% endif %}
-    </ul>
-</nav>
-<div class="nav-user">
+    </h1>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/leden">Leden</a></li>
+            <li><a href="/shiften">Shiften</a></li>
+            {% if request.user.is_staff %}
+                <li><a href="/admin">Admin</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="nav-user">
 
-    {% if user.is_authenticated %}
-        <a href="{% url 'user_profile' %}">{{ user.get_username }}</a>
-        |
-        <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
-    {% else %}
-        <a href="{% url 'login' %}?next={% url 'home' %}">Login</a>
-        |
-        <a href="{% url 'signup' %}?next={{ request.path }}">Word lid</a>
-    {% endif %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'user_profile' %}">{{ user.get_username }}</a>
+            |
+            <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}?next={% url 'home' %}">Login</a>
+            |
+            <a href="{% url 'signup' %}?next={{ request.path }}">Word lid</a>
+        {% endif %}
+    </div>
 </div>
+<ul class="breadcrumbs">
+    {% breadcrumbs as bc%}
+    {% for link in bc %}
+        <li><a href="{{ link.1 }}">{{ link.0 }}</a></li>
+    {% endfor %}
+</ul>
 <label for="nav-toggle" class="nav-toggle-label">
     <span></span>
 </label>
 </header>
+
+
+{% comment %} <span class="nav-icon">navigate_next</span> {% endcomment %}

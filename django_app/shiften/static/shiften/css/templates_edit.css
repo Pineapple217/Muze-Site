@@ -13,7 +13,7 @@ textarea {
     resize: none;
 }
 
-span {
+span .icon {
     font-family: "Material Symbols Outlined";
     font-size: inherit;
     vertical-align: bottom;

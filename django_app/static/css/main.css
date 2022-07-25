@@ -1,12 +1,12 @@
 /* Light mode */
+
 :root {
-    --body-bg: #FFFFFF;
-    --body-color: #000000;
+    --body-bg: #FEFBEA;
+    --body-color: #242420;
 }
 
 .darkmode {
     --body-bg: #212124;
-    /* --body-bg: #3F3B3B; */
     --body-color: #d6d6d6;
 }
 
@@ -33,7 +33,7 @@ body {
 }
 
 .content {
-    padding: 6rem 3rem 1rem 3rem;
+    padding: 8rem 3rem 1rem 3rem;
 
 }
 

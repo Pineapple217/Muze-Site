@@ -72,6 +72,12 @@ function shiftsToHTML() {
       h4.appendChild(edit);
     }
     shiftDiv.appendChild(h4);
+    if (shift.info) {
+      const info = document.createElement("p");
+      info.classList.add("extra-info");
+      info.innerText = shift.info;
+      shiftDiv.appendChild(info);
+    }
     const ul = document.createElement("ul");
     ul.classList.add("shifters");
     // shift.shifters.forEach((s) => {
@@ -326,7 +332,18 @@ function showCreatePopup() {
   max.max = 99;
   opties.appendChild(maxLbl);
   opties.appendChild(max);
-  //
+
+  // info
+  const info = document.createElement("input");
+  const infoLbl = document.createElement("label");
+  infoLbl.innerText = gettext("Extra Info");
+  infoLbl.htmlFor = "info";
+  info.type = "text";
+  info.id = "info";
+  info.maxLength = 500;
+  opties.appendChild(infoLbl);
+  opties.appendChild(info);
+
   popup.appendChild(opties);
   //bottom buttons
   const bottom = document.createElement("div");
@@ -341,7 +358,7 @@ function showCreatePopup() {
       end.value != "" &&
       max.value != ""
     )
-      createShift(date.value, start.value, end.value, max.value);
+      createShift(date.value, start.value, end.value, max.value, info.value);
   };
   bottom.appendChild(safe);
   // close button
@@ -413,6 +430,18 @@ function showEditPopup(shift) {
   opties.appendChild(maxLbl);
   opties.appendChild(max);
 
+  // info
+  const info = document.createElement("input");
+  const infoLbl = document.createElement("label");
+  infoLbl.innerText = gettext("Extra Info");
+  infoLbl.htmlFor = "info";
+  info.type = "text";
+  info.id = "info";
+  info.maxLength = 500;
+  info.value = shift.info;
+  opties.appendChild(infoLbl);
+  opties.appendChild(info);
+
   const saveMode = document.createElement("input");
   saveMode.type = "hidden";
   saveMode.value = "shifters";
@@ -478,7 +507,14 @@ function showEditPopup(shift) {
   safe.onclick = () => {
     if (saveMode.value == "shifters") safeShifters(shift, ul);
     else if (saveMode.value == "settings")
-      safeShift(shift, date.value, start.value, end.value, max.value);
+      safeShift(
+        shift,
+        date.value,
+        start.value,
+        end.value,
+        max.value,
+        info.value
+      );
   };
   bottom.appendChild(safe);
   // close button
@@ -517,13 +553,14 @@ async function safeShiftlist(name, date, type, active) {
   }
 }
 
-async function createShift(date, start, end, max) {
+async function createShift(date, start, end, max, info) {
   const shiftInfo = {
     date: date,
     start: start,
     end: end,
     max: max,
     shiftList: list.id,
+    info: info,
   };
   const response = await createShiftRequest(shiftInfo);
   if (response.body.status == "succes") {
@@ -535,6 +572,7 @@ async function createShift(date, start, end, max) {
       id: response.body.shift_info.id,
       max: max,
       string: response.body.shift_info.string,
+      info: info,
     });
     shiftsToHTML();
   } else {
@@ -575,13 +613,14 @@ async function safeShifters(shift, ul) {
   }
 }
 
-async function safeShift(shift, date, start, end, max) {
+async function safeShift(shift, date, start, end, max, info) {
   const actionInfo = {
     shiftId: shift.id,
     date: date,
     start: start,
     end: end,
     max: max,
+    info: info,
   };
   const response = await manageShiftRequest(actionInfo, "safe_shift");
   if (response.body.status == "succes") {
@@ -590,6 +629,7 @@ async function safeShift(shift, date, start, end, max) {
     shift.end = end;
     shift.max = max;
     shift.string = response.body.shift.string;
+    shift.info = info;
     sortShifts();
     shiftsToHTML();
   } else {

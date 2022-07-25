@@ -10,7 +10,7 @@ function del() {
     window.location.href = 'del';
 }
 </script>
-<h1>{% trans "Edit template" %}<span onclick="del()">delete</span></h1>
+<h1>{% trans "Edit template" %}<span class="icon" onclick="del()">delete</span></h1>
   <form method="POST">
     {% include  'form.html'%}
     <button type="submit">{% trans "Save" %}</button>

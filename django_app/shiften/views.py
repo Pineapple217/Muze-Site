@@ -82,8 +82,8 @@ def manage_shift(request):
                     shift.start = datetime.time.fromisoformat(actionInfo["start"])
                     shift.end = datetime.time.fromisoformat(actionInfo["end"])
                     shift.max_shifters = int(actionInfo["max"])
+                    shift.extra_info = actionInfo["info"]
                     shift.save()
-                    print(shift)
                     dict["shift"] = {
                         "string": str(shift).split(" | ")[0]
                     }
@@ -109,7 +109,9 @@ def create_shift(request):
                             start =  datetime.time.fromisoformat(shift_info["start"]),
                             end = datetime.time.fromisoformat(shift_info["end"]),
                             max_shifters = shift_info["max"],
-                            shift_list = Shiftlijst.objects.get(id = shift_info["shiftList"]),)
+                            shift_list = Shiftlijst.objects.get(id = shift_info["shiftList"]),
+                            extra_info = shift_info["info"]
+                            )
         shift_info = {
             "id": shift.id,
             "date": _(formats.date_format(shift.date, format="l j F")),
@@ -138,6 +140,7 @@ def ajax_shifts(request, list_id):
         "id": shift.id,
         "max": shift.max_shifters,
         "string": str(shift).split(" | ")[0],
+        "info": shift.extra_info,
         })
     list_dict = {
        "date": list.date,
@@ -145,7 +148,7 @@ def ajax_shifts(request, list_id):
        "type": list.type, 
        "name": list.name,
        "string": str(list),
-        "is_active": int(list.is_active),
+       "is_active": int(list.is_active),
     }
     user_dict = {
        "id": request.user.id,

@@ -68,6 +68,13 @@
     /* border-style: solid; */
 }
 
+.extra-info {
+    margin: 0;
+    font-size: 0.8rem;
+    color: gray;
+    max-width: fit-content;
+}
+
 .shift-button-status p {
     margin-bottom: 0;
 }
