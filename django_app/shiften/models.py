@@ -42,3 +42,6 @@ class Template(models.Model):
 
     def __str__(self):
         return self.name
+
+# class Onbeschikbaar(models.Model):
+    

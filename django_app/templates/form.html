@@ -1,21 +1,26 @@
 {% block content %}
     {% csrf_token %}
+    <div class="fields">
     {% for form in forms %}
       {% for field in form %}
-        <p>
-          {{ field.label_tag }}
-          {% if field.field.required %}
-          <span class="required">*</span>
-          {% endif %}
-          <br>
-          {{ field }}
-          {% if field.help_text %}
-            <small style="color: grey">{{ field.help_text }}</small>
-          {% endif %}
-          {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
-          {% endfor %}
-        </p>
+          <div class="label">
+            {{ field.label_tag }}
+            {% if field.field.required %}
+            <span class="required">*</span>
+            {% endif %}
+          </div>
+          <div>
+            {{ field }}
+            <div class="help-tip">
+              {% if field.help_text %}
+                  <p style="color: grey">{{ field.help_text }}</p> 
+              {% endif %}
+            </div>
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+          </div>
       {% endfor %}
     {% endfor %}
+    </div>
 {% endblock %}

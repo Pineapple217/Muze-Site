@@ -1,7 +1,7 @@
 /* Light mode */
 
 :root {
-    --body-bg: #FEFBEA;
+    --body-bg: #f8f7f1;
     --body-color: #242420;
 }
 
@@ -116,4 +116,9 @@ dialog::backdrop {
     line-height: 20px;
     cursor: pointer;
     transition: 0.3s;
+}
+
+.red-btn {
+    color: var(--red);
+    border-color: var(--red);
 }

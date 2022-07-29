@@ -18,6 +18,13 @@ export async function main() {
 function toHTML() {
   const shiftlist = document.querySelector(".shiftlist-div");
   shiftlist.replaceChildren();
+  const h1 = document.createElement("h1");
+  h1.innerText = gettext("Shiftlists");
+  const header = document.createElement("div");
+  header.classList.add("header");
+  header.appendChild(h1);
+  const buttons = document.createElement("div");
+  buttons.classList.add("top-buttons");
   if (user.perms.shiftlijst_add) {
     const popup = createShiftlistPopupHTML();
     shiftlist.appendChild(popup);
@@ -26,7 +33,7 @@ function toHTML() {
     add.onclick = () => {
       popup.showModal();
     };
-    shiftlist.appendChild(add);
+    header.appendChild(add);
 
     const popupTemplate = createShiftlistTemplatePopup();
     shiftlist.appendChild(popupTemplate);
@@ -35,7 +42,7 @@ function toHTML() {
     addTemplate.onclick = () => {
       popupTemplate.showModal();
     };
-    shiftlist.appendChild(addTemplate);
+    header.appendChild(addTemplate);
   }
   if (user.perms.template_view) {
     const templates = document.createElement("button");
@@ -44,9 +51,10 @@ function toHTML() {
     templates.onclick = () => {
       window.location.href = "templates";
     };
-    shiftlist.appendChild(templates);
+    header.appendChild(templates);
   }
-
+  // header.appendChild(buttons);
+  shiftlist.appendChild(header);
   const list = document.createElement("ul");
   list.classList.add("shiftlist-list");
   shiftlists.sort((a, b) => {

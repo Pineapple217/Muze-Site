@@ -141,13 +141,6 @@ dialog .header span {
     line-height: inherit;
 }
 
-dialog .delete-btn {
-    background-color: var(--red);
-    padding: 0.4rem;
-    margin-left: 1rem;
-}
-
-
 .shift-edit-popup select {
     border: 1;
     border-radius: 0.4em;
@@ -159,6 +152,11 @@ dialog .delete-btn {
     font-size: 1.25rem;
     padding: 0.3em;
     margin-bottom: 0.5rem;
+}
+
+.bottom-btns {
+    display: flex;
+    flex-direction: row;
 }
 
 .bottom-btns button {
@@ -230,4 +228,8 @@ dialog .options select {
 
 .shift li.empty::before {
     content: "\e835";
+}
+
+.del-btn {
+    margin-left: auto;
 }

@@ -109,10 +109,10 @@ function shiftsToHTML() {
       buttonDiv.appendChild(button);
     } else if (shift.max <= shift.shifters.length) {
       // Shift FULL
-      const vol = document.createElement("p");
-      vol.classList.add("volle-shift");
-      vol.innerText = gettext("Shift Full");
-      buttonDiv.appendChild(vol);
+      // const vol = document.createElement("p");
+      // vol.classList.add("volle-shift");
+      // vol.innerText = gettext("Shift Full");
+      // buttonDiv.appendChild(vol);
     } else {
       // Take shift
       const button = document.createElement("button");
@@ -178,20 +178,6 @@ function createListEditPopup() {
   const title = document.createElement("h1");
   title.innerText = gettext("Edit Shiftlist");
   head.appendChild(title);
-  // delete
-  if (user.perms.shift_del) {
-    const del = document.createElement("button");
-    del.innerText = gettext("Delete");
-    del.classList.add("delete-btn");
-    del.onclick = () => {
-      if (
-        prompt(gettext("Type 'DELETE' to delete this shiftlist")) == "DELETE"
-      ) {
-        deleteShiftlist();
-      }
-    };
-    head.append(del);
-  }
   popup.appendChild(head);
 
   const options = document.createElement("div");
@@ -281,6 +267,21 @@ function createListEditPopup() {
   bottom.appendChild(close);
   popup.appendChild(bottom);
 
+  // delete
+  if (user.perms.shift_del) {
+    const del = document.createElement("button");
+    del.innerText = gettext("Delete");
+    del.classList.add("red-btn");
+    del.classList.add("del-btn");
+    del.onclick = () => {
+      if (
+        prompt(gettext("Type 'DELETE' to delete this shiftlist")) == "DELETE"
+      ) {
+        deleteShiftlist();
+      }
+    };
+    bottom.append(del);
+  }
   return popup;
 }
 
@@ -463,18 +464,6 @@ function showEditPopup(shift) {
 
   title.appendChild(span);
   head.appendChild(title);
-  // delete
-  if (user.perms.shift_del) {
-    const del = document.createElement("button");
-    del.innerText = gettext("Delete");
-    del.classList.add("delete-btn");
-    del.onclick = () => {
-      if (confirm(gettext("Are you sure you want to delete this shift?"))) {
-        deleteShift(shift);
-      }
-    };
-    head.append(del);
-  }
   popup.appendChild(head);
   // shifters
   const ul = document.createElement("ul");
@@ -525,6 +514,19 @@ function showEditPopup(shift) {
   };
   bottom.appendChild(close);
   popup.appendChild(bottom);
+  // delete
+  if (user.perms.shift_del) {
+    const del = document.createElement("button");
+    del.innerText = gettext("Delete");
+    del.classList.add("red-btn");
+    del.classList.add("del-btn");
+    del.onclick = () => {
+      if (confirm(gettext("Are you sure you want to delete this shift?"))) {
+        deleteShift(shift);
+      }
+    };
+    bottom.append(del);
+  }
   // show
   popup.showModal();
 }

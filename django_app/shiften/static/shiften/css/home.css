@@ -65,3 +65,16 @@ dialog .options label {
     padding: 2px;
     /* width: 8rem; */
 }
+
+.header {
+    display: flex;
+    flex-direction: row;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.header>* {
+    margin-left: 1rem;
+}

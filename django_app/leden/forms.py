@@ -5,24 +5,68 @@ from django.contrib.auth.models import User
 from django.forms import ClearableFileInput, ModelForm
 from django.forms.widgets import DateInput 
 from django.utils.translation import gettext as _
+from django.contrib.auth.password_validation import password_validators_help_text_html
 class UserSignUpForm(UserCreationForm):
+    # password1 = forms.CharField(
+    #     label='',
+    #     strip=False,
+    #     widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', 'placeholder': _('Password')}),
+    #     help_text=password_validators_help_text_html(),
+    # )
+    # password2 = forms.CharField(
+    #     label='',
+    #     widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', 'placeholder': _('Confirmation password')}),
+    #     strip=False,
+    #     help_text=_('Enter the same password as before, for verification.'),
+    # )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ""  # Removes : as label suffix
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['email'].required = True
+
+        # self.fields['username'].widget.attrs['placeholder'] = _('Username')
+        # self.fields['first_name'].widget.attrs['placeholder'] = _('First name')
+        # self.fields['last_name'].widget.attrs['placeholder'] = _('Last name')
+        # self.fields['email'].widget.attrs['placeholder'] = _('Email')
+
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 
                   'email', 'password1', 'password2',)
+        # labels = {
+        #    'username': '',
+        #    'first_name': '',
+        #    'last_name': '',
+        #    'email': '',
+        # }
 
 class LidSignUpForm(ModelForm):
     tel = forms.RegexField(regex=r'^\+[0-9]{2,3}\ [0-9]{3}(\ [0-9]{2}){3}$',
                            label= _('Phone number'),
+                                                #    label= '',
                            help_text= _('Format example +32 989 91 23 12.'))
-
     def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-            self.label_suffix = ""  # Removes : as label suffix
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""  # Removes : as label suffix
+
+        # self.fields['tel'].widget.attrs['placeholder'] = _('Phone number')
+        # self.fields['date_of_birth'].widget.attrs['placeholder'] = _('Date of birth')
+        # self.fields['gender'].widget.attrs['placeholder'] = _('Gender')
+        # self.fields['street'].widget.attrs['placeholder'] = _('Street')
+        # self.fields['house_number'].widget.attrs['placeholder'] = _('House number')
+        # self.fields['zipcode'].widget.attrs['placeholder'] = _('Zipcode')
+        # self.fields['residence'].widget.attrs['placeholder'] = _('Residence')
+        # self.fields['discord_id'].widget.attrs['placeholder'] = _('Discord id')
+        # self.fields['media'].widget.attrs['placeholder'] = _('Social media')
+
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
     class Meta:
         model = Lid
         fields = ('tel', 'date_of_birth', 'gender', 'street',
@@ -33,13 +77,24 @@ class LidSignUpForm(ModelForm):
             'street': _('Street'),
             'house_number': _('House nummer'),
             'zipcode': _('Zipcode'),
-            'residence': _('Residenace'),
+            'residence': _('Residence'),
             'discord_id': _('Discord id'),
             'media': _('Social media'),
         }
+        # labels = {
+        #     'date_of_birth': "",
+        #     'gender': "",
+        #     'street': "",
+        #     'house_number': "",
+        #     'zipcode': "",
+        #     'residence': "",
+        #     'discord_id': "",
+        #     'media': "",
+        # }
         widgets = {
                 'date_of_birth': DateInput(attrs={'type': 'date'})
-            }
+        }
+    
 
 class UserUpdateForm(ModelForm):
     class Meta:
@@ -59,7 +114,7 @@ class LidUpdateForm(ModelForm):
             'street': _('Street'),
             'house_number': _('House nummer'),
             'zipcode': _('Zipcode'),
-            'residence': _('Residenace'),
+            'residence': _('Residence'),
             'discord_id': _('Discord id'),
             'media': _('Social media'),
         }

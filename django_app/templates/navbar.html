@@ -4,11 +4,7 @@
 <header>
 <div class="main">
     <h1 class="page-title">
-        {% if request.path == '/'%}
-            Home/
-        {% else %}
-            {{ request.path|slice:"1:"|capfirst }}
-        {% endif %}
+        Be gone
     </h1>
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <nav>

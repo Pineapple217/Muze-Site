@@ -1,4 +1,5 @@
 from datetime import date
+from msvcrt import kbhit
 from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
@@ -43,7 +44,6 @@ def signup(request):
                     user = authenticate(username=user.username, password=raw_password)
                     user.is_active = False
                     user.save()
-                    # login(request, user)
                     if Group.objects.filter(name='Lid'):
                         lid_group = Group.objects.get(name='Lid')
                     else:
@@ -51,9 +51,21 @@ def signup(request):
                     lid_group.user_set.add(user)
                     send_mail(
                         _("Welkom to The Muze"),
-                        render_to_string('leden/mail_succes_signup.html', {'name': user.first_name}),
+                        render_to_string('leden/mail/succes_signup.html', {'name': user.first_name}),
                         settings.EMAIL_HOST_USER,
                         [user.email],
+                        fail_silently=False,
+                    )
+                    def rvb_email():
+                        rvb = User.objects.filter(groups__name='Raad Van Bestuur')                         
+                        for rvb_p in rvb:
+                            yield rvb_p.email
+                        
+                    send_mail(
+                        _(f"{user.first_name} {user.last_name} wants to become a member"),
+                        render_to_string('leden/mail/new_signup.html', {'user': user}),
+                        settings.EMAIL_HOST_USER,
+                        rvb_email(),
                         fail_silently=False,
                     )
                     messages.success(request, _("Welkom to the muze"))
