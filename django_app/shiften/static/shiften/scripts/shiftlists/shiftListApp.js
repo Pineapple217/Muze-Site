@@ -7,12 +7,16 @@ let types;
 let templates;
 
 export async function main() {
-  const json = await getData("ajax");
-  shiftlists = json.shiftlists;
-  user = json.user;
-  types = json.types;
-  templates = json.templates;
-  toHTML();
+  try {
+    const json = await getData("ajax");
+    shiftlists = json.shiftlists;
+    user = json.user;
+    types = json.types;
+    templates = json.templates;
+    toHTML();
+  } catch (error) {
+    alert(error);
+  }
 }
 
 function toHTML() {

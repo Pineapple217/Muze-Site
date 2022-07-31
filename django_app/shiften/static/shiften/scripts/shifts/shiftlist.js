@@ -14,14 +14,20 @@ let types;
 
 let firstLoad = false;
 export async function main() {
-  const json = await getData("/ajax");
-  list = json.list;
-  user = json.user;
-  shifts = json.shifts;
-  leden = json.leden;
-  types = json.types;
-
-  shiftsToHTML();
+  try {
+    const json = await getData("/ajax");
+    list = json.list;
+    user = json.user;
+    shifts = json.shifts;
+    leden = json.leden;
+    types = json.types;
+    shiftsToHTML();
+  } catch (error) {
+    const body = document.querySelector(".content");
+    const h1 = document.createElement("h1");
+    h1.innerText = error.message;
+    body.appendChild(h1);
+  }
 }
 
 function sortShifts() {
@@ -34,7 +40,6 @@ function sortShifts() {
 }
 
 function shiftsToHTML() {
-  // const body = document.querySelector(".content");
   const header = document.querySelector(".main-header");
   const h1 = document.createElement("h1");
   const shiftList = document.getElementById("shiftlist");

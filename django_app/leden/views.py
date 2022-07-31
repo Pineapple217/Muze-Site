@@ -1,5 +1,4 @@
 from datetime import date
-from msvcrt import kbhit
 from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect

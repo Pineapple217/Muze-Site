@@ -1,21 +1,25 @@
+{% load static %}
 {% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
     {% csrf_token %}
     <div class="fields">
     {% for form in forms %}
       {% for field in form %}
           <div class="label">
             {{ field.label_tag }}
-            {% if field.field.required %}
-            <span class="required">*</span>
-            {% endif %}
+            {% comment %} {{ form.name }} {% endcomment %}
+            {% comment %} {% if field.field.required %}
+              <span class="required">*</span>
+            {% endif %} {% endcomment %}
           </div>
           <div>
             {{ field }}
-            <div class="help-tip">
               {% if field.help_text %}
-                  <p style="color: grey">{{ field.help_text }}</p> 
+                <div class="help-text">
+                  {{ field.help_text }}
+                </div>
               {% endif %}
-            </div>
             {% for error in field.errors %}
               <p style="color: red">{{ error }}</p>
             {% endfor %}

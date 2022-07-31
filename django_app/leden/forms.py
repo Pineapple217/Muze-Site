@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.forms import ClearableFileInput, ModelForm
 from django.forms.widgets import DateInput 
 from django.utils.translation import gettext as _
-from django.contrib.auth.password_validation import password_validators_help_text_html
+# from django.contrib.auth.password_validation import password_validators_help_text_html
 class UserSignUpForm(UserCreationForm):
     # password1 = forms.CharField(
     #     label='',
@@ -31,8 +31,8 @@ class UserSignUpForm(UserCreationForm):
         # self.fields['last_name'].widget.attrs['placeholder'] = _('Last name')
         # self.fields['email'].widget.attrs['placeholder'] = _('Email')
 
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+        # for field in self.fields:
+        #     self.fields[field].widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = User
@@ -64,8 +64,8 @@ class LidSignUpForm(ModelForm):
         # self.fields['discord_id'].widget.attrs['placeholder'] = _('Discord id')
         # self.fields['media'].widget.attrs['placeholder'] = _('Social media')
 
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+        # for field in self.fields:
+        #     self.fields[field].widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = Lid
