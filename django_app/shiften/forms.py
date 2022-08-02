@@ -9,24 +9,23 @@ class TemplateForm(ModelForm):
 
     class Meta:
         model = Template
-        # fields = '__all__'
-        fields = ('name', 'template')
-        # labels = {
-        #     'name': _('Name'),
-        #     'template': _('Template'),
-        # }
-#         help_text = {
-#             'template': '''{
-#   "schedule": [
-#     {
-#       "day": 5,
-#       "start": "15:30",
-#       "end": "19:00",
-#       "max": 3
-#     }
-#   ]
-# }'''
-#         }
+        fields = '__all__'
+        labels = {
+            'name': _('Name'),
+            'template': _('Template'),
+        }
+        help_texts = {
+            'template': '''{
+                            "schedule": [
+                                {
+                                "day": 0,
+                                "start": "00:00",
+                                "end": "00:00",
+                                "max": 0
+                                }
+                            ]
+                            }'''
+        }
     
 
 # class EditTemplate(ModelForm):

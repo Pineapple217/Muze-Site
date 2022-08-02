@@ -97,12 +97,21 @@ class LidSignUpForm(ModelForm):
     
 
 class UserUpdateForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""  # Removes : as label suffix
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['email'].required = True
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 
                   'email')
 
 class LidUpdateForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""  # Removes : as label suffix
     class Meta:
         model = Lid
         fields = ('profile_picture', 'tel', 'date_of_birth', 'gender', 'street',

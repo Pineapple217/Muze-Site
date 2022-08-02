@@ -3,11 +3,17 @@
 :root {
     --body-bg: #f8f7f1;
     --body-color: #242420;
+    --icon-filter: invert(14%) sepia(7%) saturate(507%) hue-rotate(22deg) brightness(98%) contrast(100%);
 }
 
 .darkmode {
     --body-bg: #212124;
     --body-color: #d6d6d6;
+    --icon-filter: invert(93%) sepia(0%) saturate(96%) hue-rotate(151deg) brightness(91%) contrast(97%);
+}
+
+.svg-icon {
+    filter: var(--icon-filter)
 }
 
 

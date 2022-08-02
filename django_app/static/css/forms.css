@@ -30,3 +30,8 @@
     margin: 0;
     padding: 0;
 }
+
+form button {
+    margin-top: 1.5em;
+    margin-right: .3em;
+}

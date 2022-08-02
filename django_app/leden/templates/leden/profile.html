@@ -7,7 +7,8 @@
     {% if user.lid.profile_picture %}
         <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
     {% endif %}
-    <a href="profile/edit">edit</a>
+    
+    <a href="profile/edit"><img src="{% static 'icons/settings.svg' %}" alt="settings" class="svg-icon"></a>
     {% include 'leden/userinfo.html' %}
 </div>
 <div class="upcomming-shifts shifts-link">

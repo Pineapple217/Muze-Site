@@ -8,10 +8,9 @@
       {% for field in form %}
           <div class="label">
             {{ field.label_tag }}
-            {% comment %} {{ form.name }} {% endcomment %}
-            {% comment %} {% if field.field.required %}
+            {% if field.field.required %}
               <span class="required">*</span>
-            {% endif %} {% endcomment %}
+            {% endif %}
           </div>
           <div>
             {{ field }}

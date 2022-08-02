@@ -69,12 +69,15 @@ dialog .options label {
 .header {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .header h1 {
     margin: 0;
+    margin-right: 1rem;
 }
 
 .header>* {
-    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.4rem;
 }
