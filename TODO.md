@@ -1,7 +1,6 @@
 Main
 
-- shiftlijst inactief niet meer bewerkbaar
-- change en reset passwoord
+- min leeftijd
 - shift onbeschbaare datums instellen als lid
 - Sociale media integratie https://pypi.org/project/django-instagram/
 

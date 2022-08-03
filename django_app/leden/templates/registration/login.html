@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block content %}
+<h1>{% trans "Please login" %}</h1>
 {% if form.errors %}
 <p>{% trans "Your username and password didnt match. Please try agian." %}</p>
 {% endif %} {% if next %} {% if user.is_authenticated %}
@@ -8,12 +9,12 @@
   {% trans "Your account doesn't have access to this page. To proceed, please login with an account that has acces." %}
 </p>
 {% else %}
-<p>{% trans "Please login" %}</p>
 {% endif %} {% endif %}
 
 <form method="POST" action="{% url 'login' %}">
-  {% csrf_token %} {{ form.as_p }}
-  <input type="submit" value="Login" />
+  {% include 'form.html' %}
+  <button type="submit" value="Login">{% trans "Login" %}</button>
   <input type="hidden" name="next" value="{{ next }}" />
 </form>
+<a href="password-reset">{% trans "Forgot your password?" %}</a>
 {% endblock content %}

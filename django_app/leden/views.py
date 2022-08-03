@@ -1,10 +1,11 @@
 from datetime import date
 from django.conf import settings
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import BadHeaderError, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.template.loader import render_to_string
+from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail
 from django.urls import reverse
 from shiften.models import Shift
@@ -14,6 +15,10 @@ from .forms import LidUpdateForm, UserSignUpForm, LidSignUpForm, UserUpdateForm
 from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required , permission_required
 from django.contrib.auth.models import Group
+from django.utils.http import urlsafe_base64_encode
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.db.models.query_utils import Q
 
 def home(request):
     return render(request, 'leden/home.html')
@@ -67,7 +72,7 @@ def signup(request):
                         rvb_email(),
                         fail_silently=False,
                     )
-                    messages.success(request, _("Welkom to the muze"))
+                    messages.success(request, _("Succesfully signed up"))
                     return redirect('home')
         else:
             user_form = UserSignUpForm()
@@ -117,9 +122,50 @@ def new_leden(request):
                 user.lid.is_accepted = True
                 user.save()
                 user.lid.save()
+                send_mail(
+                    _("Welkom to The Muze"),
+                    render_to_string('leden/mail/accepted.html', {'name': user.first_name}),
+                    settings.EMAIL_HOST_USER,
+                    [user.email],
+                    fail_silently=False,
+                )
+            if opt == 'del':
+                user.delete()
         return HttpResponseRedirect(reverse("new_leden"))
     new_leden = Lid.objects.filter(is_accepted=False)
     context = {
         "new": new_leden,
     }
     return render(request, "leden/new_leden.html", context)
+    
+def password_change_done(request):
+    return render(request, 'registration/password_change_done_m.html')
+
+
+def password_reset_request(request):
+    if request.method == "POST":
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(Q(email=data))
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Password Reset Requested"
+                    email_template_name = "registration/password/password_reset_email.html"
+                    mail_context = {
+                    "email":user.email,
+                    'domain': request.META['HTTP_HOST'],
+                    'site_name': 'Jeughuis De Muze',
+                    "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "user": user,
+                    'token': default_token_generator.make_token(user),
+                    'protocol': 'http',
+                    }
+                    email = render_to_string(email_template_name, mail_context)
+                    try:
+                        send_mail(subject, email, settings.EMAIL_HOST_USER , [user.email], fail_silently=False)
+                    except BadHeaderError:
+                        return HttpResponse('Invalid header found.')
+                    return redirect("password_reset_done")
+    password_reset_form = PasswordResetForm()
+    return render(request=request, template_name="registration/password/password_reset.html", context={"form":password_reset_form})

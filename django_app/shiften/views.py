@@ -341,7 +341,7 @@ def template_edit(request, template_id):
             return redirect(url)
     else:
         template_form = TemplateForm(instance = template)
-    return render(request, "shiften/template_edit.html", {'forms': (template_form,)})
+    return render(request, "shiften/template_edit.html", {'form': (template_form)})
 
 @login_required    
 @permission_required('shiften.add_template')
@@ -355,7 +355,7 @@ def add_template(request):
     else:
         template_form = TemplateForm()
 
-    return render(request, "shiften/template_create.html", {'forms': (template_form,)})
+    return render(request, "shiften/template_create.html", {'form': (template_form)})
 
 
 @login_required    

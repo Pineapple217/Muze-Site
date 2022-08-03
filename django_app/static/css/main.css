@@ -80,6 +80,10 @@ dialog::backdrop {
     background: rgb(0 0 0 / 0.4);
 }
 
+a {
+    color: var(--body-color);
+}
+
 @media screen and (max-width: 860px) {
     /* body, input, textarea, button { */
     /* font-size: 2rem; */
