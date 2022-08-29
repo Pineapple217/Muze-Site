@@ -52,6 +52,8 @@ class Lid(models.Model):
                 new_img = new_img.resize((max_size, max_size))
             new_img.save(self.profile_picture.path)
 
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
 
     class Meta:
         verbose_name_plural = "Leden"

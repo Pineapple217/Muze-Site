@@ -2,7 +2,7 @@ from csv import list_dialects
 from django.contrib import admin
 
 # Register your models here.
-from .models import Shift, Shiftlijst, Template
+from .models import Onbeschikbaar, OnbeschikbaarHerhalend, Shift, Shiftlijst, Template
 
 class ShiftAdmin(admin.ModelAdmin):
     list_display =  ("__str__", "shift_list")
@@ -16,3 +16,5 @@ class ShiftlijdtAdmin(admin.ModelAdmin):
 
 admin.site.register(Shiftlijst, ShiftlijdtAdmin)
 admin.site.register(Template)
+admin.site.register(Onbeschikbaar)
+admin.site.register(OnbeschikbaarHerhalend)

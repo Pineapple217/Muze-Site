@@ -1,3 +1,4 @@
+from pydoc import visiblename
 from django.urls import include, path
 from . import views
 
@@ -17,6 +18,13 @@ urlpatterns = [
       path('<int:template_id>/edit', views.template_edit),
       path('<int:template_id>/del', views.template_del),
       path('add', views.add_template),
+   ])),
+   path('available/', include([
+      path('', views.available_overview, name='available'),
+      path('add', views.available_add),
+      path('add-rep', views.available_add_rep),
+      path('<int:type>/<int:available_id>/edit', views.available_edit),
+      path('<int:type>/<int:available_id>/del', views.available_del),
    ])),
 ]
 

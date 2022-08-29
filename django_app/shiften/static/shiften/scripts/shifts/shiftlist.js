@@ -11,6 +11,7 @@ let user;
 let shifts;
 let leden;
 let types;
+let available;
 
 let firstLoad = false;
 export async function main() {
@@ -21,6 +22,7 @@ export async function main() {
     shifts = json.shifts;
     leden = json.leden;
     types = json.types;
+    available = json.available;
     shiftsToHTML();
   } catch (error) {
     const body = document.querySelector(".content");
@@ -162,6 +164,37 @@ function shiftsToHTML() {
     const popup = document.createElement("dialog");
     popup.classList.add("shift-create-popup");
     shiftList.appendChild(popup);
+  }
+  if (user.perms.available_view) {
+    const div = document.createElement("div");
+    div.classList.add("available-slideout");
+    const head = document.createElement("h1");
+    head.innerText = gettext("Not available");
+    div.appendChild(head);
+    available.forEach((avail) => {
+      const availDiv = document.createElement("div");
+      const lid = document.createElement("h2");
+      lid.innerText = avail.lid;
+      availDiv.appendChild(lid);
+      const date = document.createElement("p");
+      date.innerText = avail.date;
+      availDiv.appendChild(date);
+      if (avail.info) {
+        const info = document.createElement("p");
+        info.innerText = avail.info;
+        availDiv.appendChild(info);
+      }
+      div.appendChild(availDiv);
+    });
+    console.log(available);
+
+    shiftList.appendChild(div);
+    const slideoutBtn = document.createElement("button");
+    slideoutBtn.innerText = "cooool";
+    slideoutBtn.onclick = () => {
+      div.classList.toggle("on");
+    };
+    shiftList.appendChild(slideoutBtn);
   }
   if (!firstLoad) {
     let hash = window.location.hash;

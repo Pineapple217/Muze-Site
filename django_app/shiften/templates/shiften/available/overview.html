@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+<a href="add">Add</a>
+<a href="add-rep">Add rep</a>
+<h1>AV</h1>
+{% for av in available %}
+    <p>{{ av.start }} - {{ av.end }}</p>
+    <p>{{ av.id }}</p>
+    {% if av.info %}
+        <p>{{ av.info }}</p> 
+    {% endif %}
+    <a href="0/{{av.id}}/edit">edit</a>
+    <br>
+{% endfor %}
+<h1>AV REP</h1>
+{% for av in available_rep %}
+    <p>{{ av.start_period }} - {{ av.end_period }}</p>
+    <p>{{ av.weekday }} | {{ av.start }} - {{ av.end }}</p>
+    <p>{{ av.id }}</p>
+    {% if av.info %}
+        <p>{{ av.info }}</p> 
+    {% endif %}
+    <a href="1/{{av.id}}/edit">edit</a>
+    <br>
+{% endfor %}
+{% endblock %}

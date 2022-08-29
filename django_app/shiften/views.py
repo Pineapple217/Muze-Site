@@ -1,17 +1,21 @@
 import datetime
 import json
 from django.contrib import messages
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseRedirect, JsonResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
+from .forms import AvailableForm, AvailableRepForm
+from shiften.models import Onbeschikbaar
 from leden.forms import LidSignUpForm
 from leden.models import Lid
-from shiften.forms import TemplateForm
-from shiften.functions import create_month_shiftlist
-from shiften.models import Shift, Shiftlijst, Template
+from .forms import TemplateForm
+from .functions import create_month_shiftlist
+from .models import OnbeschikbaarHerhalend, Shift, Shiftlijst, Template
 from django.utils.translation import gettext as _
 from django.utils import formats
 from django.contrib.auth.models import User
+from django.db.models import Q
+from itertools import chain
 
 
 @login_required()
@@ -132,9 +136,9 @@ def create_shift(request):
 @login_required() 
 @permission_required('shiften.view_shift')
 def ajax_shifts(request, list_id): 
-    list = get_object_or_404(Shiftlijst, id  = list_id)
-    if list.is_active or request.user.has_perm("shiften.change.shift"):
-        shifts = list.shift_set.all().order_by('date', 'start')
+    list_object = get_object_or_404(Shiftlijst, id  = list_id)
+    if list_object.is_active or request.user.has_perm("shiften.change.shift"):
+        shifts = list_object.shift_set.all().order_by('date', 'start')
         shifts_dict = []
         for shift in shifts:
             shifters = []
@@ -152,12 +156,12 @@ def ajax_shifts(request, list_id):
             "info": shift.extra_info,
             })
         list_dict = {
-        "date": list.date,
-        "id" : list.id,
-        "type": list.type, 
-        "name": list.name,
-        "string": str(list),
-        "is_active": int(list.is_active),
+        "date": list_object.date,
+        "id" : list_object.id,
+        "type": list_object.type, 
+        "name": list_object.name,
+        "string": str(list_object),
+        "is_active": int(list_object.is_active),
         }
         user_dict = {
         "id": request.user.id,
@@ -166,7 +170,8 @@ def ajax_shifts(request, list_id):
                     "shift_add"     : request.user.has_perm("shiften.add_shift")if 1 else 0,
                     "shift_del"     : request.user.has_perm("shiften.delete_shift")if 1 else 0,
                     "shiftlist_edit": request.user.has_perm("shiften.change_shiftlijst")if 1 else 0,
-                    "shiftlist_del" : request.user.has_perm("shiften.delete_shiftlijst")if 1 else 0}
+                    "shiftlist_del" : request.user.has_perm("shiften.delete_shiftlijst")if 1 else 0,
+                    "available_view": request.user.has_perm("shiften.view_onbeschikbaar")if 1 else 0,}
         }
         dict = {"shifts": shifts_dict,
                 "list": list_dict,
@@ -181,6 +186,42 @@ def ajax_shifts(request, list_id):
                 )
         if request.user.has_perm("shiften.change_shift"):
             dict["types"] = Shiftlijst.type.field.choices
+        if request.user.has_perm("shiften.view_onbeschikbaar"):
+            dict["available"] = []
+
+            list_first_day = list_object.date.replace(day=1)
+            next_month = list_object.date.replace(day=28) + datetime.timedelta(days=4)
+            list_last_day = next_month - datetime.timedelta(days=next_month.day)
+
+            avail = Onbeschikbaar.objects.filter(Q(start__lte=list_last_day) & Q(end__gte=list_first_day))
+            avail_rep = OnbeschikbaarHerhalend.objects.filter(Q(start_period__lte=list_last_day) & Q(end_period__gte=list_first_day))
+            avail_joined = list(chain(avail, avail_rep))
+            for a in avail_joined:
+                if type(a) == Onbeschikbaar:
+                    dict["available"].append({
+                        "date": f"{a.start} - {a.end}",
+                        "info": a.info,
+                        "lid": str(a.lid),       
+                    })
+                # if type(a) == OnbeschikbaarHerhalend:
+                #     if a.start_period.isoweekday() < a.weekday:
+                #         a.start_period += datetime.timedelta(a.weekday - a.start_period.isoweekday())
+                #         loopday = a.start_period.day
+                #         while (loopday <= list_last_day.day) and ( (list_first_day + datetime.timedelta(days=loopday)) <= a.end_period):
+                #             dict["available"].append({
+                #                "date": f"{list_first_day + datetime.timedelta(days=loopday)} | {a.start} - {a.end}",
+                #                "info": a.info,
+                #                "lid": str(a.lid) 
+                #             })
+                #             loopday += 7
+                if type(a) == OnbeschikbaarHerhalend:
+                    dict["available"].append({
+                        "date": f"{a.start_period} - {a.end_period} | {a.weekday} | {a.start} - {a.end}",
+                        "info": a.info,
+                        "lid": str(a.lid),
+                    })
+            dict["available"].sort(key=lambda x: x["date"])
+                
         status = 200;
     else:
         status = 403
@@ -365,3 +406,85 @@ def template_del(request, template_id):
     template.delete()
 
     return redirect('templates')
+
+@login_required
+def available_overview(request):
+    av = request.user.lid.onbeschikbaar_set.all()
+    av_rep = request.user.lid.onbeschikbaarherhalend_set.all()
+    context = {
+        'available': av,
+        'available_rep': av_rep
+    }
+    # return HttpResponseForbidden()
+    return render(request, "shiften/available/overview.html", context)
+
+@login_required
+def available_add(request):
+    if request.method == 'POST':
+        av_form = AvailableForm(request.POST, instance = Onbeschikbaar(lid=request.user.lid))
+        if av_form.is_valid():
+            av_form.save()
+            messages.success(request, _('Available added'))
+            return redirect(to='available')
+    else:
+        av_form = AvailableForm()
+    return render(request, "shiften/available/create.html", {'form': (av_form)})
+
+@login_required
+def available_add_rep(request):
+    if request.method == 'POST':
+        av_form = AvailableRepForm(request.POST, instance = OnbeschikbaarHerhalend(lid=request.user.lid))
+        if av_form.is_valid():
+            av_form.save()
+            messages.success(request, _('Available rep added'))
+            return redirect(to='available')
+    else:
+        av_form = AvailableRepForm()
+    return render(request, "shiften/available/create_rep.html", {'form': (av_form)})
+
+@login_required
+def available_edit(request, type, available_id):
+    match type:
+        case 0:
+            av = get_object_or_404(Onbeschikbaar, id=available_id)
+            if request.method == 'POST':
+                av_form = AvailableForm(request.POST, instance=av)
+            else:
+                av_form = AvailableForm(instance=av)
+        case 1:
+            av = get_object_or_404(OnbeschikbaarHerhalend, id=available_id)
+            if request.method == 'POST':
+                av_form = AvailableRepForm(request.POST, instance=av)
+            else:
+                av_form = AvailableRepForm(instance=av)
+        case _:
+            return HttpResponseBadRequest()
+    
+    if not av.lid == request.user.lid:
+        return HttpResponseForbidden()
+    if request.method == 'POST' and av_form.is_valid():
+        av_form.save()
+        messages.success(request, _('Availibility updated successfully'))
+        return redirect('available')
+    # if av.lid == request.user.lid:
+        
+    # else:
+    #     return HttpResponseForbidden()
+    return render(request, "shiften/available/edit_rep.html", {'form': (av_form)})
+
+@login_required
+def  available_del(request, type, available_id):
+    match type:
+        case 0:
+            av = get_object_or_404(Onbeschikbaar, id=available_id)
+        case 1:
+            av = get_object_or_404(OnbeschikbaarHerhalend, id=available_id)
+        case _:
+            return HttpResponseBadRequest()
+    
+    if av.lid == request.user.lid:
+        av.delete()
+    else:
+        return HttpResponseForbidden()
+
+    return redirect('available')

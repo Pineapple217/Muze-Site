@@ -138,10 +138,6 @@ def new_leden(request):
     }
     return render(request, "leden/new_leden.html", context)
     
-def password_change_done(request):
-    return render(request, 'registration/password_change_done_m.html')
-
-
 def password_reset_request(request):
     if request.method == "POST":
         password_reset_form = PasswordResetForm(request.POST)

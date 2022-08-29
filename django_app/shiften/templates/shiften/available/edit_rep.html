@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'shiften/css/templates_edit.css' %}"> {% endcomment %}
+<h1>{% trans "Edit" %}</h1>
+  <form method="POST">
+    {% include  'form.html'%}
+    <button type="submit">{% trans "Add" %}</button>
+    <button type="reset">{% trans "Clear" %}</button>
+  </form>
+{% endblock %}

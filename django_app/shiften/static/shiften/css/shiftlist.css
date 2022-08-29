@@ -233,3 +233,25 @@ dialog .options select {
 .del-btn {
     margin-left: auto;
 }
+
+.available-slideout {
+    background: var(--body-bg);
+    color: inherit;
+    position: fixed;
+    border-left: 3px solid var(--primary);
+    padding: 0 15px;
+    top: 10rem;
+    right: -520px;
+    width: 400px;
+    height: 100%;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.available-slideout.on {
+    right: 0;
+}

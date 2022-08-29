@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.db import models
 
 from leden.models import Lid
@@ -43,5 +42,17 @@ class Template(models.Model):
     def __str__(self):
         return self.name
 
-# class Onbeschikbaar(models.Model):
-    
+class Onbeschikbaar(models.Model):
+    start = models.DateField()
+    end = models.DateField()
+    info = models.CharField(max_length=500, blank=True, null=True)
+    lid = models.ForeignKey(Lid, on_delete=models.CASCADE)
+
+class OnbeschikbaarHerhalend(models.Model):
+    start_period = models.DateField()
+    end_period = models.DateField()
+    weekday = models.PositiveSmallIntegerField()
+    start = models.TimeField()
+    end = models.TimeField()
+    info = models.CharField(max_length=500, blank=True, null=True)
+    lid = models.ForeignKey(Lid, on_delete=models.CASCADE)
