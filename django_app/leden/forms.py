@@ -30,7 +30,7 @@ class UserSignUpForm(UserCreationForm):
         # self.fields['username'].widget.attrs['placeholder'] = _('Username')
         # self.fields['first_name'].widget.attrs['placeholder'] = _('First name')
         # self.fields['last_name'].widget.attrs['placeholder'] = _('Last name')
-        # self.fields['email'].widget.attrs['placeholder'] = _('Email')
+        self.fields['email'].widget.attrs['pattern'] = r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
 
         # for field in self.fields:
         #     self.fields[field].widget.attrs['class'] = 'form-control'
@@ -60,7 +60,7 @@ class LidSignUpForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.label_suffix = ""  # Removes : as label suffix
 
-        # self.fields['tel'].widget.attrs['placeholder'] = _('Phone number')
+        self.fields['tel'].widget.attrs['pattern'] = r"[+][0-9]{2,3}[ ][0-9]{3}([ ][0-9]{2}){3}"
         # self.fields['date_of_birth'].widget.attrs['placeholder'] = _('Date of birth')
         # self.fields['gender'].widget.attrs['placeholder'] = _('Gender')
         # self.fields['street'].widget.attrs['placeholder'] = _('Street')

@@ -190,11 +190,12 @@ function shiftsToHTML() {
 
     shiftList.appendChild(div);
     const slideoutBtn = document.createElement("button");
-    slideoutBtn.innerText = "cooool";
+    slideoutBtn.innerText = gettext("availabilty");
+    slideoutBtn.classList.add("title-btns");
     slideoutBtn.onclick = () => {
       div.classList.toggle("on");
     };
-    shiftList.appendChild(slideoutBtn);
+    document.querySelector(".main-header").appendChild(slideoutBtn);
   }
   if (!firstLoad) {
     let hash = window.location.hash;

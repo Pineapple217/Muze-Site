@@ -1,6 +1,10 @@
 .main-header {
     display: flex;
     margin-top: 1rem;
+    /* position: sticky;
+    top: 8rem;
+    background-color: var(--body-bg);
+    z-index: 10; */
 }
 
 .main-header>* {
@@ -240,18 +244,27 @@ dialog .options select {
     position: fixed;
     border-left: 3px solid var(--primary);
     padding: 0 15px;
-    top: 10rem;
+    padding-bottom: 2rem;
+    top: 11.5rem;
+    bottom: 0;
     right: -520px;
     width: 400px;
-    height: 100%;
+    height: 80%;
     -webkit-transition-duration: 0.3s;
     -moz-transition-duration: 0.3s;
     -o-transition-duration: 0.3s;
     transition-duration: 0.3s;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
+    box-shadow: -3px 0px 50px 5px rgba(0, 0, 0, 0.4);
 }
 
 .available-slideout.on {
     right: 0;
 }
+
+/* .slideout-btn {
+    position: fixed;
+    top: 10rem;
+    right: 10rem;
+} */

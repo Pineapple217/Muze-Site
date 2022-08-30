@@ -1,3 +1,4 @@
+import calendar
 import datetime
 import json
 from django.contrib import messages
@@ -216,7 +217,7 @@ def ajax_shifts(request, list_id):
                 #             loopday += 7
                 if type(a) == OnbeschikbaarHerhalend:
                     dict["available"].append({
-                        "date": f"{a.start_period} - {a.end_period} | {a.weekday} | {a.start} - {a.end}",
+                        "date": f"{a.start_period} - {a.end_period}\n{_(calendar.day_name[a.weekday - 1])}\n{a.start} - {a.end}",
                         "info": a.info,
                         "lid": str(a.lid),
                     })
