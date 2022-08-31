@@ -27,14 +27,14 @@ DEPLOY = os.getenv('DEPLOY')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # die hier in deze file staat is niet meer secret en is alleen voor development
-if not DEPLOY:
+if not DEPLOY: # AKABUG
     SECRET_KEY = 'django-insecure-)(6i&+lg77#345nu(y4+0i9!gaam2w^ni3r2p-w&_b39b#r_vm'
-    DEBUG = os.getenv('DEBUG')
-    HOST_URL = os.getenv('HOST_URL')
-else:
-    SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = True
     HOST_URL = '127.0.0.1:8000'
+else: # DEPLOY
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    DEBUG = os.getenv('DEBUG')
+    HOST_URL = os.getenv('HOST_URL')
 
 
 ALLOWED_HOSTS = ['*']
