@@ -55,6 +55,10 @@
 .shift li {
     margin: 0.5rem 0 0.5rem 0;
     height: 1.3em;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .shift-button-status {
@@ -156,6 +160,15 @@ dialog .header span {
     font-size: 1.25rem;
     padding: 0.3em;
     margin-bottom: 0.5rem;
+    max-width: 400px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.shift-edit-popup option {
+    width: 100px;
 }
 
 .bottom-btns {

@@ -97,6 +97,7 @@ function shiftsToHTML() {
       const li = document.createElement("li");
       if (shift.shifters[i]) {
         li.innerText = shift.shifters[i].name;
+        li.title = shift.shifters[i].name;
       } else {
         li.classList.add("empty");
       }
@@ -186,7 +187,6 @@ function shiftsToHTML() {
       }
       div.appendChild(availDiv);
     });
-    console.log(available);
 
     shiftList.appendChild(div);
     const slideoutBtn = document.createElement("button");
