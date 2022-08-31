@@ -44,7 +44,7 @@ class AvailableForm(ModelForm):
         exclude = ['lid']
         labels = {
            'start': _('Start'),
-           'end': _('Einde'),
+           'end': _('End'),
            'info': _('Info'),
         }
 

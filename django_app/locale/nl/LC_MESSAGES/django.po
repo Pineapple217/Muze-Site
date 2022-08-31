@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-21 00:14+0200\n"
+"POT-Creation-Date: 2022-08-30 15:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,56 +18,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\leden\forms.py:20 .\leden\templates\leden\userinfo.html:15
+#: .\leden\forms.py:54 .\leden\templates\leden\userinfo.html:11
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
-#: .\leden\forms.py:21
+#: .\leden\forms.py:56
 msgid "Format example +32 989 91 23 12."
 msgstr "Formaat voorbeeld +32 989 91 23 12."
 
-#: .\leden\forms.py:31 .\leden\forms.py:57
-#: .\leden\templates\leden\userinfo.html:17
+#: .\leden\forms.py:81 .\leden\templates\leden\userinfo.html:13
 msgid "Date of birth"
 msgstr "Geboortedatum"
 
-#: .\leden\forms.py:32 .\leden\forms.py:58
-#: .\leden\templates\leden\userinfo.html:21
+#: .\leden\forms.py:82 .\leden\forms.py:134
+#: .\leden\templates\leden\userinfo.html:17
 msgid "Gender"
 msgstr "Gender"
 
-#: .\leden\forms.py:33 .\leden\forms.py:59
+#: .\leden\forms.py:83 .\leden\forms.py:135
 msgid "Street"
 msgstr "Straat"
 
-#: .\leden\forms.py:34 .\leden\forms.py:60
+#: .\leden\forms.py:84 .\leden\forms.py:136
 msgid "House nummer"
 msgstr "Huisnummer"
 
-#: .\leden\forms.py:35 .\leden\forms.py:61
+#: .\leden\forms.py:85 .\leden\forms.py:137
 msgid "Zipcode"
 msgstr "Postcode"
 
-#: .\leden\forms.py:36 .\leden\forms.py:62
-#: .\leden\templates\leden\userinfo.html:25
-msgid "Residenace"
+#: .\leden\forms.py:86 .\leden\forms.py:138
+#, fuzzy
+#| msgid "Residenace"
+msgid "Residence"
 msgstr "Woonplaats"
 
-#: .\leden\forms.py:37 .\leden\forms.py:63
-#: .\leden\templates\leden\userinfo.html:27
+#: .\leden\forms.py:87 .\leden\forms.py:139
+#: .\leden\templates\leden\userinfo.html:24
 msgid "Discord id"
 msgstr "Discord id"
 
-#: .\leden\forms.py:38 .\leden\forms.py:64
-#: .\leden\templates\leden\userinfo.html:29
+#: .\leden\forms.py:88 .\leden\forms.py:140
+#: .\leden\templates\leden\userinfo.html:27
 msgid "Social media"
 msgstr "Sociale media"
 
-#: .\leden\forms.py:56
+#: .\leden\forms.py:132
 msgid "Profile picture"
 msgstr "Profiel foto"
 
-#: .\leden\forms.py:74
+#: .\leden\forms.py:150
 msgid "image size must be under 2MB."
 msgstr "foto grote moet onder 2MB zijn."
 
@@ -87,6 +87,10 @@ msgstr "Vrouw"
 msgid "Other"
 msgstr "Andere"
 
+#: .\leden\models.py:62
+msgid "Can add new members who applied for membership"
+msgstr "Kan nieuwe leden toevoegen die lidmaatschap hebben aangevraagd"
+
 #: .\leden\templates\leden\edit_profile.html:5
 msgid "Edit profile"
 msgstr "Bewerk profiel"
@@ -100,78 +104,242 @@ msgstr "Opslaan"
 msgid "Reset"
 msgstr "Reset"
 
-#: .\leden\templates\leden\signup.html:7
-msgid "Sign up"
-msgstr "Aanmelden"
+#: .\leden\templates\leden\new_leden.html:9
+msgid "Accept"
+msgstr "Aanvaarden"
 
-#: .\leden\templates\leden\signup.html:11
+#: .\leden\templates\leden\new_leden.html:11
+msgid "Delete"
+msgstr "verwijderen"
+
+#: .\leden\templates\leden\new_leden.html:15
+#: .\leden\templates\leden\signup.html:9
+#: .\leden\templates\registration\password\password_reset.html:11
 #: .\shiften\templates\shiften\template_create.html:10
 msgid "Submit"
 msgstr "Indienen"
 
-#: .\leden\templates\leden\signup.html:12
-msgid "Clear form"
-msgstr "Maak form leeg"
+#: .\leden\templates\leden\new_leden.html:16
+#: .\shiften\templates\shiften\available\create.html:12
+#: .\shiften\templates\shiften\available\create_rep.html:11
+#: .\shiften\templates\shiften\available\edit_rep.html:11
+#: .\shiften\templates\shiften\template_create.html:11
+msgid "Clear"
+msgstr "Maak vrij"
 
-#: .\leden\templates\leden\userinfo.html:13
-msgid "Email"
-msgstr "Email"
+#: .\leden\templates\leden\profile.html:15
+#: .\leden\templates\registration\password\password_change.html:6
+msgid "Change password"
+msgstr "Wachtwoord wijzigen"
 
-#: .\leden\templates\leden\userinfo.html:23
-msgid "Address"
-msgstr "Adres"
-
-#: .\leden\templates\leden\userinfo.html:34
-msgid "Shift history"
-msgstr "Shift geschiedenis"
-
-#: .\leden\templates\leden\userinfo.html:40
+#: .\leden\templates\leden\profile.html:18
 msgid "Upcomming shifts"
 msgstr "Aankomende shifts"
 
-#: .\leden\templates\registration\login.html:5
-msgid "Your username and password didnt match. Please try agian."
-msgstr "Uw gebruikersnaam en password kloppen niet. Probeer opnieuw."
+#: .\leden\templates\leden\profile.html:25
+msgid "Shift history"
+msgstr "Shift geschiedenis"
 
-#: .\leden\templates\registration\login.html:12
+#: .\leden\templates\leden\signup.html:6
+msgid "Sign up"
+msgstr "Aanmelden"
+
+#: .\leden\templates\leden\signup.html:10
+#: .\leden\templates\registration\password\password_change.html:10
+#: .\leden\templates\registration\password\password_reset.html:12
+msgid "Clear form"
+msgstr "Maak form leeg"
+
+#: .\leden\templates\leden\userinfo.html:7
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: .\leden\templates\leden\userinfo.html:9
+msgid "Email"
+msgstr "Email"
+
+#: .\leden\templates\leden\userinfo.html:19
+msgid "Address"
+msgstr "Adres"
+
+#: .\leden\templates\leden\userinfo.html:21
+msgid "Residenace"
+msgstr "Woonplaats"
+
+#: .\leden\templates\registration\login.html:4
 msgid "Please login"
 msgstr "Login"
 
-#: .\leden\views.py:44
+#: .\leden\templates\registration\login.html:6
+msgid "Your username and password didnt match. Please try agian."
+msgstr "Uw gebruikersnaam en password kloppen niet. Probeer opnieuw."
+
+#: .\leden\templates\registration\login.html:9
+msgid ""
+"Your account doesn't have access to this page. To proceed, please login with "
+"an account that has acces."
+msgstr "U account heeft geen toegang to deze pagina. Om verder te gaan, login in met een account dat toegang heeft."
+
+#: .\leden\templates\registration\login.html:16
+msgid "Login"
+msgstr "Login"
+
+#: .\leden\templates\registration\login.html:19
+msgid "Forgot your password?"
+msgstr "Wachtwoord vergeten?"
+
+#: .\leden\templates\registration\password\password_change.html:9
+msgid "Change"
+msgstr "Veranderen"
+
+#: .\leden\templates\registration\password\password_change_done.html:5
+msgid "Your password was changed."
+msgstr "U Wachtwoord is gewijzig."
+
+#: .\leden\templates\registration\password\password_reset.html:6
+msgid "Reset password"
+msgstr "Reset Wachtwoord"
+
+#: .\leden\templates\registration\password\password_reset_complete.html:5
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_complete.html:7
+msgid "Log in"
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_confirm.html:7
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_confirm.html:11
+msgid "Change my password"
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_confirm.html:16
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_done.html:5
+msgid ""
+"We’ve emailed you instructions for setting your password, if an account "
+"exists with the email you entered. You should receive them shortly."
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_done.html:7
+msgid ""
+"If you don’t receive an email, please make sure you’ve entered the address "
+"you registered with, and check your spam folder."
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_email.html:8
+msgid "Your username, in case you’ve forgotten:"
+msgstr ""
+
+#: .\leden\templates\registration\password\password_reset_email.html:11
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: .\leden\views.py:57 .\leden\views.py:126
 msgid "Welkom to The Muze"
 msgstr "Welkom tot De Muze"
 
-#: .\leden\views.py:50
-msgid "Welkom to the muze"
-msgstr "Welkom tot de muze"
+#: .\leden\views.py:69
+#, python-brace-format
+msgid "{user.first_name} {user.last_name} wants to become a member"
+msgstr ""
 
-#: .\leden\views.py:80
+#: .\leden\views.py:75
+msgid "Succesfully signed up"
+msgstr ""
+
+#: .\leden\views.py:105
 msgid "Your profile is updated successfully"
 msgstr "Uw profiel is succesvol bijgewerkt"
 
-#: .\shiften\forms.py:11
+#: .\shiften\forms.py:15
 msgid "Name"
 msgstr "Naam"
 
-#: .\shiften\forms.py:12
+#: .\shiften\forms.py:16
 msgid "Template"
 msgstr "Sjabloon"
 
-#: .\shiften\models.py:12
+#: .\shiften\forms.py:46 .\shiften\forms.py:69
+msgid "Start"
+msgstr "Start"
+
+#: .\shiften\forms.py:47 .\shiften\forms.py:70
+msgid "Einde"
+msgstr ""
+
+#: .\shiften\forms.py:48 .\shiften\forms.py:71
+msgid "Info"
+msgstr "Info"
+
+#: .\shiften\forms.py:66
+msgid "Start period"
+msgstr "Start periode"
+
+#: .\shiften\forms.py:67
+msgid "End period"
+msgstr "Einde periode"
+
+#: .\shiften\forms.py:68
+msgid "weekday"
+msgstr "weekdag"
+
+#: .\shiften\forms.py:77
+msgid "weekday must be between 1 and 7"
+msgstr "weekday moet tussen 1 en 7 zijn"
+
+#: .\shiften\models.py:11
 msgid "month"
 msgstr "maand"
 
-#: .\shiften\models.py:13
+#: .\shiften\models.py:12
 msgid "event"
 msgstr "evenement"
+
+#: .\shiften\templates\shiften\available\create.html:8
+msgid "available"
+msgstr ""
+
+#: .\shiften\templates\shiften\available\create.html:11
+#: .\shiften\templates\shiften\available\create_rep.html:10
+#: .\shiften\templates\shiften\available\edit_rep.html:10
+#, fuzzy
+#| msgid "Address"
+msgid "Add"
+msgstr "Adres"
+
+#: .\shiften\templates\shiften\available\create_rep.html:7
+msgid "available rep"
+msgstr ""
+
+#: .\shiften\templates\shiften\available\edit_rep.html:7
+msgid "Edit"
+msgstr ""
 
 #: .\shiften\templates\shiften\template_create.html:7
 msgid "Create template"
 msgstr "Maak Sjabloon"
-
-#: .\shiften\templates\shiften\template_create.html:11
-msgid "Clear"
-msgstr "Maak vrij"
 
 #: .\shiften\templates\shiften\template_edit.html:9
 msgid "Are you sure want to delete this template"
@@ -185,13 +353,36 @@ msgstr "Bewerk sjabloon"
 msgid "Save"
 msgstr "Bewaar"
 
-#: .\shiften\views.py:273
+#: .\shiften\templates\shiften\templates.html:7
+#, fuzzy
+#| msgid "Template"
+msgid "Templates"
+msgstr "Sjabloon"
+
+#: .\shiften\views.py:342
 msgid "Shiftlist is succesfully deleted"
 msgstr "Shiftlijst is succesvol verwijdert"
 
-#: .\shiften\views.py:314 .\shiften\views.py:330
+#: .\shiften\views.py:381 .\shiften\views.py:395
 msgid "Template updated successfully"
 msgstr "Sjabloon succesvol bijgewerkt"
+
+#: .\shiften\views.py:428
+msgid "Available added"
+msgstr ""
+
+#: .\shiften\views.py:440
+msgid "Available rep added"
+msgstr ""
+
+#: .\shiften\views.py:468
+#, fuzzy
+#| msgid "Template updated successfully"
+msgid "Availibility updated successfully"
+msgstr "Sjabloon succesvol bijgewerkt"
+
+#~ msgid "Welkom to the muze"
+#~ msgstr "Welkom tot de muze"
 
 #~ msgid "p.m."
 #~ msgstr "p.m."

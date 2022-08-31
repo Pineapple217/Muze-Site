@@ -1,5 +1,6 @@
 Main
 
+- veel vertalen nog
 - settings paneel en hoe da te doen in DB
 - shift onbeschbaare datums instellen als lid
 - Sociale media integratie https://pypi.org/project/django-instagram/
@@ -20,6 +21,7 @@ Opmaak
 
 Lage prior
 
+- profiel foto op shiftlijst
 - html regex voor client side validatie
 - indien mogelijk username automatisch later generen op basis van voor en achternaam
 - shift leaderbord

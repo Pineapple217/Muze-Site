@@ -15,7 +15,7 @@
         <p>{% trans date %}</p>
         {% endwith %}
         <p>{% translate "Gender" %}</p>
-        <p>{% if user.lid.gender == "M" %} Man {% elif user.lid.gender == "F"%} Vrouw {% else%} Anders {% endif %}
+        <p>{{ user.lid.get_gender_display }}</p>
         <p>{% trans "Address" %}</p>
         <p>{{ user.lid.street}} {{ user.lid.house_number }}</p>
         <p>{% translate "Residenace" %}</p>

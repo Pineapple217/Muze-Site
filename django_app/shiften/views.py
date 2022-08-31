@@ -138,7 +138,7 @@ def create_shift(request):
 @permission_required('shiften.view_shift')
 def ajax_shifts(request, list_id): 
     list_object = get_object_or_404(Shiftlijst, id  = list_id)
-    if list_object.is_active or request.user.has_perm("shiften.change.shift"):
+    if list_object.is_active or request.user.has_perm("shiften.change_shift"):
         shifts = list_object.shift_set.all().order_by('date', 'start')
         shifts_dict = []
         for shift in shifts:

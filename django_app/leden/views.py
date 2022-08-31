@@ -150,7 +150,7 @@ def password_reset_request(request):
                     email_template_name = "registration/password/password_reset_email.html"
                     mail_context = {
                     "email":user.email,
-                    'domain': request.META['HTTP_HOST'],
+                    'domain': request.get_host(),
                     'site_name': 'Jeughuis De Muze',
                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                     "user": user,

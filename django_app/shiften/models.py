@@ -3,6 +3,7 @@ from django.db import models
 from leden.models import Lid
 from django.utils.translation import gettext as _
 from django.utils import formats
+from simple_history.models import HistoricalRecords
 
 class Shiftlijst(models.Model):
     name = models.CharField(max_length = 300, null = True, blank = True)
@@ -13,6 +14,7 @@ class Shiftlijst(models.Model):
     ]
     type = models.CharField(max_length = 100, choices=TYPES)
     is_active = models.BooleanField(default=False)
+    history = HistoricalRecords()
 
     def __str__(self):
         if self.type == 'month':
@@ -32,12 +34,16 @@ class Shift(models.Model):
     max_shifters = models.PositiveSmallIntegerField()
     extra_info = models.CharField(max_length=500, blank=True, null=True)
     shift_list = models.ForeignKey(Shiftlijst, on_delete=models.CASCADE)
+    history = HistoricalRecords()
+
     def __str__(self):
        return f'{_(formats.date_format(self.date, format="l j F Y"))} | {self.start.isoformat(timespec = "minutes")} - {self.end.isoformat(timespec = "minutes")}'
     
 class Template(models.Model):
     name = models.CharField(max_length= 200)
     template = models.JSONField()
+
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.name
