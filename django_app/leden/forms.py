@@ -1,5 +1,6 @@
 from django import forms
 from .models import Lid
+from constance import config
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import ClearableFileInput, ModelForm
@@ -99,7 +100,7 @@ class LidSignUpForm(ModelForm):
         # }
     
     def clean_date_of_birth(self, *args, **kwargs):
-        MIN_AGE = 15
+        MIN_AGE = config.MIN_AGE
         today = datetime.date.today()
         dob = self.cleaned_data.get("date_of_birth")
         age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
@@ -150,7 +151,7 @@ class LidUpdateForm(ModelForm):
             'profile_picture': _('image size must be under 2MB.'),
         }
     def clean_date_of_birth(self, *args, **kwargs):
-        MIN_AGE = 15
+        MIN_AGE = config.MIN_AGE
         today = datetime.date.today()
         dob = self.cleaned_data.get("date_of_birth")
         age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))

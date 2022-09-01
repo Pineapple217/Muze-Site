@@ -148,6 +148,7 @@ def password_reset_request(request):
                 for user in associated_users:
                     subject = "Password Reset Requested"
                     email_template_name = "registration/password/password_reset_email.html"
+                    print(settings.HOST_URL)
                     mail_context = {
                     "email":user.email,
                     'domain': settings.HOST_URL,

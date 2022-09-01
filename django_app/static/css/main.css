@@ -40,11 +40,13 @@ body {
 
 .content {
     padding: 8rem 3rem 1rem 3rem;
+    min-height: 75%;
+    margin-bottom: -60px;
 
 }
 
 html {
-    scroll-padding-top: 8rem;
+    scroll-padding-top: 10rem;
 }
 
 button {
@@ -131,4 +133,12 @@ a {
 .red-btn {
     color: var(--red);
     border-color: var(--red);
+}
+
+footer {
+    height: 50px;
+    margin-top: 100px;
+    width: 100%;
+    text-align: center;
+    color: gray;
 }

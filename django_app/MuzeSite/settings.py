@@ -20,7 +20,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEPLOY = os.getenv('DEPLOY')
+DEPLOY = (os.getenv('DEPLOY', 'False') == 'True')
 # DEPLOY = False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -33,7 +33,7 @@ if not DEPLOY: # AKABUG
     HOST_URL = '127.0.0.1:8000'
 else: # DEPLOY
     SECRET_KEY = os.getenv('SECRET_KEY')
-    DEBUG = os.getenv('DEBUG')
+    DEBUG = (os.getenv('DEBUG') == 'True')
     HOST_URL = os.getenv('HOST_URL')
 
 
@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_history', #Simple history
+    'constance.backends.database', #live settings ding
+    'constance',
     'leden',
     'main',
     'shiften',
@@ -201,5 +203,11 @@ logging.config.dictConfig({
         },
     },
 })
-#==========custom settings==============
-MAX_SHIFTERS_MONTHSHIFT = 3
+
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+CONSTANCE_DATABASE_PREFIX = 'constance:muze:'
+
+CONSTANCE_CONFIG = {
+    'MIN_AGE': (15, 'Minimum leeft voor nieuwe leden')
+}

@@ -1,7 +1,5 @@
 Main
 
-- veel vertalen nog
-- settings paneel en hoe da te doen in DB
 - shift onbeschbaare datums instellen als lid
 - Sociale media integratie https://pypi.org/project/django-instagram/
 
@@ -17,7 +15,7 @@ Opmaak
 - profiel pagina
 - forms
 - ledenlijst
-- random link en navigatie
+- navigatie
 
 Lage prior
 

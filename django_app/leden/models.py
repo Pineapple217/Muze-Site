@@ -11,9 +11,10 @@ from simple_history import register
 register(User)
 
 def file_size(value): # add this to some file where you can import it from
-    limit = 2 * 1024 * 1024
+    max_pp_size_mb = 2
+    limit = max_pp_size_mb * 1024 * 1024
     if value.size > limit:
-        raise ValidationError(_('File too large. Size should not exceed 2 MiB.'))
+        raise ValidationError(_(f'File too large. Size should not exceed {max_pp_size_mb} MiB.'))
 
 class Lid(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

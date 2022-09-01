@@ -67,7 +67,7 @@ class AvailableRepForm(ModelForm):
             'end_period': _('End period'),
             'weekday': _('weekday'),
             'start': _('Start'),
-            'end': _('Einde'),
+            'end': _('End'),
             'info': _('Info'),
         }
 
