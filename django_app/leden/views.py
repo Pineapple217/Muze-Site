@@ -1,4 +1,4 @@
-from datetime import date
+import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.http import BadHeaderError, HttpResponse, HttpResponseRedirect
@@ -19,6 +19,9 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.db.models.query_utils import Q
+from django.shortcuts import get_object_or_404
+from constance import config
+from . import stats
 
 def home(request):
     return render(request, 'leden/home.html')
@@ -84,7 +87,7 @@ def signup(request):
 @login_required()
 def userinfo(request):
     shifts = Shift.objects.filter(shifters__id = request.user.lid.id).order_by('date')
-    today = date.today()
+    today = datetime.date.today()
     shift_history = shifts.filter(date__lt = today).reverse()
     upcomming_shifts = shifts.filter(date__gt = today)
     context = {
@@ -148,7 +151,6 @@ def password_reset_request(request):
                 for user in associated_users:
                     subject = "Password Reset Requested"
                     email_template_name = "registration/password/password_reset_email.html"
-                    print(settings.HOST_URL)
                     mail_context = {
                     "email":user.email,
                     'domain': settings.HOST_URL,
@@ -166,3 +168,18 @@ def password_reset_request(request):
                     return redirect("password_reset_done")
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="registration/password/password_reset.html", context={"form":password_reset_form})
+
+@login_required
+@permission_required('leden.view_lid')
+def lid_overview(request, lid_id):
+    lid = get_object_or_404(Lid, id=lid_id)
+
+
+    context = {
+        "user": lid.user,
+        "shifts_in_xmonths": stats.total_shifts_done(lid),
+        "months_per_shift": config.MONTHS_PER_SHIFT,
+        "total_shifts": stats.shifts_in_x_months(lid, config.MONTHS_PER_SHIFT),
+        "days_since_last_shift": stats.days_since_last_shift(lid),
+    }
+    return render(request, "leden/lid_overview.html", context)

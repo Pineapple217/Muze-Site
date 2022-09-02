@@ -1,0 +1,7 @@
+.pp-lid {
+    border-radius: 50%;
+    border: 0.3rem;
+    border-color: var(--primary);
+    border-style: solid;
+    width: 200px;
+}

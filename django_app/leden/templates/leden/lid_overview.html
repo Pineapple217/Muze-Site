@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'leden/css/lid_overview.css' %}">
+<div class = "user-info">
+    {% if user.lid.profile_picture %}
+        <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
+    {% endif %}
+    
+    {% comment %} <a href="profile/edit"><img src="{% static 'icons/settings.svg' %}" alt="settings" class="svg-icon"></a> {% endcomment %}
+    {% include 'leden/userinfo.html' %}
+</div>
+
+<h1>{% trans "Statistics" %}</h1>
+<div class="lid-stats data-grid">
+    <p>{% blocktrans with x=months_per_shift %}Shifts in the last {{ x }} month{% endblocktrans %}</p>
+    <p>{{ shifts_in_xmonths }}</p>
+
+    <p>{% trans "Total shifts done" %}</p>
+    <p>{{ total_shifts }}</p>
+
+    <p>{% trans "Days since last shift" %}</p>
+    <p>{{ days_since_last_shift }}</p>
+</div>
+
+
+{% comment %} <div class="upcomming-shifts shifts-link">
+    <h1>{% trans "Upcomming shifts" %}</h1>
+    {% for shift in upcomming_shifts %}
+    <a href = "/shiften/{{ shift.shift_list.id }}#{{ shift.id }}">{{ shift }}</a>
+
+    {% endfor %}
+</div>
+<div class="shift-history shifts-link">
+    <h1>{% trans "Shift history" %}</h1>
+    {% for shift in shift_history%}
+    <a href = "/shiften/{{ shift.shift_list.id }}#{{ shift.id }}">{{ shift }}</a>
+    {% endfor %}
+</div> {% endcomment %}
+
+{% endblock content %}

@@ -2,27 +2,32 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-<a href="add">Add</a>
-<a href="add-rep">Add rep</a>
-<h1>AV</h1>
+<link rel="stylesheet" href="{% static 'shiften/css/available_overview.css' %}">
+<div class="av-block-group">
+<div class="av-block">
+<h1>{% trans "Availabilty" %}<a href="add"><img src="{% static 'icons/add.svg' %}" alt="add" class="svg-icon"></a></h1>
 {% for av in available %}
+    <hr>
     <p>{{ av.start }} - {{ av.end }}</p>
-    <p>{{ av.id }}</p>
     {% if av.info %}
-        <p>{{ av.info }}</p> 
+        <p class="info">{{ av.info }}</p> 
     {% endif %}
     <a href="0/{{av.id}}/edit">edit</a>
-    <br>
 {% endfor %}
-<h1>AV REP</h1>
+<hr>
+</div>
+<div class="av-block">
+<h1>{% trans "Availabilty repeating" %}<a href="add-rep"><img src="{% static 'icons/add.svg' %}" alt="add" class="svg-icon"></a></h1>
 {% for av in available_rep %}
+    <hr>
     <p>{{ av.start_period }} - {{ av.end_period }}</p>
     <p>{{ av.weekday }} | {{ av.start }} - {{ av.end }}</p>
-    <p>{{ av.id }}</p>
     {% if av.info %}
         <p>{{ av.info }}</p> 
     {% endif %}
     <a href="1/{{av.id}}/edit">edit</a>
-    <br>
 {% endfor %}
+    <hr>
+</div>
+</div>
 {% endblock %}

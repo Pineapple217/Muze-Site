@@ -1,4 +1,6 @@
 from django import template
+from django.urls import resolve
+from django.http import Http404
 
 register = template.Library()
 
@@ -9,5 +11,10 @@ def breadcrumbs(context):
     out = []
     for i, c in enumerate(crumbs):
         dest = "/" + "/".join(crumbs[:i+1])
+        try:
+            resolve(dest + '/')
+        except Http404:
+            dest = '' 
         out.append([c, dest])
+    # print(out)
     return out

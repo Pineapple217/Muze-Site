@@ -13,7 +13,7 @@
     <p>Discord id</p>
     <p>Media</p>
   {% for lid in leden %}
-    <p>{{ lid.user.last_name }}</p>
+    <p><a href="{{ lid.id }}">{{ lid.user.last_name }}</a></p>
     <p>{{ lid.user.first_name }}</p>
     <p>{{ lid.user.email }}</p>
     <p>{{ lid.tel }}</p>

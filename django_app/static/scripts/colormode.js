@@ -7,10 +7,14 @@ const switchColor = function () {
 const enableDarkMode = () => {
   document.body.classList.add("darkmode");
   localStorage.setItem("colormode", "dark");
+  const root = document.querySelector(":root");
+  root.style.colorScheme = "dark";
 };
 const enableLightMode = () => {
   document.body.classList.remove("darkmode");
   localStorage.setItem("colormode", "light");
+  const root = document.querySelector(":root");
+  root.style.colorScheme = "light";
 };
 
 let colormode = localStorage.getItem("colormode");

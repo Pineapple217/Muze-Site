@@ -1,0 +1,19 @@
+.svg-icon {
+    height: 1.1em;
+}
+
+.av-block-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+}
+
+p {
+    margin: 0.5rem 0;
+}
+
+.info {
+    color: gray;
+    margin-top: 0;
+}

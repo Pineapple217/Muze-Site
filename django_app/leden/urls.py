@@ -17,4 +17,5 @@ urlpatterns = [
     path('profile', views.userinfo, name='user_profile'),
     path('profile/edit', views.edit_profile),
     path('new', views.new_leden, name='new_leden'),
+    path('<int:lid_id>', views.lid_overview),
 ]

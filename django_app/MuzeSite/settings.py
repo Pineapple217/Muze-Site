@@ -208,6 +208,9 @@ logging.config.dictConfig({
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_DATABASE_PREFIX = 'constance:muze:'
 
+# from constance import config
+# config.MIN_AGE
 CONSTANCE_CONFIG = {
-    'MIN_AGE': (15, 'Minimum leeft voor nieuwe leden')
+    'MIN_AGE': (15, 'Minimum leeft voor nieuwe leden'),
+    'MONTHS_PER_SHIFT': (3, 'months/shift a member is required to shift')
 }

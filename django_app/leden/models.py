@@ -1,4 +1,3 @@
-from wsgiref import validate
 from PIL import Image
 from django.db import models
 from django.contrib.auth.models import User
@@ -6,8 +5,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
 from simple_history.models import HistoricalRecords
-
 from simple_history import register
+
 register(User)
 
 def file_size(value): # add this to some file where you can import it from
@@ -41,9 +40,6 @@ class Lid(models.Model):
     
     history = HistoricalRecords()
 
-    def __str__(self):
-        return self.user.username
-
     def save(self, *args, **kwargs):
         super().save()
 
@@ -69,5 +65,7 @@ class Lid(models.Model):
         permissions = [
             ("accept_lid", _("Can add new members who applied for membership"))
         ]
+
+
 
 

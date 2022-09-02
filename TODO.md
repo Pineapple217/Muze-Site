@@ -1,5 +1,6 @@
 Main
 
+- svg ani aliasing
 - shift onbeschbaare datums instellen als lid
 - Sociale media integratie https://pypi.org/project/django-instagram/
 

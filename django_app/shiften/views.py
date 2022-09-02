@@ -410,8 +410,9 @@ def template_del(request, template_id):
 
 @login_required
 def available_overview(request):
-    av = request.user.lid.onbeschikbaar_set.all()
-    av_rep = request.user.lid.onbeschikbaarherhalend_set.all()
+    today = datetime.date.today()
+    av = request.user.lid.onbeschikbaar_set.filter(end__gte = today).order_by('start')
+    av_rep = request.user.lid.onbeschikbaarherhalend_set.filter(end_period__gte = today).order_by('start_period')
     context = {
         'available': av,
         'available_rep': av_rep

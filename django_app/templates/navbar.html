@@ -22,6 +22,9 @@
                 </li>
             {% endif %}
             <li><a href="/shiften">Shiften</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="/shiften/available">Beschikbaarheid</a></li>
+            {% endif %}
             {% if request.user.is_staff %}
                 <li><a href="/admin">Admin</a></li>
             {% endif %}
