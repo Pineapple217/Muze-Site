@@ -154,6 +154,10 @@ nav li div.dropdown-content {
         display: none;
     }
 
+    .page-title {
+        margin: 22px 0;
+    }
+
     .nav-user {
         padding-top: 1rem;
     }
