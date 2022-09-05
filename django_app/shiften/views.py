@@ -210,7 +210,9 @@ def ajax_shifts(request, list_id):
                     })
                 if type(a) == OnbeschikbaarHerhalend:
                     subdivided = []
-                    loopday = a.weekday + list_first_day.isoweekday() - 1
+                    # if a.weekday == list_first_day.isoweekday():
+                    #     loopday
+                    loopday = (a.weekday + list_first_day.isoweekday() - 1)%7
                     if (list_first_day < a.start_period):
                         while (loopday < a.start_period.day):
                             loopday += 7 
