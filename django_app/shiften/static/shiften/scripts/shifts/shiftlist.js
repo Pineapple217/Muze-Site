@@ -13,7 +13,9 @@ let leden;
 let types;
 let available;
 
+let availOpen = false;
 let firstLoad = false;
+
 export async function main() {
   try {
     const json = await getData("/ajax");
@@ -169,14 +171,17 @@ function shiftsToHTML() {
   if (user.perms.available_view) {
     const div = document.createElement("div");
     div.classList.add("available-slideout");
+    if (availOpen) div.classList.add("on");
     const head = document.createElement("h1");
     const header = document.createElement("div");
     header.classList.add("avail-header");
-    const close = document.querySelector(".close-btn");
+    const close_stat = document.querySelector(".close-btn");
+    const close = close_stat.cloneNode(true);
     close.classList.remove("hidden");
     close.classList.add("svg-icon");
     close.onclick = () => {
       div.classList.remove("on");
+      availOpen = !availOpen;
     };
     head.innerText = gettext("Not available");
     head.appendChild(close);
@@ -204,6 +209,7 @@ function shiftsToHTML() {
     slideoutBtn.classList.add("title-btns");
     slideoutBtn.onclick = () => {
       div.classList.toggle("on");
+      availOpen = !availOpen;
     };
     document.querySelector(".main-header").appendChild(slideoutBtn);
   }
@@ -519,8 +525,49 @@ function showEditPopup(shift) {
   const li = document.createElement("li");
   const select = document.createElement("select");
   select.appendChild(document.createElement("option"));
+  console.log(available);
+  const ledenWithAvailId = [...new Set([...available.map((av) => av.user_id)])];
+  console.log(ledenWithAvailId);
+  const shiftDate = new Date(shift.date);
   leden.forEach((lid) => {
     const option = document.createElement("option");
+    let lidBlocked = false;
+    if (ledenWithAvailId.includes(lid.id)) {
+      const availsLid = available.filter((av) => av.user_id == lid.id);
+      availsLid.forEach((av) => {
+        if (av.type == "normal") {
+          const start = new Date(av.start);
+          const end = new Date(av.end);
+
+          if (shiftDate > start && shiftDate < end) {
+            lidBlocked = true;
+            option.classList.add("not-avail");
+          }
+        } else if (av.type == "rep") {
+          av.subs.forEach((sub) => {
+            if (sub.date == shift.date) {
+              let subEnd = sub.end_time.replace(":", "");
+              const subStart = sub.start_time.replace(":", "");
+              if (subEnd < subStart) subEnd = parseInt(subEnd) + 2400;
+              let shiftEnd = shift.end.replace(":", "");
+              const shiftStart = shift.start.replace(":", "");
+              if (shiftEnd < shiftStart) shiftEnd = parseInt(shiftEnd) + 2400;
+              if (
+                !(
+                  (subStart < shiftStart && subEnd <= shiftStart) ||
+                  (subStart >= shiftEnd && subEnd > shiftEnd)
+                )
+              ) {
+                lidBlocked = true;
+                option.classList.add("not-avail");
+              }
+            }
+          });
+          const dateAv = new Date(av.date);
+        }
+      });
+    }
+    // option.innerText = lidBlocked ? lid.name + " - XXX" : lid.name;
     option.innerText = lid.name;
     option.value = lid.id;
     select.appendChild(option);

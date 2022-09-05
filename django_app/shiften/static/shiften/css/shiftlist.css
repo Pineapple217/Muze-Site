@@ -283,3 +283,7 @@ dialog .options select {
     height: 35px;
     margin-left: 5px;
 }
+
+.not-avail {
+    color: gray;
+}

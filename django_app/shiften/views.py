@@ -201,27 +201,43 @@ def ajax_shifts(request, list_id):
                 if type(a) == Onbeschikbaar:
                     dict["available"].append({
                         "date": f"{a.start} - {a.end}",
+                        "start": a.start,
+                        "end": a.end,
                         "info": a.info,
                         "lid": str(a.lid),       
+                        "user_id": a.lid.user.id,
+                        "type": "normal"
                     })
-                # if type(a) == OnbeschikbaarHerhalend:
-                #     if a.start_period.isoweekday() < a.weekday:
-                #         a.start_period += datetime.timedelta(a.weekday - a.start_period.isoweekday())
-                #         loopday = a.start_period.day
-                #         while (loopday <= list_last_day.day) and ( (list_first_day + datetime.timedelta(days=loopday)) <= a.end_period):
-                #             dict["available"].append({
-                #                "date": f"{list_first_day + datetime.timedelta(days=loopday)} | {a.start} - {a.end}",
-                #                "info": a.info,
-                #                "lid": str(a.lid) 
-                #             })
-                #             loopday += 7
                 if type(a) == OnbeschikbaarHerhalend:
+                    subdivided = []
+                    loopday = a.weekday + list_first_day.isoweekday() - 1
+                    if (list_first_day < a.start_period):
+                        while (loopday < a.start_period.day):
+                            loopday += 7 
+                    # if a.start_period.isoweekday() < a.weekday:
+                        # start_period_move += datetime.timedelta(a.weekday - a.start_period.isoweekday() - 1)
+                    # loopday = start_period_move.day
+                    while (loopday < list_last_day.day) and ( (list_first_day + datetime.timedelta(days=loopday)) <= a.end_period):
+                        subdivided.append({
+                            "date": list_first_day + datetime.timedelta(days=loopday),
+                            "start_time": a.start.isoformat(timespec = "minutes"),
+                            "end_time": a.end.isoformat(timespec = "minutes"),
+                            "info": a.info,
+                            "lid": str(a.lid),
+                        })
+                        loopday += 7
                     dict["available"].append({
                         "date": f"{a.start_period} - {a.end_period}\n{_(calendar.day_name[a.weekday - 1])}\n{a.start} - {a.end}",
                         "info": a.info,
                         "lid": str(a.lid),
+                        "user_id": a.lid.user.id,
+                        "subs": subdivided,
+                        "type": "rep"
                     })
             dict["available"].sort(key=lambda x: x["date"])
+
+
+
                 
         status = 200;
     else:
@@ -398,7 +414,6 @@ def add_template(request):
         template_form = TemplateForm()
 
     return render(request, "shiften/template_create.html", {'form': (template_form)})
-
 
 @login_required    
 @permission_required('shiften.remove_template')

@@ -1,6 +1,8 @@
 Main
 
-- svg ani aliasing
+- onbeschiibaar grondig testen
+- onbeschikbaar werkt nog niet deftig voor events
+- shiftlijst js kan wat herwerken gebruiken.
 - Sociale media integratie https://pypi.org/project/django-instagram/
 
 Problemen voor later
@@ -11,6 +13,7 @@ Problemen voor later
 
 Opmaak
 
+- svg ani aliasing
 - css voor icon knoppen centraler maken
 - forms
 - navigatie
