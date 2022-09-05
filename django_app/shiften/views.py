@@ -438,7 +438,7 @@ def available_add_rep(request):
         av_form = AvailableRepForm(request.POST, instance = OnbeschikbaarHerhalend(lid=request.user.lid))
         if av_form.is_valid():
             av_form.save()
-            messages.success(request, _('Available rep added'))
+            messages.success(request, _('Available repeating added'))
             return redirect(to='available')
     else:
         av_form = AvailableRepForm()

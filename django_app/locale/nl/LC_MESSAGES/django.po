@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-01 14:00+0200\n"
+"POT-Creation-Date: 2022-09-05 11:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,25 +69,25 @@ msgstr "Profiel foto"
 msgid "image size must be under 2MB."
 msgstr "foto grote moet onder 2MB zijn."
 
-#: .\leden\models.py:17
+#: .\leden\models.py:16
 #, fuzzy, python-brace-format
 #| msgid "File too large. Size should not exceed 2 MiB."
 msgid "File too large. Size should not exceed {max_pp_size_mb} MiB."
 msgstr "Bestand te groot. Grote mag niet over 2MB zijn."
 
-#: .\leden\models.py:27
+#: .\leden\models.py:26
 msgid "Male"
 msgstr "Man"
 
-#: .\leden\models.py:28
+#: .\leden\models.py:27
 msgid "Female"
 msgstr "Vrouw"
 
-#: .\leden\models.py:29
+#: .\leden\models.py:28
 msgid "Other"
 msgstr "Andere"
 
-#: .\leden\models.py:70
+#: .\leden\models.py:66
 msgid "Can add new members who applied for membership"
 msgstr "Kan nieuwe leden toevoegen die lidmaatschap hebben aangevraagd"
 
@@ -103,6 +103,23 @@ msgstr "Opslaan"
 #: .\shiften\templates\shiften\template_edit.html:17
 msgid "Reset"
 msgstr "Reset"
+
+#: .\leden\templates\leden\lid_overview.html:16
+msgid "Statistics"
+msgstr "Statestieken"
+
+#: .\leden\templates\leden\lid_overview.html:18
+#, python-format
+msgid "Shifts in the last %(x)s month"
+msgstr "Shifts in de laaste %(x)s maand(en)"
+
+#: .\leden\templates\leden\lid_overview.html:21
+msgid "Total shifts done"
+msgstr "Totaal shiften gedaan"
+
+#: .\leden\templates\leden\lid_overview.html:24
+msgid "Days since last shift"
+msgstr "Dagen sins laaste shift"
 
 #: .\leden\templates\leden\new_leden.html:9
 msgid "Accept"
@@ -269,20 +286,20 @@ msgstr "U gebruikersnaam, in het geval dat u deze vergeten was:"
 msgid "The %(site_name)s team"
 msgstr "Het %(site_name)s team"
 
-#: .\leden\views.py:57 .\leden\views.py:126
+#: .\leden\views.py:60 .\leden\views.py:129
 msgid "Welkom to The Muze"
 msgstr "Welkom tot De Muze"
 
-#: .\leden\views.py:69
+#: .\leden\views.py:72
 #, python-brace-format
 msgid "{user.first_name} {user.last_name} wants to become a member"
 msgstr "{user.first_name} {user.last_name} wilt een lid worden"
 
-#: .\leden\views.py:75
+#: .\leden\views.py:78
 msgid "Succesfully signed up"
 msgstr "succesvol ingeschreven"
 
-#: .\leden\views.py:105
+#: .\leden\views.py:108
 msgid "Your profile is updated successfully"
 msgstr "Uw profiel is succesvol bijgewerkt"
 
@@ -331,8 +348,10 @@ msgid "event"
 msgstr "evenement"
 
 #: .\shiften\templates\shiften\available\create.html:8
-msgid "available"
-msgstr "beschikbaar"
+#: .\shiften\templates\shiften\available\overview.html:8
+#| msgid "available"
+msgid "Not available"
+msgstr "Niet beschikbaar"
 
 #: .\shiften\templates\shiften\available\create.html:11
 #: .\shiften\templates\shiften\available\create_rep.html:10
@@ -341,12 +360,18 @@ msgid "Add"
 msgstr "Toevoegen"
 
 #: .\shiften\templates\shiften\available\create_rep.html:7
-msgid "available rep"
-msgstr ""
+#| msgid "available"
+msgid "Not available repeating"
+msgstr "Niet beschikbaar herhalend"
 
 #: .\shiften\templates\shiften\available\edit_rep.html:7
-msgid "Edit"
-msgstr "Bewerk"
+#| msgid "available"
+msgid "not available edit"
+msgstr "niet beschikbaar bewerken"
+
+#: .\shiften\templates\shiften\available\overview.html:20
+msgid "Not availabilty repeating"
+msgstr "Niet beschikbaar herhalend"
 
 #: .\shiften\templates\shiften\template_create.html:7
 msgid "Create template"
@@ -376,19 +401,23 @@ msgstr "Shiftlijst is succesvol verwijdert"
 msgid "Template updated successfully"
 msgstr "Sjabloon succesvol bijgewerkt"
 
-#: .\shiften\views.py:428
+#: .\shiften\views.py:429
 msgid "Available added"
-msgstr ""
+msgstr "beschikbaarheid toegevoegt"
 
-#: .\shiften\views.py:440
-msgid "Available rep added"
-msgstr ""
+#: .\shiften\views.py:441
+msgid "Available repeating added"
+msgstr "Beschikbaarheid herhalend toegevoegt"
 
-#: .\shiften\views.py:468
+
+#: .\shiften\views.py:469
 #, fuzzy
 #| msgid "Template updated successfully"
 msgid "Availibility updated successfully"
 msgstr "Sjabloon succesvol bijgewerkt"
+
+#~ msgid "Edit"
+#~ msgstr "Bewerk"
 
 #~ msgid "Welkom to the muze"
 #~ msgstr "Welkom tot de muze"

@@ -1,28 +1,36 @@
 {% extends '../base.html' %} {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'leden/css/ledenlijst.css' %}">
-<div class = "ledenlijst">
-    <p>Achternaam</p>
-    <p>Voornaam</p>
-    <p>E-mailadres</p>
-    <p>Telefoonnummer</p>
-    <p>Geboortdatum</p>
-    <p>Gender</p>
-    <p>Adres</p>
-    <p>Stad</p>
-    <p>Discord id</p>
-    <p>Media</p>
+<table class = "ledenlijst sortable ">
+<thead>
+    <th>Achternaam</th>
+    <th>Voornaam</th>
+    <th>E-mailadres</th>
+    <th>Telefoonnummer</th>
+    <th>Geboortdatum</th>
+    <th>Gender</th>
+    <th>Adres</th>
+    <th>Stad</th>
+    <th>Discord id</th>
+    <th>Media</th>
+</thead>
+<tbody>
   {% for lid in leden %}
-    <p><a href="{{ lid.id }}">{{ lid.user.last_name }}</a></p>
-    <p>{{ lid.user.first_name }}</p>
-    <p>{{ lid.user.email }}</p>
-    <p>{{ lid.tel }}</p>
-    <p>{{ lid.date_of_birth|date:"" }}</p>
-    <p>{{ lid.get_gender_display }}</p>
-    <p>{{ lid.street}} {{ lid.house_number }}</p>
-    <p>{{ lid.residence}} {{ lid.zipcode }}</p>
-    <p>{{ lid.discord_id }}</p>
-    <p>{{ lid.media }}</p>
+  <tr>
+    <td><a href="{{ lid.id }}">{{ lid.user.last_name }}</a></td>
+    <td>{{ lid.user.first_name }}</td>
+    <td>{{ lid.user.email }}</td>
+    <td>{{ lid.tel }}</td>
+    <td>{{ lid.date_of_birth|date:"Y-m-d" }}</td>
+    <td>{{ lid.get_gender_display }}</td>
+    <td>{{ lid.street}} {{ lid.house_number }}</td>
+    <td>{{ lid.residence}} {{ lid.zipcode }}</td>
+    <td>{{ lid.discord_id|default_if_none:"" }}</td>
+    <td>{{ lid.media }}</td>
+  </tr>
   {% endfor %}
-</div>
+</tbody>
+</table>
+{% comment %} <script src="{% static 'leden/scripts/ledenlijst/main.js' %}" type="module"></script> {% endcomment %}
+<script src="{% static 'scripts/sortable.min.js' %}"></script>
 {% endblock %}

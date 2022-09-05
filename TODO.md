@@ -1,7 +1,6 @@
 Main
 
 - svg ani aliasing
-- shift onbeschbaare datums instellen als lid
 - Sociale media integratie https://pypi.org/project/django-instagram/
 
 Problemen voor later
@@ -13,13 +12,13 @@ Problemen voor later
 Opmaak
 
 - css voor icon knoppen centraler maken
-- profiel pagina
 - forms
-- ledenlijst
 - navigatie
+- ledenlijst scrolbar die hidden is en idk waarom
 
 Lage prior
 
+- ledenlijst filters en betere sort
 - profiel foto op shiftlijst
 - html regex voor client side validatie
 - indien mogelijk username automatisch later generen op basis van voor en achternaam

@@ -170,8 +170,18 @@ function shiftsToHTML() {
     const div = document.createElement("div");
     div.classList.add("available-slideout");
     const head = document.createElement("h1");
+    const header = document.createElement("div");
+    header.classList.add("avail-header");
+    const close = document.querySelector(".close-btn");
+    close.classList.remove("hidden");
+    close.classList.add("svg-icon");
+    close.onclick = () => {
+      div.classList.remove("on");
+    };
     head.innerText = gettext("Not available");
-    div.appendChild(head);
+    head.appendChild(close);
+    header.appendChild(head);
+    div.appendChild(header);
     available.forEach((avail) => {
       const availDiv = document.createElement("div");
       const lid = document.createElement("h2");

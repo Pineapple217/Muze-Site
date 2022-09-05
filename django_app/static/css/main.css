@@ -43,7 +43,9 @@ body {
     padding: 8rem 3rem 1rem 3rem;
     min-height: 75%;
     margin-bottom: -60px;
+    /* overflow: auto; */
 
+    /* overflow: scroll; */
 }
 
 html {
@@ -92,10 +94,21 @@ a {
     /* font-size: 2rem; */
     /* } */
 
+
     .content {
         padding-top: 10em;
+        overflow: auto;
     }
+
+    header {
+        position: fixed;
+    }
+
+
+
 }
+
+/* @media screen and (min-width: 860px) {} */
 
 .hidden {
     display: none !important

@@ -177,9 +177,9 @@ def lid_overview(request, lid_id):
 
     context = {
         "user": lid.user,
-        "shifts_in_xmonths": stats.total_shifts_done(lid),
+        "shifts_in_xmonths": stats.shifts_in_x_months(lid, config.MONTHS_PER_SHIFT),
         "months_per_shift": config.MONTHS_PER_SHIFT,
-        "total_shifts": stats.shifts_in_x_months(lid, config.MONTHS_PER_SHIFT),
+        "total_shifts": stats.total_shifts_done(lid),
         "days_since_last_shift": stats.days_since_last_shift(lid),
     }
     return render(request, "leden/lid_overview.html", context)

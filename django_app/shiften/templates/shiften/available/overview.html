@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'shiften/css/available_overview.css' %}">
 <div class="av-block-group">
 <div class="av-block">
-<h1>{% trans "Availabilty" %}<a href="add"><img src="{% static 'icons/add.svg' %}" alt="add" class="svg-icon"></a></h1>
+<h1>{% trans "Not available" %}<a href="add"><img src="{% static 'icons/add.svg' %}" alt="add" class="svg-icon"></a></h1>
 {% for av in available %}
     <hr>
     <p>{{ av.start }} - {{ av.end }}</p>
@@ -17,7 +17,7 @@
 <hr>
 </div>
 <div class="av-block">
-<h1>{% trans "Availabilty repeating" %}<a href="add-rep"><img src="{% static 'icons/add.svg' %}" alt="add" class="svg-icon"></a></h1>
+<h1>{% trans "Not availabilty repeating" %}<a href="add-rep"><img src="{% static 'icons/add.svg' %}" alt="add" class="svg-icon"></a></h1>
 {% for av in available_rep %}
     <hr>
     <p>{{ av.start_period }} - {{ av.end_period }}</p>
