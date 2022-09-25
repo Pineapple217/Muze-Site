@@ -5,8 +5,9 @@
   <h1>{% trans "Edit profile" %}</h1>
   <form method="POST" enctype="multipart/form-data">
     {% include  'forms.html'%}
-    <button type="submit">{% trans "Safe" %}</button>
+    <button type="submit">{% trans "Save" %}</button>
     <button type="reset">{% trans "Reset" %}</button>
   </form>
   <script src="{% static 'leden/scripts/fileUpload.js' %}" type="module"></script>
+  <span class="hidden">{{ pp_size }}</span>
 {% endblock %}

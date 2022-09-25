@@ -7,13 +7,14 @@ from django.utils.translation import gettext as _
 from simple_history.models import HistoricalRecords
 from simple_history import register
 
+from constance import config
 register(User)
 
 def file_size(value): # add this to some file where you can import it from
-    max_pp_size_mb = 2
+    max_pp_size_mb = config.PP_MAX_SIZE_MB
     limit = max_pp_size_mb * 1024 * 1024
     if value.size > limit:
-        raise ValidationError(_(f'File too large. Size should not exceed {max_pp_size_mb} MiB.'))
+        raise ValidationError(_('File too large. Size should not exceed %(max)s MB.') % {'max': max_pp_size_mb})
 
 class Lid(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -39,7 +39,7 @@ else: # DEPLOY
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['http://kaz.sgr20.be:50080','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['http://kaz.sgr20.be:50080','https://*.127.0.0.1', 'http://beta.jhdemuze.be:50080']
 # Application definition
 
 INSTALLED_APPS = [
@@ -165,8 +165,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = 'media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'web3.futureweb.be'
-EMAIL_PORT = 465
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 # EMAIL_USE_TLS = True
@@ -212,5 +212,6 @@ CONSTANCE_DATABASE_PREFIX = 'constance:muze:'
 # config.MIN_AGE
 CONSTANCE_CONFIG = {
     'MIN_AGE': (15, 'Minimum leeft voor nieuwe leden'),
-    'MONTHS_PER_SHIFT': (3, 'months/shift a member is required to shift')
+    'MONTHS_PER_SHIFT': (3, 'months/shift a member is required to shift'),
+    'PP_MAX_SIZE_MB': (2, 'Aantal megabyte dat een profiel foto mag in nemen')
 }

@@ -110,7 +110,9 @@ def edit_profile(request):
     else:
         user_form = UserUpdateForm(instance=request.user)
         lid_form = LidUpdateForm(instance=request.user.lid)
-    return render(request, "leden/edit_profile.html", {'forms': (user_form, lid_form)})
+    
+    return render(request, "leden/edit_profile.html", {'forms': (user_form, lid_form),
+                                                       'pp_size': config.PP_MAX_SIZE_MB})
 
 @login_required
 @permission_required('leden.accept_lid')

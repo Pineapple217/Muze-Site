@@ -305,7 +305,7 @@ function createListEditPopup() {
   const bottom = document.createElement("div");
   bottom.classList.add("bottom-btns");
   const safe = document.createElement("button");
-  safe.innerText = gettext("Safe");
+  safe.innerText = gettext("Save");
   safe.onclick = () => {
     if (date.value) {
       if (type.value == "event" ? name.value : true) {
@@ -406,7 +406,7 @@ function showCreatePopup() {
   bottom.classList.add("bottom-btns");
   // safe button
   const safe = document.createElement("button");
-  safe.innerText = gettext("Safe");
+  safe.innerText = gettext("Save");
   safe.onclick = () => {
     if (
       date.value != "" &&
@@ -588,7 +588,7 @@ function showEditPopup(shift) {
   bottom.classList.add("bottom-btns");
   // safe button
   const safe = document.createElement("button");
-  safe.innerText = gettext("Safe");
+  safe.innerText = gettext("Save");
   safe.onclick = () => {
     if (saveMode.value == "shifters") safeShifters(shift, ul);
     else if (saveMode.value == "settings")

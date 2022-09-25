@@ -65,7 +65,7 @@ msgstr "Type"
 #: .\shiften\static\shiften\scripts\shifts\shiftlist.js:292
 #: .\shiften\static\shiften\scripts\shifts\shiftlist.js:393
 #: .\shiften\static\shiften\scripts\shifts\shiftlist.js:534
-msgid "Safe"
+msgid "Save"
 msgstr "Opslaan"
 
 #: .\shiften\static\shiften\scripts\shiftlists\shiftListApp.js:155

@@ -146,7 +146,7 @@ function createShiftlistPopupHTML() {
   const bottom = document.createElement("div");
   bottom.classList.add("bottom-btns");
   const safe = document.createElement("button");
-  safe.innerText = gettext("Safe");
+  safe.innerText = gettext("Save");
   safe.onclick = () => {
     if (date.value) createShiftlist(name.value, date.value, type.value);
   };
@@ -201,7 +201,7 @@ function createShiftlistTemplatePopup() {
   const bottom = document.createElement("div");
   bottom.classList.add("bottom-btns");
   const safe = document.createElement("button");
-  safe.innerText = gettext("Safe");
+  safe.innerText = gettext("Save");
   safe.onclick = () => {
     if (date.value) createShiftlistTemplate(template.value, date.value);
   };

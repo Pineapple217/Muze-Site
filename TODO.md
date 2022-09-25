@@ -1,5 +1,7 @@
 Main
 
+- export naar agenda van shiften
+- clear shifters knop
 - onbeschiibaar grondig testen
 - onbeschikbaar werkt nog niet deftig voor events
 - shiftlijst js kan wat herwerken gebruiken.
@@ -10,6 +12,7 @@ Problemen voor later
 - image beveiliging
 - voor betere perfomance icons als svg opslaan in plaats van font
 - discord id zien mensen niet
+- global setting max size is nie zo dynamaic idk why
 
 Opmaak
 

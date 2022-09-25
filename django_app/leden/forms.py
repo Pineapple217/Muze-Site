@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.forms import ClearableFileInput, ModelForm
 from django.forms.widgets import DateInput 
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _l
 import datetime
 # from django.contrib.auth.password_validation import password_validators_help_text_html
 class UserSignUpForm(UserCreationForm):
@@ -52,11 +53,11 @@ class UserSignUpForm(UserCreationForm):
 
 class LidSignUpForm(ModelForm):
     tel = forms.RegexField(regex=r'^\+[0-9]{2,3}\ [0-9]{3}(\ [0-9]{2}){3}$',
-                           label= _('Phone number'),
-                                                #    label= '',
-                           help_text= _('Format example +32 989 91 23 12.'))
+                           label= _l('Phone number'),
+                           help_text= _l('Format example +32 989 91 23 12.'))
 
-    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    date_of_birth = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}),
+                                    label=_l('Date of birth'))
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_suffix = ""  # Removes : as label suffix
@@ -79,14 +80,13 @@ class LidSignUpForm(ModelForm):
         fields = ('tel', 'date_of_birth', 'gender', 'street',
                   'house_number', 'zipcode', 'residence', 'discord_id', 'media',)
         labels = {
-            'date_of_birth': _('Date of birth'),
-            'gender': _('Gender'),
-            'street': _('Street'),
-            'house_number': _('House nummer'),
-            'zipcode': _('Zipcode'),
-            'residence': _('Residence'),
-            'discord_id': _('Discord id'),
-            'media': _('Social media'),
+            'gender': _l('Gender'),
+            'street': _l('Street'),
+            'house_number': _l('House nummer'),
+            'zipcode': _l('Zipcode'),
+            'residence': _l('Residence'),
+            'discord_id': _l('Discord id'),
+            'media': _l('Social media'),
         }
         # labels = {
         #     'date_of_birth': "",
@@ -130,15 +130,15 @@ class LidUpdateForm(ModelForm):
         fields = ('profile_picture', 'tel', 'gender', 'street',
                   'house_number', 'zipcode', 'residence', 'discord_id', 'media',)
         labels = {
-            'profile_picture': _('Profile picture'),
-            # 'date_of_birth': _('Date of birth'),
-            'gender': _('Gender'),
-            'street': _('Street'),
-            'house_number': _('House nummer'),
-            'zipcode': _('Zipcode'),
-            'residence': _('Residence'),
-            'discord_id': _('Discord id'),
-            'media': _('Social media'),
+            'profile_picture': _l('Profile picture'),
+            # 'date_of_birth': _l('Date of birth'),
+            'gender': _l('Gender'),
+            'street': _l('Street'),
+            'house_number': _l('House nummer'),
+            'zipcode': _l('Zipcode'),
+            'residence': _l('Residence'),
+            'discord_id': _l('Discord id'),
+            'media': _l('Social media'),
         }
 
         widgets = {
@@ -148,7 +148,7 @@ class LidUpdateForm(ModelForm):
         }
 
         help_texts = {
-            'profile_picture': _('image size must be under 2MB.'),
+            'profile_picture': _l('Image size must be under %(max)s MB.') % {'max': config.PP_MAX_SIZE_MB},
         }
     def clean_date_of_birth(self, *args, **kwargs):
         MIN_AGE = config.MIN_AGE

@@ -37,15 +37,15 @@ body {
     background: var(--body-bg);
     color: var(--body-color);
     margin: 0;
+    min-height: 100vh;
+    position: relative;
 }
 
 .content {
     padding: 8rem 3rem 1rem 3rem;
-    min-height: 75%;
-    margin-bottom: -60px;
-    /* overflow: auto; */
-
-    /* overflow: scroll; */
+    /* min-height: 78vh; */
+    /* margin-bottom: -60px; */
+    padding-bottom: 4rem;
 }
 
 html {
@@ -150,8 +150,9 @@ a {
 }
 
 footer {
-    height: 50px;
-    margin-top: 100px;
+    position: absolute;
+    bottom: 0;
+    height: 4rem;
     width: 100%;
     text-align: center;
     color: gray;

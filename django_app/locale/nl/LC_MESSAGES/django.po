@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-05 11:26+0200\n"
+"POT-Creation-Date: 2022-09-06 01:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,28 +66,28 @@ msgid "Profile picture"
 msgstr "Profiel foto"
 
 #: .\leden\forms.py:151
-msgid "image size must be under 2MB."
-msgstr "foto grote moet onder 2MB zijn."
+#, python-format
+msgid "Image size must be under %(max)s MB."
+msgstr "Foto grote moet onder %(max)s MB zijn."
 
-#: .\leden\models.py:16
-#, fuzzy, python-brace-format
-#| msgid "File too large. Size should not exceed 2 MiB."
-msgid "File too large. Size should not exceed {max_pp_size_mb} MiB."
-msgstr "Bestand te groot. Grote mag niet over 2MB zijn."
+#: .\leden\models.py:17
+#, python-format
+msgid "File too large. Size should not exceed %(max)s MB."
+msgstr "Bestand te groot. Grote mag niet over %(max)s MB zijn."
 
-#: .\leden\models.py:26
+#: .\leden\models.py:27
 msgid "Male"
 msgstr "Man"
 
-#: .\leden\models.py:27
+#: .\leden\models.py:28
 msgid "Female"
 msgstr "Vrouw"
 
-#: .\leden\models.py:28
+#: .\leden\models.py:29
 msgid "Other"
 msgstr "Andere"
 
-#: .\leden\models.py:66
+#: .\leden\models.py:67
 msgid "Can add new members who applied for membership"
 msgstr "Kan nieuwe leden toevoegen die lidmaatschap hebben aangevraagd"
 
@@ -96,7 +96,7 @@ msgid "Edit profile"
 msgstr "Bewerk profiel"
 
 #: .\leden\templates\leden\edit_profile.html:8
-msgid "Safe"
+msgid "Save"
 msgstr "Opslaan"
 
 #: .\leden\templates\leden\edit_profile.html:9
@@ -221,7 +221,7 @@ msgstr "Reset Wachtwoord"
 
 #: .\leden\templates\registration\password\password_reset_complete.html:5
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr "U Wachtwoord is ingestelt. U kan nu inloggen"
+msgstr "U Wachtwoord is ingestelt. U kan nu inloggen."
 
 #: .\leden\templates\registration\password\password_reset_complete.html:7
 msgid "Log in"
@@ -286,7 +286,7 @@ msgstr "U gebruikersnaam, in het geval dat u deze vergeten was:"
 msgid "The %(site_name)s team"
 msgstr "Het %(site_name)s team"
 
-#: .\leden\views.py:60 .\leden\views.py:129
+#: .\leden\views.py:60 .\leden\views.py:131
 msgid "Welkom to The Muze"
 msgstr "Welkom tot De Muze"
 
@@ -349,7 +349,6 @@ msgstr "evenement"
 
 #: .\shiften\templates\shiften\available\create.html:8
 #: .\shiften\templates\shiften\available\overview.html:8
-#| msgid "available"
 msgid "Not available"
 msgstr "Niet beschikbaar"
 
@@ -360,12 +359,10 @@ msgid "Add"
 msgstr "Toevoegen"
 
 #: .\shiften\templates\shiften\available\create_rep.html:7
-#| msgid "available"
 msgid "Not available repeating"
 msgstr "Niet beschikbaar herhalend"
 
 #: .\shiften\templates\shiften\available\edit_rep.html:7
-#| msgid "available"
 msgid "not available edit"
 msgstr "niet beschikbaar bewerken"
 
@@ -393,24 +390,23 @@ msgstr "Bewaar"
 msgid "Templates"
 msgstr "Sjabloon"
 
-#: .\shiften\views.py:342
+#: .\shiften\views.py:360
 msgid "Shiftlist is succesfully deleted"
 msgstr "Shiftlijst is succesvol verwijdert"
 
-#: .\shiften\views.py:381 .\shiften\views.py:395
+#: .\shiften\views.py:399 .\shiften\views.py:413
 msgid "Template updated successfully"
 msgstr "Sjabloon succesvol bijgewerkt"
 
-#: .\shiften\views.py:429
+#: .\shiften\views.py:446
 msgid "Available added"
 msgstr "beschikbaarheid toegevoegt"
 
-#: .\shiften\views.py:441
+#: .\shiften\views.py:458
 msgid "Available repeating added"
 msgstr "Beschikbaarheid herhalend toegevoegt"
 
-
-#: .\shiften\views.py:469
+#: .\shiften\views.py:486
 #, fuzzy
 #| msgid "Template updated successfully"
 msgid "Availibility updated successfully"

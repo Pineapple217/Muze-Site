@@ -4,12 +4,11 @@
 <header>
 <div class="main">
     <h1 class="page-title">
-        De Muze
+        <a href="/">De Muze</a>
     </h1>
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
     <nav>
         <ul>
-            <li><a href="/">Home</a></li>
             {% if perms.leden.accept_lid or perms.leden.view_lid %}
                 <li>
                     <div class="dropdown">
