@@ -36,8 +36,10 @@ else: # DEPLOY
     DEBUG = (os.getenv('DEBUG') == 'True')
     HOST_URL = os.getenv('HOST_URL')
 
-
-ALLOWED_HOSTS = ['*']
+if not DEPLOY:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOST = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')
 
 CSRF_TRUSTED_ORIGINS = ['http://kaz.sgr20.be:50080','https://*.127.0.0.1', 'http://beta.jhdemuze.be:50080']
 # Application definition
@@ -207,6 +209,9 @@ logging.config.dictConfig({
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 CONSTANCE_DATABASE_PREFIX = 'constance:muze:'
+
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # from constance import config
 # config.MIN_AGE

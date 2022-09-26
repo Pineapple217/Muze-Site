@@ -12,17 +12,39 @@ services:
       context: .
     ports:
       - "8000:8000"
+
   nginx:
-    build: ./nginx
+    build: .docker/nginx
     volumes:
       - static:/static
+      - certbot-web:/www
+      - proxy-dhparams:/proxy
+      - certbot-certs:/etc/letsencrypt
     ports:
       - "80:80"
       - "443:443"
     depends_on:
       - django_gunicorn
+    environment:
+      - DOMAIN=${DOMAIN}
+
+  certbot:
+    build:
+      context: ./docker/certbot
+    command: echo "Skipping..."
+    environment:
+      - EMAIL=${ACME_DEFAULT_EMAIL}
+      - DOMAIN=${DOMAIN}
+    volumes:
+      - certbot-web:/www
+      - certbot-certs:/etc/letsencrypt/
+    depends_on:
+      - nginx
 
 volumes:
   static:
   media:
   db:
+  certbot-web:
+  proxy-dhparams:
+  certbot-certs:
