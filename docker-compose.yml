@@ -16,7 +16,8 @@ services:
       - "8000:8000"
 
   nginx:
-    build: .docker/nginx
+    build:
+      context: .docker/nginx
     volumes:
       - static:/static
       - certbot-web:/www
