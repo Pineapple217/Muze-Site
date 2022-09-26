@@ -8,6 +8,8 @@ services:
       - db:/app/db
     env_file:
       - .env
+    environment:
+      - DJANGO_ALLOWED_HOSTS=${DOMAIN}
     build:
       context: .
     ports:
