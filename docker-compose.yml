@@ -17,7 +17,7 @@ services:
 
   nginx:
     build:
-      context: .docker/nginx
+      context: ./docker/nginx
     volumes:
       - static:/static
       - certbot-web:/www
