@@ -4,7 +4,7 @@ upstream django {
 
 server {
     listen 80;
-    server_name beta.jhdemuze.be;
+    server_name ${DOMAIN};
 
     location /.well-known/acme-challenge/ {
         root /www/;
@@ -18,10 +18,10 @@ server {
 
 server {
     listen 443 ssl;
-    server_name beta.jhdemuze.be;
+    server_name ${DOMAIN};
 
-    ssl_certificate     /etc/letsencrypt/live/beta.jhdemuze.be/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/beta.jhdemuze.be/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
 
     include     /etc/nginx/options-ssl-nginx.conf;
     ssl_dhparam /proxy/ssl-dhparams.pem;
