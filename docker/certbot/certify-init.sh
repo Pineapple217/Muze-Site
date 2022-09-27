@@ -22,3 +22,4 @@ certbot certonly \
     --rsa-key-size 4096 \
     --agree-tos \
     --noninteractive
+    --http-01-port=50080
