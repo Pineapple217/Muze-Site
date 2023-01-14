@@ -6,6 +6,7 @@ Main
 - onbeschikbaar werkt nog niet deftig voor events
 - shiftlijst js kan wat herwerken gebruiken.
 - Sociale media integratie https://pypi.org/project/django-instagram/
+- discord webhook meldingen voor shifters en voor nieuwe leden
 
 Problemen voor later
 
