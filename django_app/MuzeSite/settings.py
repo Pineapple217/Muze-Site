@@ -39,7 +39,7 @@ else: # DEPLOY
 if not DEPLOY:
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOST = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')
+    ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')
 
 CSRF_TRUSTED_ORIGINS = ['http://kaz.sgr20.be:50080','https://*.127.0.0.1', 'http://beta.jhdemuze.be:50080']
 # Application definition

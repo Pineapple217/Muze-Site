@@ -6,7 +6,7 @@ networks:
     name: proxy-network
 
 services:
-  django_gunicorn:
+  django-gunicorn:
     container_name: django-gunicorn
     volumes:
       - static:/static
