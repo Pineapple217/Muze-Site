@@ -23,5 +23,6 @@ services:
 
 volumes:
   static:
+    external: true
   media:
   db:
