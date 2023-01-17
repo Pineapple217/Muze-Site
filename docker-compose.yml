@@ -1,7 +1,7 @@
 version: "3.8"
 
 networks:
-  proxy-networks:
+  proxy-network:
     external: true
     name: proxy-network
 
