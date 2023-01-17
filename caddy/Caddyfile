@@ -1,0 +1,10 @@
+{
+    email ict@jhdemuze.be
+}
+bete.jhdemuze.be /static* {
+    root /static
+    file_server
+}
+beta.jhdemuze.be {
+    reverse_proxy django-gunicorn:8000
+}
