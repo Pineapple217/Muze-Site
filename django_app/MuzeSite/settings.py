@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'simple_history', #Simple history
     'constance.backends.database', #live settings ding
+    'django_unicorn',
     'constance',
     'leden',
     'main',

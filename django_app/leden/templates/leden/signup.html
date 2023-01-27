@@ -2,12 +2,47 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-  <link rel="stylesheet" href="{% static 'leden/css/signup.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'leden/css/signup.css' %}"> -->
+  <article>
   <h1>{% trans "Sign up" %}</h1>
   <form method="POST">
-      {% include 'forms.html'%}
-    <button type="submit">{% trans "Submit" %}</button>
-    <button type="reset">{% trans "Clear form" %}</button>
-  </form>
-  <script src= "{% static 'leden/scripts/phonenum.js' %}"></script>
+    {% csrf_token %}
+
+    {{ user_form.username }}
+    <div class="grid">
+      {{ user_form.first_name }}
+      {{ user_form.last_name }}
+    </div>
+    {{ user_form.email }}
+    <div class="grid">
+      {{ user_form.password1 }}
+      {{ user_form.password2 }}
+    </div>
+    {{ lid_form.tel }}
+
+    {{ lid_form.date_of_birth }}
+    {{ lid_form.gender }}
+    <div class="grid">
+      {{ lid_form.street }}
+      {{ lid_form.house_number }}
+    </div>
+    <div class="grid">
+      {{ lid_form.residence }}
+      {{ lid_form.zipcode }}
+    </div>
+    {{ lid_form.discord_id }}
+
+    <label for="{{ lid_form.media.id_for_label }}">
+      {{ lid_form.media.label }} 
+      {{ lid_form.media }}
+    </label>
+
+
+
+    <div class="grid">
+      <button type="submit">{% trans "Submit" %}</button>
+      <button type="reset" class="secondary">{% trans "Clear form" %}</button>
+    </div>
+  </form></article>
+  {% comment %} <script src= "{% static 'leden/scripts/phonenum.js' %}"></script> {% endcomment %}
 {% endblock %}

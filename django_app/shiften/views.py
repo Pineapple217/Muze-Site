@@ -21,14 +21,7 @@ from itertools import chain
 
 @login_required()
 def home(request):
-    if request.user.has_perm("shiften.add_shiftlijst") or request.user.has_perm("shiften.view_template"):
-        return render(request, 'shiften/home_perms.html',)
-    else:
-        shiftlists = Shiftlijst.objects.filter(is_active=True)
-        context = {
-        'shiftlists': shiftlists, 
-        }
-        return render(request, 'shiften/home.html', context= context)
+    return render(request, 'shiften/home.html')
 
 @login_required()
 def shift_list(request, list_id):
@@ -246,43 +239,6 @@ def ajax_shifts(request, list_id):
         status = 403
         dict = {"status": "Shiftlist is locked"}
     return JsonResponse(dict, status = status)
-
-@login_required    
-@permission_required('shiften.view_shiftlijst')
-def ajax_shift_list(request):
-    shiftlijsten = []
-    if  request.user.has_perm('shiften.change_shiftlijst'):
-        shiftlijst_query = Shiftlijst.objects.all()
-    else:
-        shiftlijst_query = Shiftlijst.objects.filter(is_active=True)
-    for shiftlijst in shiftlijst_query:
-       shiftlijsten.append({
-            "date": shiftlijst.date,
-            "type": _(shiftlijst.type),
-            "id": shiftlijst.id, 
-            "name": shiftlijst.name,
-            "string": str(shiftlijst),
-            "is_active": shiftlijst.is_active,
-       }) 
-    user_dict = {
-       "id": request.user.id,
-       "name": request.user.first_name + " " + request.user.last_name,
-       "perms": {"shiftlijst_add": request.user.has_perm("shiften.add_shiftlijst")if 1 else 0,
-                 "template_view": request.user.has_perm("shiften.view_template")if 1 else 0,}
-    }
-    dict = {
-        "shiftlists": shiftlijsten,
-        "user": user_dict,
-    }
-    if request.user.has_perm("shiften.add_shiftlijst"):
-        dict["types"] = Shiftlijst.type.field.choices
-        dict["templates"] = []
-        for template in Template.objects.all():
-            dict["templates"].append({
-                'name': template.name,
-                'id': template.id,
-            })
-    return JsonResponse(dict)   
 
 @login_required
 @permission_required('shiften.add_shiftlijst')

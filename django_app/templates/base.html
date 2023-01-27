@@ -1,32 +1,41 @@
 {% load static %}
-<link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
-<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<html data-theme="dark">
+    <head>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'pico.css/pico.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>De Muze</title>
-<body>
-<script src="{% static '/scripts/main.js' %}"></script>
-{% include 'navbar.html'%}
-<div class="content">
-{% block content %} 
-{% endblock %}
-</div> 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-        <div class="message">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            {{ message }}
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
-<script src="{% static '/scripts/colormode.js' %}"></script>
-<footer>
-    &copy; {% now 'Y' %} Jeugdhuis de muze
-</footer>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>De Muze</title>
+    </head>
+    <body>
+        <script src="{% static '/scripts/main.js' %}"></script>
 
-</body>
+        {% include 'navbar.html'%}
+
+        <main class="container">
+        {% block content %} 
+        {% endblock %}
+        </main> 
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                <div class="message">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{ message }}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- <script src="{% static '/scripts/colormode.js' %}"></script> -->
+        <footer class="container">
+            <small>
+            &copy; {% now 'Y' %} Jeugdhuis de muze
+            </small>
+        </footer>
+
+    </body>
+</html>

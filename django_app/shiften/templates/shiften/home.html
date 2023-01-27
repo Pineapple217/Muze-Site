@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+{% load unicorn %}
 {% load i18n %}
-<link rel="stylesheet" href="{% static 'shiften/css/home.css' %}">
-<h1>Shiftlists</h1>
-<ul class="shiftlist-list">
-    {% for list in shiftlists %}
-        <li class="shiftlist"><a href="{{ list.id }}">{{ list }}</a></li>
-    {% endfor %}
-</ul>
+    {% unicorn_scripts %}
+
+    {% csrf_token %}
+    {% comment %} <link rel="stylesheet" href="{% static 'shiften/css/home.css' %}"> {% endcomment %}
+    {% unicorn 'home' %}
+
 {% endblock%}

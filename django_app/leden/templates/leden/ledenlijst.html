@@ -1,7 +1,8 @@
 {% extends '../base.html' %} {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'leden/css/ledenlijst.css' %}">
-<table class = "ledenlijst sortable ">
+<figure>
+<table class="sortable" role="grid">
 <thead>
     <th>Achternaam</th>
     <th>Voornaam</th>
@@ -17,7 +18,7 @@
 <tbody>
   {% for lid in leden %}
   <tr>
-    <td><a href="{{ lid.id }}">{{ lid.user.last_name }}</a></td>
+    <td><a href="{{ lid.id }}" class="contrast">{{ lid.user.last_name }}</a></td>
     <td>{{ lid.user.first_name }}</td>
     <td>{{ lid.user.email }}</td>
     <td>{{ lid.tel }}</td>
@@ -31,6 +32,7 @@
   {% endfor %}
 </tbody>
 </table>
+</figure>
 {% comment %} <script src="{% static 'leden/scripts/ledenlijst/main.js' %}" type="module"></script> {% endcomment %}
 <script src="{% static 'scripts/sortable.min.js' %}"></script>
 {% endblock %}

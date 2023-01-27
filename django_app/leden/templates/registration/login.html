@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 {% block content %}
-<h1>{% trans "Please login" %}</h1>
+<link rel="stylesheet" type="text/css" href="{% static 'leden/css/login.css' %}">
+
 {% if form.errors %}
 <p>{% trans "Your username and password didnt match. Please try agian." %}</p>
 {% endif %} {% if next %} {% if user.is_authenticated %}
@@ -10,11 +12,15 @@
 </p>
 {% else %}
 {% endif %} {% endif %}
-
-<form method="POST" action="{% url 'login' %}">
-  {% include 'form.html' %}
-  <button type="submit" value="Login">{% trans "Login" %}</button>
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
-<a href="password-reset">{% trans "Forgot your password?" %}</a>
+<article class="grid">
+  <div>
+      <h1>{% trans "Login" %}</h1>
+    <form method="POST" action="{% url 'login' %}">
+      {% include 'form.html' %}
+      <button type="submit" value="Login">{% trans "Login" %}</button>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+    <a href="password-reset" class="secondary">{% trans "Forgot your password?" %}</a>
+  </div>
+</article>
 {% endblock content %}

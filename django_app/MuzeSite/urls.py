@@ -25,6 +25,7 @@ urlpatterns = [
     path('leden/', include('leden.urls')),
     path('shiften/', include('shiften.urls')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path("unicorn/", include("django_unicorn.urls")),
 ] 
 
 if settings.DEBUG:

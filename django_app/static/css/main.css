@@ -19,7 +19,8 @@
 
 
 :root {
-    --primary: #7AFCA1;
+    --primary: #7afca1;
+    --primary: #d81b60;
     --secondary: #06FB00;
     --accent: #168586;
     --dark: #212124;
@@ -29,6 +30,61 @@
     --button-text: #000000;
 }
 
+/* Teal Light scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+    --primary: #00897b;
+    --primary-hover: #00796b;
+    --primary-focus: rgba(0, 137, 123, 0.125);
+    --primary-inverse: #FFF;
+}
+
+/* Teal Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --primary: #00897b;
+        --primary-hover: #009688;
+        --primary-focus: rgba(0, 137, 123, 0.25);
+        --primary-inverse: #FFF;
+    }
+}
+
+/* Teal Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+    --primary: #00897b;
+    --primary-hover: #009688;
+    --primary-focus: rgba(0, 137, 123, 0.25);
+    --primary-inverse: #FFF;
+}
+
+/* Teal (Common styles) */
+:root {
+    --form-element-active-border-color: var(--primary);
+    --form-element-focus-color: var(--primary-focus);
+    --switch-color: var(--primary-inverse);
+    --switch-checked-background-color: var(--primary);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 
 body, input, textarea, button {
     font-family: 'Trebuchet MS', sans-serif;
 }
@@ -43,8 +99,6 @@ body {
 
 .content {
     padding: 8rem 3rem 1rem 3rem;
-    /* min-height: 78vh; */
-    /* margin-bottom: -60px; */
     padding-bottom: 4rem;
 }
 
@@ -58,8 +112,6 @@ button {
     border-bottom: 2px solid var(--body-color);
     color: var(--body-color);
     font-size: 1.1rem;
-    /* font-weight: 500; */
-    /* border-radius: 1em; */
     padding-bottom: 0.4em;
     transition-duration: 0.15s;
 }
@@ -90,9 +142,6 @@ a {
 }
 
 @media screen and (max-width: 860px) {
-    /* body, input, textarea, button { */
-    /* font-size: 2rem; */
-    /* } */
 
 
     .content {
@@ -108,7 +157,6 @@ a {
 
 }
 
-/* @media screen and (min-width: 860px) {} */
 
 .hidden {
     display: none !important
@@ -157,3 +205,4 @@ footer {
     text-align: center;
     color: gray;
 }
+*/

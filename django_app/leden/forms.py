@@ -29,9 +29,11 @@ class UserSignUpForm(UserCreationForm):
         self.fields['last_name'].required = True
         self.fields['email'].required = True
 
-        # self.fields['username'].widget.attrs['placeholder'] = _('Username')
-        # self.fields['first_name'].widget.attrs['placeholder'] = _('First name')
-        # self.fields['last_name'].widget.attrs['placeholder'] = _('Last name')
+        for field_name in self.fields:
+            field = self.fields.get(field_name)  
+            if field:
+                field.widget.attrs['placeholder'] =  field.label
+
         self.fields['email'].widget.attrs['pattern'] = r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
 
         # for field in self.fields:
@@ -63,14 +65,12 @@ class LidSignUpForm(ModelForm):
         self.label_suffix = ""  # Removes : as label suffix
 
         self.fields['tel'].widget.attrs['pattern'] = r"[+][0-9]{2,3}[ ][0-9]{3}([ ][0-9]{2}){3}"
-        # self.fields['date_of_birth'].widget.attrs['placeholder'] = _('Date of birth')
-        # self.fields['gender'].widget.attrs['placeholder'] = _('Gender')
-        # self.fields['street'].widget.attrs['placeholder'] = _('Street')
-        # self.fields['house_number'].widget.attrs['placeholder'] = _('House number')
-        # self.fields['zipcode'].widget.attrs['placeholder'] = _('Zipcode')
-        # self.fields['residence'].widget.attrs['placeholder'] = _('Residence')
-        # self.fields['discord_id'].widget.attrs['placeholder'] = _('Discord id')
-        # self.fields['media'].widget.attrs['placeholder'] = _('Social media')
+        self.fields['media'].widget.attrs['role'] = 'switch'
+
+        for field_name in self.fields:
+            field = self.fields.get(field_name)  
+            if field:
+                field.widget.attrs['placeholder'] =  field.label
 
         # for field in self.fields:
         #     self.fields[field].widget.attrs['class'] = 'form-control'
@@ -88,16 +88,6 @@ class LidSignUpForm(ModelForm):
             'discord_id': _l('Discord id'),
             'media': _l('Social media'),
         }
-        # labels = {
-        #     'date_of_birth': "",
-        #     'gender': "",
-        #     'street': "",
-        #     'house_number': "",
-        #     'zipcode': "",
-        #     'residence': "",
-        #     'discord_id': "",
-        #     'media': "",
-        # }
     
     def clean_date_of_birth(self, *args, **kwargs):
         MIN_AGE = config.MIN_AGE

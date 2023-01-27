@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 
 from leden.models import Lid
@@ -14,10 +15,11 @@ class Shiftlijst(models.Model):
     ]
     type = models.CharField(max_length = 100, choices=TYPES)
     is_active = models.BooleanField(default=False)
+
     history = HistoricalRecords()
 
     def __str__(self):
-        if self.type == 'month':
+        if self.type == 'month' and type(self.date) == datetime.date:
             return _(formats.date_format(self.date , format="F Y"))
         else:
             return self.name

@@ -1,29 +1,28 @@
 {% load static %}
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}">
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'css/forms.css' %}"> -->
     {% csrf_token %}
-    <div class="fields">
+    <!-- <div class="fields"> -->
     {% for form in forms %}
       {% for field in form %}
-          <div class="label">
+          <!-- <div class="label"> -->
             {{ field.label_tag }}
-            {% if field.field.required %}
+
+            <!-- {% if field.field.required %}
               <span class="required">*</span>
-            {% endif %}
-          </div>
-          <div>
+            {% endif %} -->
+
             {{ field }}
               {% if field.help_text %}
-                <div class="help-text">
+                <small>
                   {{ field.help_text }}
-                </div>
+                </small>
               {% endif %}
             {% for error in field.errors %}
               <p style="color: red">{{ error }}</p>
             {% endfor %}
-          </div>
+          <!-- </div> -->
       {% endfor %}
     {% endfor %}
-    </div>
 {% endblock %}

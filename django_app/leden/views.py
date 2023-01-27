@@ -80,7 +80,8 @@ def signup(request):
         else:
             user_form = UserSignUpForm()
             lid_form = LidSignUpForm()
-        return render(request, 'leden/signup.html', {'forms': (user_form, lid_form)})
+        return render(request, 'leden/signup.html', {'user_form': user_form,
+                                                     'lid_form': lid_form})
     else:
         return render(request,  'leden/already_logged_in.html')
 

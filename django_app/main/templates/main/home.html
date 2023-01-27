@@ -1,94 +1,41 @@
 {% extends 'base.html' %}
 {% block content%}
+{% load i18n %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'main/css/home.css' %}">
-<button id="color-mode-btn">Toggle colormode</button>
-{% comment %} <iframe
+
+<article class="grid bigfoto">
+  <div>
+    <h2>{% trans "Word lid" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+          Word lid bla bla bla is heel leuk en zo.
+          Heel cool ook ge moet er echt bij zijn geloof mij.
+      {% endblocktranslate %}
+    </p>
+    <button onclick="window.location.href='{% url 'signup' %}';">{% trans "Word Lid" %}</button>
+
+  </div>
+  <img src="{% static 'main/img/wordlid.jpg' %}" alt="">
+</article>
+
+
+{% comment %} <article class="grid">
+  <div>
+    <h2>{% trans "Join onze discord sever" %}</h2>
+    <p>
+      bla bla bla bla
+    </p>
+  </div>
+ <div id="discord">
+ <iframe
   src="https://discord.com/widget?id=539096504237817866&theme=dark"
-  width="350"
-  height="500"
   allowtransparency="true"
   frameborder="0"
   sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-></iframe> {% endcomment %}
-<br>
-<br>
-<p>Sint laborum enim qui mollit sint do aute aute elit nostrud et mollit laboris dolor. Consectetur consequat est et non consequat ad consequat labore reprehenderit commodo ipsum irure. Reprehenderit cillum magna aliqua qui esse adipisicing adipisicing ullamco eu anim elit esse. Magna laboris veniam non amet veniam. Est adipisicing aliqua irure culpa magna pariatur. Nostrud amet laborum aute mollit et minim nostrud eu aute esse. Non nostrud cupidatat nostrud adipisicing minim incididunt consequat ea occaecat exercitation non ullamco deserunt est.
 
-Voluptate nulla elit culpa sit. Aute incididunt voluptate voluptate irure minim id nostrud labore esse. Anim commodo veniam mollit dolore consequat aliquip anim. Ad est pariatur elit sit.
+></iframe>
+</div>
+</article> {% endcomment %}
 
-Adipisicing veniam do enim id amet sunt Lorem occaecat ea excepteur occaecat. Excepteur tempor magna magna consequat nulla. Veniam et officia proident occaecat deserunt commodo ex ex. Enim anim cillum fugiat esse. Officia consequat pariatur occaecat minim ullamco consectetur veniam.
-
-Ut ipsum eiusmod laborum laboris irure cupidatat do esse quis cillum cillum. Ex irure magna incididunt eiusmod dolore deserunt est proident ullamco deserunt. Velit dolore occaecat deserunt ut tempor commodo tempor ullamco nulla magna.
-
-Ad officia proident adipisicing enim anim do. Ut consequat ipsum dolore anim ad laboris nisi id consectetur sunt occaecat nulla. Velit Lorem labore consequat pariatur excepteur laboris excepteur non ad ea amet do nisi. Tempor Lorem Lorem tempor sit laborum et sint non cillum tempor consectetur. Enim irure ut ex id ad laborum.
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-Tempor anim mollit id anim nulla sint est exercitation. Ipsum commodo id cillum elit exercitation id eu. Nostrud consectetur ex esse officia.
-
-Qui voluptate veniam dolore irure laboris aliquip do laborum adipisicing. Non est adipisicing proident esse quis aliqua tempor quis et ut mollit. Do officia amet laborum Lorem aliquip ad adipisicing excepteur in ex. Anim est elit mollit ullamco sunt ex ad laboris nisi. Deserunt ipsum veniam ipsum veniam duis excepteur anim irure.
-
-Laborum laborum cillum velit duis nisi aliquip dolore ad velit dolore elit dolore exercitation veniam. Tempor minim anim ex adipisicing voluptate labore ipsum id elit mollit incididunt consectetur dolore ullamco. Officia ad adipisicing ut velit. Nulla ullamco excepteur sint dolore eu.
-
-Amet veniam dolore ad commodo irure. Nostrud id ut sunt amet occaecat eiusmod id irure ullamco quis deserunt sunt. Veniam laborum laborum fugiat aliquip et dolor magna laboris eiusmod deserunt. Ea quis aliquip dolor cillum aliquip nisi nisi adipisicing quis excepteur.
-
-Laboris sunt fugiat deserunt do laboris est labore id incididunt est adipisicing ullamco. Consectetur non cillum occaecat occaecat. Voluptate quis eiusmod excepteur exercitation fugiat eiusmod deserunt fugiat excepteur ut laborum consectetur. Magna id excepteur cillum laboris.</p>
-
-{% comment %} <script src="{% static 'main/scripts/instagram/main.js' %}" type="module"></script> {% endcomment %}
 {% endblock %}
