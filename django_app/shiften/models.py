@@ -6,6 +6,8 @@ from django.utils.translation import gettext as _
 from django.utils import formats
 from simple_history.models import HistoricalRecords
 
+from django.core.exceptions import ValidationError
+
 class Shiftlijst(models.Model):
     name = models.CharField(max_length = 300, null = True, blank = True)
     date = models.DateField()
@@ -22,7 +24,24 @@ class Shiftlijst(models.Model):
         if self.type == 'month' and type(self.date) == datetime.date:
             return _(formats.date_format(self.date , format="F Y"))
         else:
-            return self.name
+            if self.name:
+                return self.name
+        return "ERROR __str__"
+        
+
+    def clean(self):
+        if self.type != "month":
+            if not self.name:
+                raise ValidationError(
+                    {"name": "Name can only be empty if it is of type month"})
+        else:
+            if self.date:
+                self.date = datetime.date(self.date.year, self.date.month, 1)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
     
     class Meta:
        verbose_name_plural = "Shiftlijsten" 
@@ -39,7 +58,10 @@ class Shift(models.Model):
     history = HistoricalRecords()
 
     def __str__(self):
-       return f'{_(formats.date_format(self.date, format="l j F Y"))} | {self.start.isoformat(timespec = "minutes")} - {self.end.isoformat(timespec = "minutes")}'
+        try:
+            return f'{_(formats.date_format(self.date, format="l j F Y"))} | {self.start.isoformat(timespec = "minutes")} - {self.end.isoformat(timespec = "minutes")}'
+        except:
+            return "ERROR __str__"
     
 class Template(models.Model):
     name = models.CharField(max_length= 200)

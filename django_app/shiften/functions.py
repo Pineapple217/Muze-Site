@@ -8,7 +8,7 @@ import datetime
 def create_month_shiftlist(template, date):
     schedule = template.template["schedule"] 
     
-    date = datetime.date.fromisoformat(date)
+    # date = datetime.date.fromisoformat(date)
     date = datetime.date(date.year, date.month, 1)
     list = Shiftlijst.objects.create(type='month', date = date)
     date += datetime.timedelta(days = (schedule[0]["day"] - date.isoweekday() + 7) % 7) 

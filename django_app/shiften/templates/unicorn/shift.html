@@ -1,0 +1,38 @@
+<div>
+    <!-- put component code here -->
+    {% for shift in shifts %}
+    {% ifchanged shift.date %}</div>
+    {% with date=shift.date|date:'l j F Y'%}
+    <h3>{% trans date %}</h3>
+    {% endwith %}
+    <div class="day">
+    {% endifchanged %}
+    <div class = "shift">
+      <h4>{{ shift.start }}-{{ shift.end }}
+        {% if perms.shiften.change_shift %}
+         &nbsp;<button class="edit-button" value="{{ shift.id }}">&#9881;</button>
+        {% endif %}
+      </h4>
+      <ul class="shifters">
+      {% for shifter in shift.shifters.all %}
+        <li {% if shifter.user.id == user.id %} class = "loggedshifter" {% endif %}>
+          {{ shifter.user.first_name }} {{ shifter.user.last_name }}</li> 
+      {% endfor %}
+      </ul>
+      <div class="shift-button-status">
+      {% if shift.shifters.all.count == max_shifters and request.user.lid not in shift.shifters.all%}
+      <p class="volle-shift">Shift zit vol</p>
+      {% else %}
+        <button type="submit", name="shift_id" value="{{ shift.id }}">
+          {% if request.user.lid in shift.shifters.all %}
+            Maak shift vrij
+          {% else %}
+            Neem Shift
+          {% endif %}
+        </button>
+      </form>
+      {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+</div>

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'simple_history', #Simple history
     'constance.backends.database', #live settings ding
     'django_unicorn',
+    'maintenance_mode',
     'constance',
     'leden',
     'main',
@@ -70,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware', #Simple history
+    'maintenance_mode.middleware.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = 'MuzeSite.urls'
@@ -221,3 +223,8 @@ CONSTANCE_CONFIG = {
     'MONTHS_PER_SHIFT': (3, 'months/shift a member is required to shift'),
     'PP_MAX_SIZE_MB': (2, 'Aantal megabyte dat een profiel foto mag in nemen')
 }
+
+# MAINTENANCE MODE
+MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
+MAINTENANCE_MODE_IGNORE_STAFF = True
+MAINTENANCE_MODE_IGNORE_SUPERUSER = False

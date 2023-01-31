@@ -1,0 +1,32 @@
+<div>
+    {% load unicorn %}
+    <dialog id="add-shiftlist-template">
+        <article id='form-template'>
+            <a href="#close" aria-label="Close" class="close" 
+                data-target="add-shiftlist-template" onClick="toggleModal(event)">
+            </a>
+            <h1>Confirm your action</h1>
+            <p id='unicorn-errors'>
+                {% unicorn_errors %}
+            </p>           
+
+            <label for="type">Template</label>
+            <select id="type" u:model.defer="template_id" onchange="disableName(event)">
+                {% for template in templates %} 
+                    <option value="{{ template.id }}">{{ template }}</option>
+                {% endfor %}
+            </select>
+            <label for="date">Date</label>
+            <input id="date" type="date" u:model.defer="date" />
+            <footer>
+                <a href="#cancel" role="button" class="secondary" 
+                    data-target="add-shiftlist-normal" onClick="toggleModal(event)"
+                    u:click="$refresh">Cancel</a>
+                <a href="#confirm" role="button" 
+                    u:click="add_template"
+                    u:partial.id="form-template"
+                    >Add</a>
+            </footer>
+        </article>
+    </dialog>
+</div>

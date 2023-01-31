@@ -3,10 +3,10 @@
 {% load static %}
 {% load unicorn %}
 {% load i18n %}
-    {% unicorn_scripts %}
+{% unicorn_scripts %}
 
-    {% csrf_token %}
-    {% comment %} <link rel="stylesheet" href="{% static 'shiften/css/home.css' %}"> {% endcomment %}
-    {% unicorn 'home' %}
+{% csrf_token %}
+{% unicorn 'home' %}
+<link rel="stylesheet" href="{% static 'shiften/css/home.css' %}">
 
 {% endblock%}

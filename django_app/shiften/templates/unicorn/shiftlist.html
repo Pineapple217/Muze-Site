@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content%}
+
+{% load static %}
+{% load i18n %}
+{% load unicorn %}
+{% unicorn_scripts %}
+<link rel="stylesheet" type="text/css" href="{% static 'shiften/css/shiftlist.css' %}">
+{% csrf_token %}
+
+<div u:view>
+    <hgroup>
+        <hgroup id="shiftlist-info">
+            <h1>{{ shiftlist }}</h1>
+            <h2>{{ shiftlist.type }}</h2>
+        </hgroup>
+        <div class="grid">
+            {% if perms.shiften.change_shiftlijst %}
+                <button href="#" data-target="edit-shiftlist"
+                onclick="toggleModal(event); disableName()" role="button" class="secondary outline">
+                    Edit
+                </button>
+            {% endif %}
+            {% if perms.shiften.add_shift %}
+                <button href="#" data-target="add-shift" 
+                onclick="toggleModal(event)" role="button" class="secondary outline">
+                    Add Shift
+                </button>
+            {% endif %}
+        </div>
+    </hgroup>
+
+    <ul class="shift-list">
+        {% for shift in shifts %} 
+            <li class="shift">{{ shift }}</li>
+        {% endfor %}
+    </ul>
+{% comment %} {% unicorn 'edit-shiftlist' parent=view %} {% endcomment %}
+    <dialog id="edit-shiftlist">
+        <article id='form-edit'>
+            <a href="#close" aria-label="Close" class="close" 
+                data-target="edit-shiftlist" onClick="toggleModal(event)">
+            </a>
+            <h1>Confirm your action</h1>
+            <p id='unicorn-errors'>
+                {% unicorn_errors %}
+            </p>           
+
+            <label for="name">Name</label>
+            <input id="name" type="text" maxlength="300" u:model.defer="shiftlist.name" />
+            <label for="date">Date</label>
+            <input id="date" type="date" u:model.defer="shiftlist.date" />
+            <label for="type">Type</label>
+            <select id="type" u:model.defer="shiftlist.type" onchange="disableName(event)">
+                <option value="month">maand</option>
+                <option value="event">evenement</option>
+            </select>
+            <label for="active">Active</label>
+            <input id="active" type="checkbox" role="switch" u:model.defer="shiftlist.is_active" />
+            <footer>
+                <a href="#cancel" role="button" class="secondary" 
+                    data-target="edit-shiftlist" onClick="toggleModal(event)"
+                    u:click="$refresh"
+                    >Cancel</a>
+                <a href="#confirm" role="button" 
+                    u:click="save"
+                    u:partial.id="form-edit"
+                    u:partial.id="shiftlist-info"
+                    >Save</a>
+            </footer>
+        </article>
+    </dialog>
+
+</div>
+<script src="{% static '/scripts/modal.js' %}"></script>
+<script src="{% static '/shiften/scripts/shiftlist.js' %}"></script>
+
+{% endblock %}

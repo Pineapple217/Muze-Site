@@ -10,7 +10,6 @@ from shiften.models import Onbeschikbaar
 from leden.forms import LidSignUpForm
 from leden.models import Lid
 from .forms import TemplateForm
-from .functions import create_month_shiftlist
 from .models import OnbeschikbaarHerhalend, Shift, Shiftlijst, Template
 from django.utils.translation import gettext as _
 from django.utils import formats
@@ -22,11 +21,6 @@ from itertools import chain
 @login_required()
 def home(request):
     return render(request, 'shiften/home.html')
-
-@login_required()
-def shift_list(request, list_id):
-    get_object_or_404(Shiftlijst, id  = list_id)
-    return render(request, 'shiften/shiftlist.html')
 
 @login_required()
 @permission_required('shiften.view_shift')
@@ -239,52 +233,6 @@ def ajax_shifts(request, list_id):
         status = 403
         dict = {"status": "Shiftlist is locked"}
     return JsonResponse(dict, status = status)
-
-@login_required
-@permission_required('shiften.add_shiftlijst')
-def create_shiftlist(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
-        action = data.get("action")
-        match action:
-            case 'create_shiftlist':
-                shiftlist_info = data.get("actionInfo")
-                date = datetime.date.fromisoformat(shiftlist_info["date"])
-                if shiftlist_info["type"] == "month":
-                    date = datetime.date(date.year, date.month, 1)
-                shiftlist = Shiftlijst.objects.create(
-                                            date = date,
-                                            type = shiftlist_info["type"],
-                                            name = shiftlist_info["name"],)
-                shiftlist_info = {
-                "id": shiftlist.id,
-                "type": _(shiftlist.type),
-                "string": str(shiftlist),
-                }
-
-                status_msg = "succes"
-                status = 200
-            case 'create_shiftlist_template':
-                info = data.get("actionInfo")
-                template_id = info.get("id")
-                shiftlist_date = info.get("vars")
-                template = Template.objects.get(id=template_id)
-                shiftlist = create_month_shiftlist(template, shiftlist_date)
-
-                shiftlist_info = {
-                "date": shiftlist.date,
-                "id": shiftlist.id,
-                "type": _(shiftlist.type),
-                "string": str(shiftlist),
-                "name": shiftlist.name
-                }
-                status_msg = "succes"
-                status = 200
-
-            case _:
-                status_msg = f"{action}: this action does not exits"
-                status = 400 # Bad Request
-        return JsonResponse({"status": status_msg, "shiftlist_info": shiftlist_info}, status = status)
 
 @login_required
 def manage_shiftlist(request):
