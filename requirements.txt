@@ -10,7 +10,6 @@ django-constance==2.9.1
 django-maintenance-mode==0.18.0
 django-picklefield==3.1
 django-simple-history==3.1.1
-django-unicorn==0.49.2
 gunicorn==20.1.0
 idna==3.3
 orjson==3.8.5

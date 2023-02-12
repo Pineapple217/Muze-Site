@@ -1,0 +1,18 @@
+{% load i18n %}
+<article class="shift">
+    <header>
+        <hgroup> 
+            <h1>{{ shift.start|date:"H:i"}} - {{ shift.end|date:"H:i" }}</h1>
+            <h2>{{ shift.extra_info|default_if_none:"" }}</h2>
+        </hgroup>
+    </header>
+    <div id="shifters-{{ shift.id }}">
+        {% include "shiften/shiftlist/shifters.html" %}
+    </div>
+    <footer>
+        <button hx-post="{% url 'shift_signup' shift.id %}"
+                hx-swap="none"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        >{% trans "Signup" %}</button>
+    </footer>
+</article>

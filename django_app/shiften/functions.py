@@ -12,7 +12,6 @@ def create_month_shiftlist(template, date):
     date = datetime.date(date.year, date.month, 1)
     list = Shiftlijst.objects.create(type='month', date = date)
     date += datetime.timedelta(days = (schedule[0]["day"] - date.isoweekday() + 7) % 7) 
-    print(date)
     month = date.month
     while date.month == month:
         for shift in schedule:

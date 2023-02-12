@@ -2,14 +2,14 @@ import calendar
 import datetime
 import json
 from django.contrib import messages
-from django.http import HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseRedirect, JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseForbidden, JsonResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
-from .forms import AvailableForm, AvailableRepForm
+from django.urls import reverse
+from .forms import AvailableForm, AvailableRepForm, ShiftlistCreateForm, ShiftlistCreateWithTemplateForm, ShiftlistEditForm, TemplateForm
 from shiften.models import Onbeschikbaar
-from leden.forms import LidSignUpForm
 from leden.models import Lid
-from .forms import TemplateForm
+from .functions import create_month_shiftlist
 from .models import OnbeschikbaarHerhalend, Shift, Shiftlijst, Template
 from django.utils.translation import gettext as _
 from django.utils import formats
@@ -19,8 +19,108 @@ from itertools import chain
 
 
 @login_required()
+@permission_required('shiften.view_shiftlist')
 def home(request):
-    return render(request, 'shiften/home.html')
+    if request.user.has_perm('shiften.change_shiftlijst'):
+            shiftlists = Shiftlijst.objects.all()
+    else:
+            shiftlists = Shiftlijst.objects.filter(is_active=True)
+    shiftlists = shiftlists.order_by('date')
+
+    context = {}
+    context['form_normal'] = ShiftlistCreateForm()
+    context['form_template'] = ShiftlistCreateWithTemplateForm()
+    context['shiftlists'] =  shiftlists
+
+    return render(request, 'shiften/home/index.html', context=context)
+
+@login_required()
+@permission_required('shiften.add_shiftlist')
+def shiftlist_add_normal(request):
+    context = {}
+    form = ShiftlistCreateForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            shiftlist = form.save()
+
+            context["list"] = shiftlist
+            form = ShiftlistCreateForm()
+
+    context["form_normal"] = form
+    return render(request, "shiften/home/add_shiftlist_normal.html", context)
+
+@login_required()
+@permission_required('shiften.add_shiftlist')
+def shiftlist_add_template(request):
+    context = {}
+    form = ShiftlistCreateWithTemplateForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            template_id = form.cleaned_data['template']
+            date = form.cleaned_data['date']
+
+            template = Template.objects.get(id=template_id)
+            shiftlist = create_month_shiftlist(template, date)
+            context["list"] = shiftlist
+            form = ShiftlistCreateWithTemplateForm()
+
+    context["form_template"] = form
+    return render(request, "shiften/home/add_shiftlist_template.html", context)
+
+@login_required()
+@permission_required('shiften.view_shiftlist')
+@permission_required('shiften.view_shift')
+def shiftlist(request, shiftlist_id):
+    context = {}
+    shiftlist = get_object_or_404(Shiftlijst, id  = shiftlist_id)
+    context['shiftlist'] = shiftlist
+    context['shifts'] = shiftlist.shift_set.all().order_by('date', 'start')
+    context['form_edit'] = ShiftlistEditForm(instance=shiftlist)
+    return render(request, 'shiften/shiftlist/index.html', context=context)
+
+@login_required
+@permission_required('shiften.change_shiftlist')
+def shiftlist_edit(request, shiftlist_id):
+    context = {}
+    shiftlist = get_object_or_404(Shiftlijst, id  = shiftlist_id)
+    form = ShiftlistEditForm(request.POST or None, instance=shiftlist)
+    if request.method == "POST":
+        if form.is_valid():
+            shiftlist = form.save()
+            context['shiftlist_edited'] = True
+            form = ShiftlistEditForm(instance=shiftlist)
+
+    context["shiftlist"] = shiftlist
+    context["form_edit"] = form
+    return render(request, "shiften/shiftlist/edit_shiftlist.html", context)
+
+@login_required
+@permission_required('shiften.delete_shiftlist')
+def shiftlist_delete(request, shiftlist_id):
+    shiftlist = get_object_or_404(Shiftlijst, id  = shiftlist_id)
+    shiftlist.delete()
+    response = HttpResponse()
+    response.headers['HX-Redirect'] = reverse('shiftlist_home')
+    return response
+
+@login_required()
+@permission_required('shiften.view_shift')
+def shift_signup(request, shift_id):
+    context = {}
+    shift = get_object_or_404(Shift, id  = shift_id)
+    context['shift'] = shift
+    if request.method == "POST":
+        user_lid = request.user.lid
+        if shift.shifters.contains(user_lid): # zit er all in
+            shift.shifters.remove(user_lid)
+        elif shift.shifters.count() < shift.max_shifters: # vrije plaats en zit er nog niet in
+            shift.shifters.add(user_lid)
+        else: # voll
+            print("shift voll")
+
+    return render(request, "shiften/shiftlist/shifters_replace_wrapper.html", context)
 
 @login_required()
 @permission_required('shiften.view_shift')
@@ -234,6 +334,89 @@ def ajax_shifts(request, list_id):
         dict = {"status": "Shiftlist is locked"}
     return JsonResponse(dict, status = status)
 
+@login_required    
+@permission_required('shiften.view_shiftlijst')
+def ajax_shift_list(request):
+    shiftlijsten = []
+    if  request.user.has_perm('shiften.change_shiftlijst'):
+        shiftlijst_query = Shiftlijst.objects.all()
+    else:
+        shiftlijst_query = Shiftlijst.objects.filter(is_active=True)
+    for shiftlijst in shiftlijst_query:
+       shiftlijsten.append({
+            "date": shiftlijst.date,
+            "type": _(shiftlijst.type),
+            "id": shiftlijst.id, 
+            "name": shiftlijst.name,
+            "string": str(shiftlijst),
+            "is_active": shiftlijst.is_active,
+       }) 
+    user_dict = {
+       "id": request.user.id,
+       "name": request.user.first_name + " " + request.user.last_name,
+       "perms": {"shiftlijst_add": request.user.has_perm("shiften.add_shiftlijst")if 1 else 0,
+                 "template_view": request.user.has_perm("shiften.view_template")if 1 else 0,}
+    }
+    dict = {
+        "shiftlists": shiftlijsten,
+        "user": user_dict,
+    }
+    if request.user.has_perm("shiften.add_shiftlijst"):
+        dict["types"] = Shiftlijst.type.field.choices
+        dict["templates"] = []
+        for template in Template.objects.all():
+            dict["templates"].append({
+                'name': template.name,
+                'id': template.id,
+            })
+    return JsonResponse(dict)   
+
+@login_required
+@permission_required('shiften.add_shiftlijst')
+def create_shiftlist(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        action = data.get("action")
+        match action:
+            case 'create_shiftlist':
+                shiftlist_info = data.get("actionInfo")
+                date = datetime.date.fromisoformat(shiftlist_info["date"])
+                if shiftlist_info["type"] == "month":
+                    date = datetime.date(date.year, date.month, 1)
+                shiftlist = Shiftlijst.objects.create(
+                                            date = date,
+                                            type = shiftlist_info["type"],
+                                            name = shiftlist_info["name"],)
+                shiftlist_info = {
+                "id": shiftlist.id,
+                "type": _(shiftlist.type),
+                "string": str(shiftlist),
+                }
+
+                status_msg = "succes"
+                status = 200
+            case 'create_shiftlist_template':
+                info = data.get("actionInfo")
+                template_id = info.get("id")
+                shiftlist_date = info.get("vars")
+                template = Template.objects.get(id=template_id)
+                shiftlist = create_month_shiftlist(template, shiftlist_date)
+
+                shiftlist_info = {
+                "date": shiftlist.date,
+                "id": shiftlist.id,
+                "type": _(shiftlist.type),
+                "string": str(shiftlist),
+                "name": shiftlist.name
+                }
+                status_msg = "succes"
+                status = 200
+
+            case _:
+                status_msg = f"{action}: this action does not exits"
+                status = 400 # Bad Request
+        return JsonResponse({"status": status_msg, "shiftlist_info": shiftlist_info}, status = status)
+
 @login_required
 def manage_shiftlist(request):
     if request.method == "POST":
@@ -290,7 +473,6 @@ def template(request, template_id):
 
     return render(request, 'shiften/template.html', context= context)
 
-from django.core.mail import EmailMessage
 @login_required    
 @permission_required('shiften.change_template')
 def template_edit(request, template_id):

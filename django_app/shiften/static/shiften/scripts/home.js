@@ -15,7 +15,4 @@ function toggleModalById(modelId) {
   typeof modal != "undefined" && modal != null && isModalOpen(modal)
     ? closeModal(modal)
     : openModal(modal);
-  setTimeout(() => {
-    Unicorn.call("home", "load_shiftlists");
-  }, 250);
 }

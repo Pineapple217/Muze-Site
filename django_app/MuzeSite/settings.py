@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'simple_history', #Simple history
     'constance.backends.database', #live settings ding
-    'django_unicorn',
     'maintenance_mode',
     'constance',
     'leden',
@@ -130,8 +129,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'nl-be'
-# LANGUAGE_CODE = 'en-uk'
+# LANGUAGE_CODE = 'nl-be'
+LANGUAGE_CODE = 'en-uk'
 
 TIME_ZONE = 'Europe/Brussels'
 

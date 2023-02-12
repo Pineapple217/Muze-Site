@@ -1,16 +1,18 @@
 function disableName() {
-  const nameInput = document.getElementById("name");
-  const selector = document.getElementById("type");
+  const nameInput = document.getElementById("id_name");
+  const selector = document.getElementById("id_type");
   setTimeout(() => {
-    if (selector.value == "event") {
-      nameInput.disabled = false;
-      nameInput.style.textDecoration = "";
-    } else {
+    if (selector.value == "month") {
       nameInput.disabled = true;
       nameInput.style.textDecoration = "line-through";
+    } else {
+      nameInput.disabled = false;
+      nameInput.style.textDecoration = "";
     }
   }, 1);
 }
+document.getElementById("id_type").onchange = disableName;
+
 // Deze functie werkt alleen maar als model.js ook geladen is
 function toggleModalById(modelId) {
   const modal = document.getElementById(modelId);

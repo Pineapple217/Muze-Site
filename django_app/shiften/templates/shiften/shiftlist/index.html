@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content%}
+
+{% load static %}
+{% load i18n %}
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'shiften/css/shiftlist.css' %}"> {% endcomment %}
+{% csrf_token %}
+
+<hgroup>
+    <hgroup id="shiftlist-info">
+        <h1>{{ shiftlist }}</h1>
+        <h2>{{ shiftlist.type }}</h2>
+    </hgroup>
+    <div class="grid">
+        {% if perms.shiften.change_shiftlijst %}
+            <button href="#" data-target="edit-shiftlist"
+            onclick="toggleModal(event); disableName()" role="button" class="secondary outline">
+                Edit
+            </button>
+        {% endif %}
+        {% if perms.shiften.add_shift %}
+            <button href="#" data-target="add-shift" 
+            onclick="toggleModal(event)" role="button" class="secondary outline">
+                Add Shift
+            </button>
+        {% endif %}
+    </div>
+</hgroup>
+
+<dialog id="edit-shiftlist">
+    <article id="form-normal">
+        <a href="#close" aria-label="Close" class="close" 
+            data-target="edit-shiftlist" onClick="toggleModal(event)">
+        </a>
+        {% include "shiften/shiftlist/edit_shiftlist.html" %}
+</dialog>
+
+<div id="shifts">
+    <div>
+    {% for shift in shifts %}
+        {% ifchanged shift.date %}
+            </div>
+            <h1>{{ shift.date|date:"l j F Y" }}</h1>
+            <div class="day grid">
+        {% endifchanged %}
+        {% include "shiften/shiftlist/shift.html" %}
+    {% endfor %}
+</div>
+
+<script src="{% static '/scripts/modal.js' %}"></script>
+<script src="{% static '/shiften/scripts/shiftlist.js' %}"></script>
+
+{% endblock %}

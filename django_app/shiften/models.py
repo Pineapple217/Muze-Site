@@ -7,6 +7,7 @@ from django.utils import formats
 from simple_history.models import HistoricalRecords
 
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
 class Shiftlijst(models.Model):
     name = models.CharField(max_length = 300, null = True, blank = True)
@@ -34,14 +35,17 @@ class Shiftlijst(models.Model):
             if not self.name:
                 raise ValidationError(
                     {"name": "Name can only be empty if it is of type month"})
-        else:
-            if self.date:
-                self.date = datetime.date(self.date.year, self.date.month, 1)
+        if self.type == "month":
+            self.date = datetime.date(self.date.year, self.date.month, 1)
+            self.name = None
+            
 
     def save(self, *args, **kwargs):
         self.full_clean()
         return super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('shiftlist', kwargs={'shiftlist_id' : self.pk})
     
     class Meta:
        verbose_name_plural = "Shiftlijsten" 

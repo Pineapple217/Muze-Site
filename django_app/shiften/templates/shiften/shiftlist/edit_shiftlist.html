@@ -1,0 +1,42 @@
+
+{% load i18n %}
+
+{% if shiftlist_edited %}
+    <div hx-swap-oob="beforeend:#shiftlist-list">
+        <li class="shiftlist
+        {% if not list.is_active %}red{% endif %}"
+        ><a href="{{ list.id }}">{{ list }}</a></li>
+    </div>
+    <script>
+        toggleModalById('edit-shiftlist')
+        window.history.replaceState( null, null, window.location.href)
+    </script>
+{% endif %}
+
+<form hx-post="{% url 'shiftlist_edit' shiftlist.id %}" hx-swap="outerHTML">
+    <h1>Confirm your action</h1>
+    {% csrf_token %}
+    {% for field in form_edit %}
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+            <small>
+            {{ field.help_text }}
+            </small>
+        {% endif %}
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    {% endfor %}
+    <footer>
+        {% comment %} <a href="#confirm" role="button" 
+            >Add</a> {% endcomment %}
+        <button type="submit">{% trans "Submit" %}</button>
+        <button type="reset">{% trans "Clear" %}</button>
+        {% csrf_token %}
+        <button hx-post="{% url 'shiftlist_delete' shiftlist.id %}"
+                hx-confirm="Are you sure?"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        >{% trans "Delete" %}</button>
+    </footer>
+</form>
