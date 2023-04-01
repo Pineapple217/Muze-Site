@@ -1,5 +1,4 @@
 asgiref==3.5.2
-beautifulsoup4==4.11.1
 cachetools==4.2.4
 certifi==2022.6.15
 charset-normalizer==2.1.0
@@ -12,7 +11,6 @@ django-picklefield==3.1
 django-simple-history==3.1.1
 gunicorn==20.1.0
 idna==3.3
-orjson==3.8.5
 Pillow==9.2.0
 pipdeptree==2.2.1
 pydantic==1.9.1
