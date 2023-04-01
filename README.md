@@ -8,4 +8,5 @@
 - Django
   - [simple-history](https://github.com/jazzband/django-simple-history)
   - [constance](https://github.com/jazzband/django-constance)
+  - [maintenance-mode](https://github.com/fabiocaccamo/django-maintenance-mode)
 - [Pico css](https://github.com/picocss/pico)
