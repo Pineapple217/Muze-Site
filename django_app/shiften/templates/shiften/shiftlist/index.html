@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content%}
+
+{% load static %}
+{% load i18n %}
+<link rel="stylesheet" type="text/css" href="{% static 'shiften/css/shiftlist.css' %}">
+{% csrf_token %}
+
+<hgroup>
+    <hgroup id="shiftlist-info">
+        <h1>{{ shiftlist|title }}</h1>
+        <h2>{{ shiftlist.type|capfirst }}</h2>
+    </hgroup>
+    <div class="grid">
+        {% if perms.shiften.change_shiftlijst %}
+            <button href="#" data-target="edit-shiftlist"
+            onclick="toggleModal(event); disableName()" role="button" class="secondary outline">
+                Edit
+            </button>
+        {% endif %}
+        {% if perms.shiften.add_shift %}
+            <button href="#" data-target="add-shift" 
+            onclick="toggleModal(event)" role="button" class="secondary outline">
+                Add Shift
+            </button>
+        {% endif %}
+    </div>
+</hgroup>
+
+<dialog id="edit-shiftlist">
+    <article>
+        <a href="#close" aria-label="Close" class="close" 
+            data-target="edit-shiftlist" onClick="toggleModal(event)">
+        </a>
+        {% include "shiften/shiftlist/edit_shiftlist.html" %}
+</dialog>
+
+<dialog id="add-shift">
+    <article>
+        <a href="#close" aria-label="Close" class="close" 
+            data-target="add-shift" onClick="toggleModal(event)">
+        </a>
+        {% include "shiften/shiftlist/shift_create.html" %}
+</dialog>
+
+<dialog id="edit-shift">
+    <article>
+        <a href="#close" aria-label="Close" class="close" 
+            data-target="edit-shift" onClick="toggleModal(event)">
+        </a>
+        <div id="edit-shift-div">
+
+        </div>
+</dialog>
+
+{% include "shiften/shiftlist/shifts.html" %}
+
+<script src="{% static '/scripts/modal.js' %}"></script>
+<script src="{% static '/shiften/scripts/shiftlist.js' %}"></script>
+
+{% endblock %}

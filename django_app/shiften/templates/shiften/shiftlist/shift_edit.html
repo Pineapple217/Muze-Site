@@ -1,0 +1,50 @@
+{% load i18n %}
+{% if shifts %}
+    <div hx-swap-oob="outerHTML:#shifts">
+        {% include "shiften/shiftlist/shifts.html" %}
+        {% comment %} <script>
+            toggleModalById('edit-shift')
+            window.history.replaceState( null, null, window.location.href)
+        </script> {% endcomment %}
+    </div>
+{% endif %}
+
+<div  hx-swap-oob="innerHTML:#edit-shift-div">
+    <form hx-post="{% url 'shift_edit' shift.id %}" hx-swap="innerHTML">
+        <header>
+            <h1>Confirm your action</h1>
+        </header>
+        {% csrf_token %}
+        {{ form_edit_shift.date.label_tag }}
+        {{ form_edit_shift.date }}
+        <div class="grid">
+            <div>
+                {{ form_edit_shift.start.label_tag }}
+                {{ form_edit_shift.start }}
+            </div>
+            <div>
+                {{ form_edit_shift.end.label_tag }}
+                {{ form_edit_shift.end }}
+            </div>
+        </div>
+        {{ form_edit_shift.max_shifters.label_tag }}
+        {{ form_edit_shift.max_shifters }}
+        {{ form_edit_shift.extra_info.label_tag }}
+        {{ form_edit_shift.extra_info }}
+        <footer>
+            <div class="grid">
+                <button type="submit">{% trans "Submit" %}</button>
+                <button type="reset">{% trans "Clear" %}</button>
+            </div>
+            {% csrf_token %}
+            <button hx-delete="{% url 'shift_delete' shift.id %}"
+                    hx-confirm="Are you sure?"
+                    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+            >{% trans "Delete" %}</button>
+        </footer>
+    </form>
+    <script>
+        toggleModalById('edit-shift')
+        window.history.replaceState( null, null, window.location.href)
+    </script>
+</div>

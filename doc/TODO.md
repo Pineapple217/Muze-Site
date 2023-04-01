@@ -1,3 +1,8 @@
+SOON
+
+- sommige posts moeten puts zijn
+- namen van dingen
+
 Main
 
 - export naar agenda van shiften

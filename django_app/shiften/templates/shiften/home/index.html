@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load i18n %}
+
+{% comment %} {% csrf_token %} {% endcomment %}
+
+<div>
+    <hgroup>
+        <h1>{% trans "Shiftlists" %}</h1>
+        <div class="grid">
+            {% if perms.shiften.add_shiftlijst %}
+                <button href="#" data-target="add-shiftlist-normal"
+                onclick="toggleModal(event)" role="button" class="secondary outline">
+                    {% trans "Add Shiftlist" %}
+                </button>
+                <button href="#" data-target="add-shiftlist-template" 
+                onclick="toggleModal(event)" role="button" class="secondary outline">
+                    {% trans "Add Shiftlist (template)" %}
+                </button>
+            {% endif %}
+        </div>
+    </hgroup>
+
+    {% include "shiften/home/shiftlist_list.html" %}
+
+    <script src="{% static '/scripts/modal.js' %}"></script>
+    <script src="{% static '/shiften/scripts/home.js' %}"></script>
+</div>
+
+<dialog id="add-shiftlist-normal">
+    <article id="form-normal">
+        <a href="#close" aria-label="Close" class="close" 
+            data-target="add-shiftlist-normal" onClick="toggleModal(event)">
+        </a>
+        {% include "shiften/home/add_shiftlist_normal.html" %}
+</dialog>
+<dialog id="add-shiftlist-template">
+    <article id="form-normal">
+        <a href="#close" aria-label="Close" class="close" 
+            data-target="add-shiftlist-template" onClick="toggleModal(event)">
+        </a>
+        {% include "shiften/home/add_shiftlist_template.html" %}
+</dialog>
+
+<link rel="stylesheet" href="{% static 'shiften/css/home.css' %}">
+
+{% endblock%}

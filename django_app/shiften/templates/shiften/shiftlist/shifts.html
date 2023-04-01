@@ -1,0 +1,12 @@
+<div id="shifts">
+    <div>
+    {% for shift in shifts %}
+        {% ifchanged shift.date %}
+            </div>
+            <h1 id='shiftdate'>{{ shift.date|date:"l j F Y"|capfirst }}</h1>
+            <div class="day grid">
+        {% endifchanged %}
+        {% include "shiften/shiftlist/shift.html" %}
+    {% endfor %}
+</div>
+</div>

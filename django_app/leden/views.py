@@ -45,7 +45,6 @@ def signup(request):
                     user.refresh_from_db()
                     lid_form = LidSignUpForm(request.POST, instance = Lid(user=user))
                     lid_form.full_clean()
-                    # lid_form.is_accepted = False
                     lid_form.save()
                     raw_password = user_form.cleaned_data.get('password1')
                     user = authenticate(username=user.username, password=raw_password)
@@ -80,7 +79,8 @@ def signup(request):
         else:
             user_form = UserSignUpForm()
             lid_form = LidSignUpForm()
-        return render(request, 'leden/signup.html', {'forms': (user_form, lid_form)})
+        return render(request, 'leden/signup.html', {'user_form': user_form,
+                                                     'lid_form': lid_form})
     else:
         return render(request,  'leden/already_logged_in.html')
 

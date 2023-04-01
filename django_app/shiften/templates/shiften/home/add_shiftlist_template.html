@@ -1,0 +1,36 @@
+{% load i18n %}
+
+{% if list %}
+    <div hx-swap-oob="beforeend:#shiftlist-list">
+        <li class="shiftlist
+        {% if not list.is_active %}red{% endif %}"
+        ><a href="{{ list.get_absolute_url }}">{{ list }}</a></li>
+    </div>
+    <script>
+        toggleModalById('add-shiftlist-template')
+        window.history.replaceState( null, null, window.location.href)
+    </script>
+{% endif %}
+
+<form hx-post="{% url 'shiftlist_add_template' %}" hx-swap="outerHTML">
+    <h1>{% trans "Add Shiftlist (template)" %}</h1>
+    {% csrf_token %}
+    {% for field in form_template %}
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+            <small>
+            {{ field.help_text }}
+            </small>
+        {% endif %}
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    {% endfor %}
+    <footer>
+        <div class="grid">
+            <button type="submit">{% trans "Submit" %}</button>
+            <button type="reset">{% trans "Clear" %}</button>
+        </div>
+    </footer>
+</form>

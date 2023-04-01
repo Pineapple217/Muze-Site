@@ -1,16 +1,16 @@
 import calendar
 import datetime
 import json
+from pprint import pprint
 from django.contrib import messages
-from django.http import HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseRedirect, JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseForbidden, JsonResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
-from .forms import AvailableForm, AvailableRepForm
+from django.urls import reverse
+from .forms import AvailableForm, AvailableRepForm, ShiftAddForm, ShiftEditForm, ShiftEditShiftersFrom, ShiftlistCreateForm, ShiftlistCreateWithTemplateForm, ShiftlistEditForm, TemplateForm
 from shiften.models import Onbeschikbaar
-from leden.forms import LidSignUpForm
 from leden.models import Lid
-from .forms import TemplateForm
-from .functions import create_month_shiftlist
+from .functions import create_month_shiftlist, get_aviable_shifters
 from .models import OnbeschikbaarHerhalend, Shift, Shiftlijst, Template
 from django.utils.translation import gettext as _
 from django.utils import formats
@@ -20,352 +20,181 @@ from itertools import chain
 
 
 @login_required()
-def home(request):
-    if request.user.has_perm("shiften.add_shiftlijst") or request.user.has_perm("shiften.view_template"):
-        return render(request, 'shiften/home_perms.html',)
-    else:
-        shiftlists = Shiftlijst.objects.filter(is_active=True)
-        context = {
-        'shiftlists': shiftlists, 
-        }
-        return render(request, 'shiften/home.html', context= context)
-
-@login_required()
-def shift_list(request, list_id):
-    get_object_or_404(Shiftlijst, id  = list_id)
-    return render(request, 'shiften/shiftlist.html')
-
-@login_required()
-@permission_required('shiften.view_shift')
-def signup_shift(request):
-    if request.method == "POST":
-        data = json.loads(request.body)
-        action = data.get("action")
-        id = data.get("shiftId")
-        shift = get_object_or_404(Shift, id=id)
-        if shift.shift_list.is_active:
-            match action:
-                case "add_shifter":
-                    if shift.shifters.count() < shift.max_shifters:
-                        shift.shifters.add(request.user.lid)
-                        status_msg = "succes"
-                        status = 200 # OK
-                    else:
-                        status_msg = "Shift is full"
-                        status = 409 # Conflict 
-                case "remove_shifter":
-                    if shift.shifters.contains(request.user.lid):
-                        shift.shifters.remove(request.user.lid)     
-                        status_msg = "succes"
-                        status = 200 # OK
-                    else:
-                        status_msg = "Shift does not contain given user"
-                        status = 409 # Conflict
-                case _:
-                    status_msg = f"{action}: this action does not exits"
-                    status = 400 # Bad Request
-        else:
-            status = 403
-            status_msg = "User does not have accesses."
-
-        return JsonResponse({"status": status_msg} ,status = status)
-
-@login_required
-def manage_shift(request):
-    if request.method == "POST":
-        data = json.loads(request.body) 
-        action = data.get("action")
-        actionInfo = data.get("actionInfo")
-        id = actionInfo.get("shiftId")
-        shift = Shift.objects.get(id=id)
-
-        dict = {}
-        match action:
-            case "safe_shifters":
-                if request.user.has_perm("shiften.change_shift"):
-                    shifters_ids = actionInfo.get("shifters")
-                    shift.shifters.clear();
-                    for id in shifters_ids:
-                        shift.shifters.add(User.objects.get(id=id).lid)
-                    dict["status"] = "succes"
-                    status = 200
-            case "safe_shift":
-                if request.user.has_perm("shiften.change_shift"):
-                    shift.date = datetime.date.fromisoformat(actionInfo["date"])
-                    shift.start = datetime.time.fromisoformat(actionInfo["start"])
-                    shift.end = datetime.time.fromisoformat(actionInfo["end"])
-                    shift.max_shifters = int(actionInfo["max"])
-                    shift.extra_info = actionInfo["info"]
-                    shift.save()
-                    dict["shift"] = {
-                        "string": str(shift).split(" | ")[0]
-                    }
-                    dict["status"] = "succes"
-                    status = 200
-            case "delete_shift":
-                if request.user.has_perm("shiften.delete_shift"):
-                    shift.delete()
-                    dict["status"] = "succes"
-                    status = 200
-            case _:
-                status_msg = f"{action}: this action does not exits"
-                status = 400 # Bad Request 
-        return JsonResponse(dict, status = status)
-
-@login_required() 
-@permission_required('shiften.add_shift')
-def create_shift(request):
-    if request.method == "POST":
-        shift_info = json.loads(request.body)
-        shift = Shift.objects.create(
-                            date = datetime.date.fromisoformat(shift_info["date"]),
-                            start =  datetime.time.fromisoformat(shift_info["start"]),
-                            end = datetime.time.fromisoformat(shift_info["end"]),
-                            max_shifters = shift_info["max"],
-                            shift_list = Shiftlijst.objects.get(id = shift_info["shiftList"]),
-                            extra_info = shift_info["info"]
-                            )
-        shift_info = {
-            "id": shift.id,
-            "date": _(formats.date_format(shift.date, format="l j F")),
-            "string": str(shift).split(" | ")[0]
-        }
-        status_msg = "succes"
-        status = 200
-        return JsonResponse({"status": status_msg, "shift_info": shift_info }, status = status)
-
-@login_required() 
-@permission_required('shiften.view_shift')
-def ajax_shifts(request, list_id): 
-    list_object = get_object_or_404(Shiftlijst, id  = list_id)
-    if list_object.is_active or request.user.has_perm("shiften.change_shift"):
-        shifts = list_object.shift_set.all().order_by('date', 'start')
-        shifts_dict = []
-        for shift in shifts:
-            shifters = []
-            for u in shift.shifters.all():
-                shifters.append({"name": u.user.first_name + " " + u.user.last_name,
-                                "id": u.user.id})
-            shifts_dict.append({
-            "date": shift.date,
-            "start":  shift.start.isoformat(timespec = "minutes"),
-            "end":  shift.end.isoformat(timespec = "minutes"),
-            "shifters": shifters,
-            "id": shift.id,
-            "max": shift.max_shifters,
-            "string": str(shift).split(" | ")[0],
-            "info": shift.extra_info,
-            })
-        list_dict = {
-        "date": list_object.date,
-        "id" : list_object.id,
-        "type": list_object.type, 
-        "name": list_object.name,
-        "string": str(list_object),
-        "is_active": int(list_object.is_active),
-        }
-        user_dict = {
-        "id": request.user.id,
-        "name": request.user.first_name + " " + request.user.last_name,
-        "perms": {"shift_change"  : request.user.has_perm("shiften.change_shift")if 1 else 0,
-                    "shift_add"     : request.user.has_perm("shiften.add_shift")if 1 else 0,
-                    "shift_del"     : request.user.has_perm("shiften.delete_shift")if 1 else 0,
-                    "shiftlist_edit": request.user.has_perm("shiften.change_shiftlijst")if 1 else 0,
-                    "shiftlist_del" : request.user.has_perm("shiften.delete_shiftlijst")if 1 else 0,
-                    "available_view": request.user.has_perm("shiften.view_onbeschikbaar")if 1 else 0,}
-        }
-        dict = {"shifts": shifts_dict,
-                "list": list_dict,
-                "user": user_dict,}
-        if request.user.has_perm("shiften.change_shift"):
-            dict["leden"] = []
-            for lid in Lid.objects.all():
-                user = lid.user
-                dict["leden"].append(
-                    {"name": user.first_name + " " + user.last_name,
-                    "id": user.id,}
-                )
-        if request.user.has_perm("shiften.change_shift"):
-            dict["types"] = Shiftlijst.type.field.choices
-        if request.user.has_perm("shiften.view_onbeschikbaar"):
-            dict["available"] = []
-
-            list_first_day = list_object.date.replace(day=1)
-            next_month = list_object.date.replace(day=28) + datetime.timedelta(days=4)
-            list_last_day = next_month - datetime.timedelta(days=next_month.day)
-
-            avail = Onbeschikbaar.objects.filter(Q(start__lte=list_last_day) & Q(end__gte=list_first_day))
-            avail_rep = OnbeschikbaarHerhalend.objects.filter(Q(start_period__lte=list_last_day) & Q(end_period__gte=list_first_day))
-            avail_joined = list(chain(avail, avail_rep))
-            for a in avail_joined:
-                if type(a) == Onbeschikbaar:
-                    dict["available"].append({
-                        "date": f"{a.start} - {a.end}",
-                        "start": a.start,
-                        "end": a.end,
-                        "info": a.info,
-                        "lid": str(a.lid),       
-                        "user_id": a.lid.user.id,
-                        "type": "normal"
-                    })
-                if type(a) == OnbeschikbaarHerhalend:
-                    subdivided = []
-                    # if a.weekday == list_first_day.isoweekday():
-                    #     loopday
-                    loopday = (a.weekday - list_first_day.isoweekday() + 7)%7
-                    if (list_first_day < a.start_period):
-                        while (loopday < a.start_period.day):
-                            loopday += 7 
-                    # if a.start_period.isoweekday() < a.weekday:
-                        # start_period_move += datetime.timedelta(a.weekday - a.start_period.isoweekday() - 1)
-                    # loopday = start_period_move.day
-                    while (loopday < list_last_day.day) and ( (list_first_day + datetime.timedelta(days=loopday)) <= a.end_period):
-                        subdivided.append({
-                            "date": list_first_day + datetime.timedelta(days=loopday),
-                            "start_time": a.start.isoformat(timespec = "minutes"),
-                            "end_time": a.end.isoformat(timespec = "minutes"),
-                            "info": a.info,
-                            "lid": str(a.lid),
-                        })
-                        loopday += 7
-                    dict["available"].append({
-                        "date": f"{a.start_period} - {a.end_period}\n{_(calendar.day_name[a.weekday - 1])}\n{a.start} - {a.end}",
-                        "info": a.info,
-                        "lid": str(a.lid),
-                        "user_id": a.lid.user.id,
-                        "subs": subdivided,
-                        "type": "rep"
-                    })
-            dict["available"].sort(key=lambda x: x["date"])
-
-
-
-                
-        status = 200;
-    else:
-        status = 403
-        dict = {"status": "Shiftlist is locked"}
-    return JsonResponse(dict, status = status)
-
-@login_required    
 @permission_required('shiften.view_shiftlijst')
-def ajax_shift_list(request):
-    shiftlijsten = []
-    if  request.user.has_perm('shiften.change_shiftlijst'):
-        shiftlijst_query = Shiftlijst.objects.all()
+def home(request):
+    if request.user.has_perm('shiften.change_shiftlijst'):
+            shiftlists = Shiftlijst.objects.all()
     else:
-        shiftlijst_query = Shiftlijst.objects.filter(is_active=True)
-    for shiftlijst in shiftlijst_query:
-       shiftlijsten.append({
-            "date": shiftlijst.date,
-            "type": _(shiftlijst.type),
-            "id": shiftlijst.id, 
-            "name": shiftlijst.name,
-            "string": str(shiftlijst),
-            "is_active": shiftlijst.is_active,
-       }) 
-    user_dict = {
-       "id": request.user.id,
-       "name": request.user.first_name + " " + request.user.last_name,
-       "perms": {"shiftlijst_add": request.user.has_perm("shiften.add_shiftlijst")if 1 else 0,
-                 "template_view": request.user.has_perm("shiften.view_template")if 1 else 0,}
-    }
-    dict = {
-        "shiftlists": shiftlijsten,
-        "user": user_dict,
-    }
-    if request.user.has_perm("shiften.add_shiftlijst"):
-        dict["types"] = Shiftlijst.type.field.choices
-        dict["templates"] = []
-        for template in Template.objects.all():
-            dict["templates"].append({
-                'name': template.name,
-                'id': template.id,
-            })
-    return JsonResponse(dict)   
+            shiftlists = Shiftlijst.objects.filter(is_active=True)
+    shiftlists = shiftlists.order_by('date')
 
-@login_required
+    context = {}
+    context['form_normal'] = ShiftlistCreateForm()
+    context['form_template'] = ShiftlistCreateWithTemplateForm()
+    context['shiftlists'] =  shiftlists
+
+    return render(request, 'shiften/home/index.html', context=context)
+
+@login_required()
 @permission_required('shiften.add_shiftlijst')
-def create_shiftlist(request):
+def shiftlist_add_normal(request):
+    context = {}
+    form = ShiftlistCreateForm(request.POST or None)
+
     if request.method == "POST":
-        data = json.loads(request.body)
-        action = data.get("action")
-        match action:
-            case 'create_shiftlist':
-                shiftlist_info = data.get("actionInfo")
-                date = datetime.date.fromisoformat(shiftlist_info["date"])
-                if shiftlist_info["type"] == "month":
-                    date = datetime.date(date.year, date.month, 1)
-                shiftlist = Shiftlijst.objects.create(
-                                            date = date,
-                                            type = shiftlist_info["type"],
-                                            name = shiftlist_info["name"],)
-                shiftlist_info = {
-                "id": shiftlist.id,
-                "type": _(shiftlist.type),
-                "string": str(shiftlist),
-                }
+        if form.is_valid():
+            shiftlist = form.save()
 
-                status_msg = "succes"
-                status = 200
-            case 'create_shiftlist_template':
-                info = data.get("actionInfo")
-                template_id = info.get("id")
-                shiftlist_date = info.get("vars")
-                template = Template.objects.get(id=template_id)
-                shiftlist = create_month_shiftlist(template, shiftlist_date)
+            context["list"] = shiftlist
+            form = ShiftlistCreateForm()
 
-                shiftlist_info = {
-                "date": shiftlist.date,
-                "id": shiftlist.id,
-                "type": _(shiftlist.type),
-                "string": str(shiftlist),
-                "name": shiftlist.name
-                }
-                status_msg = "succes"
-                status = 200
+    context["form_normal"] = form
+    return render(request, "shiften/home/add_shiftlist_normal.html", context)
 
-            case _:
-                status_msg = f"{action}: this action does not exits"
-                status = 400 # Bad Request
-        return JsonResponse({"status": status_msg, "shiftlist_info": shiftlist_info}, status = status)
+@login_required()
+@permission_required('shiften.add_shiftlijst')
+def shiftlist_add_template(request):
+    context = {}
+    form = ShiftlistCreateWithTemplateForm(request.POST or None)
+
+    if request.method == "POST":
+        if form.is_valid():
+            template_id = form.cleaned_data['template']
+            date = form.cleaned_data['date']
+
+            template = Template.objects.get(id=template_id)
+            shiftlist = create_month_shiftlist(template, date)
+            context["list"] = shiftlist
+            form = ShiftlistCreateWithTemplateForm()
+
+    context["form_template"] = form
+    return render(request, "shiften/home/add_shiftlist_template.html", context)
+
+@login_required()
+@permission_required('shiften.view_shiftlijst')
+@permission_required('shiften.view_shift')
+def shiftlist(request, shiftlist_id):
+    context = {}
+    shiftlist = get_object_or_404(Shiftlijst, id  = shiftlist_id)
+    context['shiftlist'] = shiftlist
+    context['shifts'] = shiftlist.shift_set.all().order_by('date', 'start')
+    context['form_edit'] = ShiftlistEditForm(instance=shiftlist)
+    context['form_shift'] = ShiftAddForm()
+    return render(request, 'shiften/shiftlist/index.html', context=context)
 
 @login_required
-def manage_shiftlist(request):
+@permission_required('shiften.change_shiftlijst')
+def shiftlist_edit(request, shiftlist_id):
+    context = {}
+    shiftlist = get_object_or_404(Shiftlijst, id  = shiftlist_id)
+    form = ShiftlistEditForm(request.POST or None, instance=shiftlist)
     if request.method == "POST":
-        data = json.loads(request.body) 
-        action = data.get("action")
-        actionInfo = data.get("actionInfo")
-        id = actionInfo.get("id")
-        shiftlijst = Shiftlijst.objects.get(id=id)
-        response = {}
-        match action:
-            case "safe_shiftlist":
-                if request.user.has_perm("shiften.change_shiftlijst"):
-                    shiftlijst.name = actionInfo.get("name")
-                    shiftlijst.date = datetime.date.fromisoformat(actionInfo.get("date"))
-                    shiftlijst.type = actionInfo.get("type")
-                    shiftlijst.is_active = bool(actionInfo.get("active"))
-                    shiftlijst.save()
-                    response["shiftlist_info"] = {
-                        "type": shiftlijst.type,
-                        "string": str(shiftlijst),
-                    }
-                    status_msg = "succes"
-                    status = 200
-            case "delete_shiftlist":
-                if request.user.has_perm("shiften.delete_shift"):
-                    shiftlijst.delete()
-                    # mesage dat shift gone is
-                    messages.success(request, _("Shiftlist is succesfully deleted"))
-                    status_msg = "succes"
-                    status = 200
-                    # return redirect('shiftlist_home')
-            case _:
-                status_msg = f"{action}: this action does not exits"
-                status = 400 # Bad Request 
-        response["status"] = status_msg
-        return JsonResponse(response, status = status)
+        if form.is_valid():
+            shiftlist = form.save()
+            context['shiftlist_edited'] = True
+            form = ShiftlistEditForm(instance=shiftlist)
+
+    context["shiftlist"] = shiftlist
+    context["form_edit"] = form
+    return render(request, "shiften/shiftlist/edit_shiftlist.html", context)
+
+@login_required
+@permission_required('shiften.delete_shiftlijst')
+def shiftlist_delete(request, shiftlist_id):
+    shiftlist = get_object_or_404(Shiftlijst, id  = shiftlist_id)
+    shiftlist.delete()
+    response = HttpResponse()
+    response.headers['HX-Redirect'] = reverse('shiftlist_home')
+    return response
+
+@login_required()
+@permission_required('shiften.view_shift')
+def shift_signup(request, shift_id):
+    context = {}
+    shift = get_object_or_404(Shift, id  = shift_id)
+    context['shift'] = shift
+    if request.method == "POST":
+        user_lid = request.user.lid
+        if shift.shifters.contains(user_lid): # zit er all in
+            shift.shifters.remove(user_lid)
+        elif shift.shifters.count() < shift.max_shifters: # vrije plaats en zit er nog niet in
+            shift.shifters.add(user_lid)
+        else: # voll
+            print("shift voll")
+
+    return render(request, "shiften/shiftlist/shifters_replace_wrapper.html", context)
+
+@login_required()
+@permission_required('shiften.view_shift')
+def shift_create(request, shiftlist_id):
+    context = {}
+    shiftlist = get_object_or_404(Shiftlijst, id  = shiftlist_id)
+    form = ShiftAddForm(request.POST or None)
+    if request.method == "POST":
+        if form.is_valid():
+            shift = form.save(commit=False)
+            shift.shift_list = shiftlist
+            shift.save()
+            context['new_shift'] = True
+
+            form = ShiftAddForm()
+            context['shifts'] = shiftlist.shift_set.all().order_by('date', 'start')
+
+    context['shiftlist'] = shiftlist
+    context['form_shift'] = form
+    return render(request, "shiften/shiftlist/shift_create.html", context)
+
+@login_required()
+@permission_required('shiften.edit_shift')
+def shift_edit(request, shift_id):
+    context = {}
+    shift = get_object_or_404(Shift, id  = shift_id)
+    form = ShiftEditForm(request.POST or None, instance=shift)
+    if request.method == "POST":
+        if form.is_valid():
+            shift = form.save()
+            context['shifts'] = shift.shift_list.shift_set.all().order_by('date', 'start')
+            form = ShiftEditForm(instance=shift)
+
+    context["shift"] = shift
+    context["form_edit_shift"] = form
+    return render(request, "shiften/shiftlist/shift_edit.html", context)
+
+@login_required
+@permission_required('shiften.delete_shift')
+def shift_delete(request, shift_id):
+    context = {}
+    if request.method == "DELETE":
+        shift = get_object_or_404(Shift, id  = shift_id)
+        shift.delete()
+        context['shifts'] = shift.shift_list.shift_set.all().order_by('date', 'start')
+        return render(request, "shiften/shiftlist/shift_delete.html", context)
+
+@login_required
+@permission_required('shiften.edit_shift')
+def shift_edit_shifters(request, shift_id):
+    context = {}
+    shift = get_object_or_404(Shift, id  = shift_id)
+    shiftlist = get_object_or_404(Shiftlijst, id=shift.shift_list.id)
+    form = ShiftEditShiftersFrom(request.POST or None, instance = shift)
+    context['shift'] = shift
+    context['form_edit_shifters'] = form
+    print('iets')
+    if request.method == 'POST':
+        if form.is_valid():
+            form.clean()
+            form.save()
+            return render(request, "shiften/shiftlist/shifters.html", context)
+    pprint(get_aviable_shifters(shiftlist))
+    return render(request, "shiften/shiftlist/shift_edit_shifters.html", context)
+
+@login_required
+@permission_required('shiften.view_shift')
+def shift_shifters(request, shift_id):
+    context = {}
+    shift = get_object_or_404(Shift, id  = shift_id)
+    context['shift'] = shift
+    return render(request, "shiften/shiftlist/shifters_replace_wrapper.html", context)
 
 @login_required    
 @permission_required('shiften.view_template')
@@ -386,7 +215,6 @@ def template(request, template_id):
 
     return render(request, 'shiften/template.html', context= context)
 
-from django.core.mail import EmailMessage
 @login_required    
 @permission_required('shiften.change_template')
 def template_edit(request, template_id):

@@ -1,0 +1,7 @@
+<ul id="shiftlist-list">
+    {% for list in shiftlists %} 
+        <li class="shiftlist
+        {% if not list.is_active %}red{% endif %}"
+        ><a href="{{ list.get_absolute_url }}">{{ list }}</a></li>
+    {% endfor %}
+</ul>

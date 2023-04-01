@@ -1,0 +1,37 @@
+{% load i18n %}
+<article class="shift">
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <hgroup> 
+                        <h1 id="shifttime">{{ shift.start|date:"H:i"}} - {{ shift.end|date:"H:i" }}</h1>
+                        <h2>{{ shift.extra_info|default_if_none:"" }}</h2>
+                    </hgroup>
+                </li>
+            </ul>
+            {% if perms.shiften.change_shift %}
+                <ul>
+                    
+                    <li><a href="#" role="button"
+                        hx-get="{% url 'shift_edit' shift.id %}"
+                        hx-swap="none"
+                        >{% trans "Edit Shift" %}</a></li>
+                    <li><a href="#" role="button"
+                        hx-get="{% url 'shift_edit_shifters' shift.id %}"
+                        hx-swap="none"
+                        >{% trans "Edit Shifters" %}</a></li>
+                </ul>
+            {% endif %}
+        </nav>
+    </header>
+    <div id="shifters-{{ shift.id }}">
+        {% include "shiften/shiftlist/shifters.html" %}
+    </div>
+    <footer>
+        <button hx-post="{% url 'shift_signup' shift.id %}"
+                hx-swap="none"
+                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        >{% trans "Signup" %}</button>
+    </footer>
+</article>

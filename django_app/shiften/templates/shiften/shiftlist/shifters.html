@@ -1,0 +1,9 @@
+{% load filters %}
+<ul>
+    {% for shifter in shift.shifters.all %}
+        <li {% if shifter == request.user.lid %}class='current-user'{% endif %}>{{ shifter }}</li> 
+    {% endfor %}
+    {% for _ in shift|nr_of_empty_shiftslots %}
+        <li></li> 
+    {% endfor %}
+</ul>

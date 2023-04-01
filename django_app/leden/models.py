@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _l
 
 from simple_history.models import HistoricalRecords
 from simple_history import register
@@ -24,9 +25,9 @@ class Lid(models.Model):
     tel = models.CharField(max_length=50)
 
     GENDERS = [
-        ('M', _('Male')),
-        ('F', _('Female')),
-        ('X', _('Other')),
+        ('M', _l('Male')),
+        ('F', _l('Female')),
+        ('X', _l('Other')),
     ]
     gender = models.CharField(max_length=1, choices=GENDERS)
     street = models.CharField(max_length=200)

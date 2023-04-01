@@ -1,0 +1,23 @@
+article.bigfoto {
+    padding: 0;
+    margin: 40px 0;
+}
+
+article.bigfoto div {
+    padding: 2rem;
+}
+
+#discord {
+    width: 500px;
+    height: 500px;
+
+    overflow: hidden
+}
+
+#discord iframe {
+    position: relative;
+    left: -2px;
+    top: -2px;
+    max-width: 504px;
+    max-width: 504px;
+}
