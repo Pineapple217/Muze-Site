@@ -182,6 +182,9 @@ EMAIL_USE_SSL = True
 
 # Clear prev config
 LOGGING_CONFIG = None
+LOG_DIR = os.path.join(BASE_DIR, '../logs')
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
 
 # Get loglevel from env
 LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
@@ -190,20 +193,38 @@ logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'console': {
-            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
+        'verbose': {
+            'format': '{levelname} {asctime} [{module}] {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
         },
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'console',
+            'formatter': 'simple',
+        },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOG_DIR, 'warning.log'),
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
+            'backupCount': 5,
+            'level': 'WARNING',
+            'formatter': 'verbose'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
         },
     },
     'loggers': {
         '': {
             'level': LOGLEVEL,
-            'handlers': ['console',],
+            'handlers': ['console', 'file', 'mail_admins'],
         },
     },
 })

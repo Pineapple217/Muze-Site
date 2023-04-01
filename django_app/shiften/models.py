@@ -54,10 +54,10 @@ class Shift(models.Model):
     date = models.DateField()
     start = models.TimeField()
     end = models.TimeField()
-
     shifters = models.ManyToManyField(Lid, blank=True)
     max_shifters = models.PositiveSmallIntegerField()
     extra_info = models.CharField(max_length=500, blank=True, null=True)
+
     shift_list = models.ForeignKey(Shiftlijst, on_delete=models.CASCADE)
     history = HistoricalRecords()
 

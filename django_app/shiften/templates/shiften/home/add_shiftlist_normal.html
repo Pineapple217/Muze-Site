@@ -13,7 +13,7 @@
 {% endif %}
 
 <form hx-post="{% url 'shiftlist_add_normal' %}" hx-swap="outerHTML">
-    <h1>Confirm your action</h1>
+    <h1>{% trans "Add shiftlist" %}</h1>
     {% csrf_token %}
     {% for field in form_normal %}
         {{ field.label_tag }}
@@ -28,9 +28,9 @@
         {% endfor %}
     {% endfor %}
     <footer>
-        {% comment %} <a href="#confirm" role="button" 
-            >Add</a> {% endcomment %}
-        <button type="submit">{% trans "Submit" %}</button>
-        <button type="reset">{% trans "Clear" %}</button>
+        <div class="grid">
+            <button type="submit">{% trans "Submit" %}</button>
+            <button type="reset">{% trans "Clear" %}</button>
+        </div>
     </footer>
 </form>

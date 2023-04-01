@@ -12,10 +12,9 @@ def shifts_in_x_months(lid, x):
     today = datetime.date.today()
 
     shift_history = shifts.filter(date__lt = today)
-    print(shift_history)
 
     if today.month - x <= 0:
-        x_months_back = datetime.date(today.year - 1, today.month - x, today.day)
+        x_months_back = datetime.date(today.year - 1, today.month - x + 12, today.day)
     else:
         x_months_back = datetime.date(today.year, today.month - x, today.day)
 

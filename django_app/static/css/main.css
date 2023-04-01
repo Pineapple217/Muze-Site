@@ -161,7 +161,7 @@ a {
 .hidden {
     display: none !important
 }
-
+*/
 .messages {
     list-style-type: none;
     padding: 0;
@@ -179,6 +179,9 @@ a {
     margin-bottom: 15px;
 }
 
+ul.messages>li {
+    list-style: none;
+}
 
 
 .message .closebtn {
@@ -191,6 +194,8 @@ a {
     cursor: pointer;
     transition: 0.3s;
 }
+
+/*
 
 .red-btn {
     color: var(--red);

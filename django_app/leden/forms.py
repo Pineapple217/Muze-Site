@@ -71,6 +71,7 @@ class LidSignUpForm(ModelForm):
             field = self.fields.get(field_name)  
             if field:
                 field.widget.attrs['placeholder'] =  field.label
+                # field.label = _l(field.label)
 
         # for field in self.fields:
         #     self.fields[field].widget.attrs['class'] = 'form-control'

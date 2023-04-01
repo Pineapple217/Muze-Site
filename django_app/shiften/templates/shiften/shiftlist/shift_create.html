@@ -1,0 +1,38 @@
+{% load i18n %}
+
+{% if new_shift %}
+    <div hx-swap-oob="outerHTML:#shifts">
+        {% include "shiften/shiftlist/shifts.html" %}
+        <script>
+            toggleModalById('add-shift')
+            window.history.replaceState( null, null, window.location.href)
+        </script>
+    </div>
+{% endif %}
+
+<form hx-post="{% url 'shift_create' shiftlist.id %}" hx-swap="innerHTML">
+    <h1>Confirm your action</h1>
+    {% csrf_token %}
+    {{ form_shift.date.label_tag }}
+    {{ form_shift.date }}
+    <div class="grid">
+        <div>
+            {{ form_shift.start.label_tag }}
+            {{ form_shift.start }}
+        </div>
+        <div>
+            {{ form_shift.end.label_tag }}
+            {{ form_shift.end }}
+        </div>
+    </div>
+    {{ form_shift.max_shifters.label_tag }}
+    {{ form_shift.max_shifters }}
+    {{ form_shift.extra_info.label_tag }}
+    {{ form_shift.extra_info }}
+    <footer>
+        <div class="grid">
+            <button type="submit">{% trans "Submit" %}</button>
+            <button type="reset">{% trans "Clear" %}</button>
+        </div>
+    </footer>
+</form>

@@ -45,7 +45,6 @@ def signup(request):
                     user.refresh_from_db()
                     lid_form = LidSignUpForm(request.POST, instance = Lid(user=user))
                     lid_form.full_clean()
-                    # lid_form.is_accepted = False
                     lid_form.save()
                     raw_password = user_form.cleaned_data.get('password1')
                     user = authenticate(username=user.username, password=raw_password)

@@ -1,0 +1,7 @@
+<div hx-swap-oob="outerHTML:#shifts">
+    {% include "shiften/shiftlist/shifts.html" %}
+    <script>
+        toggleModalById('edit-shift')
+        window.history.replaceState( null, null, window.location.href)
+    </script>
+</div>

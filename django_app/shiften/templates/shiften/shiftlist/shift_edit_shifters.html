@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<div id="shifters-{{ shift.id }}" hx-swap-oob="outerHTML">
+    <form hx-post="{% url 'shift_edit_shifters' shift.id %}" hx-swap="outerHTML">
+        {% csrf_token %}
+        {% for field in form_edit_shifters %}
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+                <small>
+                {{ field.help_text }}
+                </small>
+            {% endif %}
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+        <div class="grid">
+            <button class="outline" type="submit">{% trans "Submit" %}</button>
+            <button class="outline secondary"
+            hx-get={% url 'shift_shifters' shift.id %}
+            hx-target="#shifters-{{ shift.id }}" 
+            >{% trans "Cancel" %}</button>
+            {% comment %} <button hx-delete="{% url 'shift_delete' shift.id %}"
+                    hx-confirm="Are you sure?"
+                    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' {% endcomment %}
+        </div>
+    </form>
+</div>

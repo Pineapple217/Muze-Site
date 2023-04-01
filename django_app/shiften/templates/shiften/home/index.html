@@ -7,16 +7,16 @@
 
 <div>
     <hgroup>
-        <h1>Shiftlists</h1>
+        <h1>{% trans "Shiftlists" %}</h1>
         <div class="grid">
             {% if perms.shiften.add_shiftlijst %}
                 <button href="#" data-target="add-shiftlist-normal"
                 onclick="toggleModal(event)" role="button" class="secondary outline">
-                    Add Shiftlist
+                    {% trans "Add Shiftlist" %}
                 </button>
                 <button href="#" data-target="add-shiftlist-template" 
                 onclick="toggleModal(event)" role="button" class="secondary outline">
-                    Add Shiftlist (template)
+                    {% trans "Add Shiftlist (template)" %}
                 </button>
             {% endif %}
         </div>
