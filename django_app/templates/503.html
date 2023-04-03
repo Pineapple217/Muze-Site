@@ -1,6 +1,25 @@
 {% load static %}
-<h1>503 Service Unavailable</h1>
-<p>
-    De website is momenteel in onderhoud. Probeer later opnieuw.
-</p>
-<img src="{% static 'img/cat-intrns.jpg' %}" alt="Katten in een computer">
+<link rel="stylesheet" type="text/css" href="{% static 'pico.css/pico.min.css' %}">
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/pico.min.css">
+    <title>503 - De Muze</title>
+  </head>
+  <body>
+    <main class="container">
+        <article class="grid"> 
+            <div>
+                <h1>503 Service Unavailable</h1>
+                <p>
+                    De website is momenteel in onderhoud. Probeer later opnieuw.
+                </p>
+                <p>admin@jhdemuze.be</p>
+            </div>
+            <img src="{% static 'img/cat-intrns.jpg' %}" alt="Katten in een computer">
+        </article>
+    </main>
+  </body>
+</html>
