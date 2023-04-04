@@ -8,6 +8,7 @@ networks:
 services:
   django-gunicorn:
     container_name: django-gunicorn
+    restart: always
     volumes:
       - static:/static
       - media:/app/media
@@ -20,6 +21,20 @@ services:
     #   - "8000:8000"
     networks:
       - proxy-network
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
 
 volumes:
   static:

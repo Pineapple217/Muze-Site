@@ -41,6 +41,12 @@ if not DEPLOY:
 else:
     ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')
 
+DB_USER = os.getenv('DB_USER')
+DB_PASSWD = os.getenv('DB_PASSWD')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
+
 CSRF_TRUSTED_ORIGINS = ['http://kaz.sgr20.be:50080','https://*.127.0.0.1', 'http://beta.jhdemuze.be:50080']
 # Application definition
 
@@ -99,10 +105,20 @@ WSGI_APPLICATION = 'MuzeSite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db/db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db/db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER' : DB_USER,
+        'PASSWORD' : DB_PASSWD,
+        'HOST' : DB_HOST,
+        'PORT' : DB_PORT,
     }
 }
 
