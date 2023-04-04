@@ -2,29 +2,28 @@
 {% load i18n %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'leden/css/userinfo.css' %}">
-    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-    <div class = "data-grid">
-        <p>{% trans "Username" %}</p>
-        <p>{{ user.username }}</p>
-        <p>{% translate "Email" %}</p>
-        <p>{{ user.email }}</p>
-        <p>{% translate "Phone number" %}</p>
-        <p>{{ user.lid.tel }}</p>
-        <p>{% translate "Date of birth" %}</p>
-        {% with date=user.lid.date_of_birth|date:'d F Y'%}
-        <p>{% trans date %}</p>
-        {% endwith %}
-        <p>{% translate "Gender" %}</p>
-        <p>{{ user.lid.get_gender_display }}</p>
-        <p>{% trans "Address" %}</p>
-        <p>{{ user.lid.street}} {{ user.lid.house_number }}</p>
-        <p>{% translate "Residenace" %}</p>
-        <p>{{ user.lid.residence}} {{ user.lid.zipcode }}</p>
-        {% if user.lid.discord_id %}
-            <p>{% translate "Discord id" %}</p>
-            <p>{{ user.lid.discord_id }}</p>
-        {% endif %}
-        <p>{% translate "Social media" %}</p>
-        <p>{{ user.lid.media }}</p>
-    </div>
+<div class="data-grid">
+    <p>{% trans "Username" %}</p>
+    <p>{{ user.username }}</p>
+    <p>{% translate "Email" %}</p>
+    <p>{{ user.email }}</p>
+    <p>{% translate "Phone number" %}</p>
+    <p>{{ user.lid.tel }}</p>
+    <p>{% translate "Date of birth" %}</p>
+    {% with date=user.lid.date_of_birth|date:'d F Y'%}
+    <p>{% trans date %}</p>
+    {% endwith %}
+    <p>{% translate "Gender" %}</p>
+    <p>{{ user.lid.get_gender_display }}</p>
+    <p>{% trans "Address" %}</p>
+    <p>{{ user.lid.street}} {{ user.lid.house_number }}</p>
+    <p>{% translate "Residenace" %}</p>
+    <p>{{ user.lid.residence}} {{ user.lid.zipcode }}</p>
+    {% if user.lid.discord_id %}
+        <p>{% translate "Discord id" %}</p>
+        <p>{{ user.lid.discord_id }}</p>
+    {% endif %}
+    <p>{% translate "Social media" %}</p>
+    <p>{{ user.lid.media }}</p>
+</div>
 {% endblock content %}

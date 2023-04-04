@@ -12,13 +12,19 @@
 }
 
 .pp-lid {
-    border-radius: 50%;
-    border: 0.3rem;
+    border-radius: 5px;
+    /* border: 0.3rem;
     border-color: var(--primary);
-    border-style: solid;
+    border-style: solid; */
     width: 200px;
 }
 
 .svg-icon {
     height: 1.8rem;
+}
+
+header.profile {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
 }

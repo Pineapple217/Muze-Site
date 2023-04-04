@@ -10,13 +10,19 @@
         <h1>{% trans "Shiftlists" %}</h1>
         <div class="grid">
             {% if perms.shiften.add_shiftlijst %}
-                <button href="#" data-target="add-shiftlist-normal"
+                <button data-target="add-shiftlist-normal"
                 onclick="toggleModal(event)" role="button" class="secondary outline">
                     {% trans "Add Shiftlist" %}
                 </button>
-                <button href="#" data-target="add-shiftlist-template" 
+                <button data-target="add-shiftlist-template" 
                 onclick="toggleModal(event)" role="button" class="secondary outline">
                     {% trans "Add Shiftlist (template)" %}
+                </button>
+            {% endif %}
+            {% if perms.templates.view_template %}
+                <button role="button" class="secondary outline"
+                onclick="document.location='templates'">
+                    {% trans "Templates" %}
                 </button>
             {% endif %}
         </div>

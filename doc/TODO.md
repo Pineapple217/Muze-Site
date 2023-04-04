@@ -1,5 +1,6 @@
 SOON
 
+- logs in volume steken
 - sommige posts moeten puts zijn
 - namen van dingen
 

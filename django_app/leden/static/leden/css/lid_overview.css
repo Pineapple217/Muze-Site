@@ -1,7 +1,10 @@
 .pp-lid {
-    border-radius: 50%;
-    border: 0.3rem;
-    border-color: var(--primary);
-    border-style: solid;
+    border-radius: 5px;
     width: 200px;
+}
+
+header.profile {
+    display: flex;
+    /* align-items: flex-end; */
+    gap: 2rem;
 }

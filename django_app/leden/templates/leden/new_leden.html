@@ -2,17 +2,30 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'leden/css/new_leden.css' %}">
 <form method="POST">
 {% csrf_token %}
 {% for lid in new %}
-    {% include 'leden/userinfo.html' with user=lid.user %}
-    <label for="accept{{lid.id}}">{% trans "Accept" %}</label>
-    <input id="accept{{lid.id}}" type="radio" value="accept" name="{{ lid.user.id }}">
-    <label for="del{{lid.id}}">{% trans "Delete" %}</label>
-    <input id="del{{lid.id}}" type="radio" value="del" name="{{ lid.user.id }}">
-    <br>
+    <article class="userinfo">
+        <header>
+            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+        </header>
+        {% include 'leden/userinfo.html' with user=lid.user %}
+        <footer>
+            <div class="grid">
+                <label for="accept{{lid.id}}">{% trans "Accept" %}
+                    <input id="accept{{lid.id}}" type="radio" value="accept" name="{{ lid.user.id }}">
+                </label>
+                <label for="del{{lid.id}}">{% trans "Delete" %}
+                    <input id="del{{lid.id}}" type="radio" value="del" name="{{ lid.user.id }}">
+                </label>
+            </div>
+        </footer>
+    </article>
 {% endfor %}
-<button type="submit">{% trans "Submit" %}</button>
-<button type="reset">{% trans "Clear" %}</button>
+<div class="grid">
+    <button type="submit">{% trans "Submit" %}</button>
+    <button type="reset">{% trans "Clear" %}</button>
+</div>
 </form>
 {% endblock %}

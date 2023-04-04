@@ -5,6 +5,20 @@
   <!-- <link rel="stylesheet" href="{% static 'leden/css/signup.css' %}"> -->
   <article>
   <h1>{% trans "Sign up" %}</h1>
+  {% for field in lid_form %}
+      {% if field.errors %}
+        {% for error in field.errors %}
+          <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+        {% endfor %}
+      {% endif %}
+  {% endfor %}
+  {% for field in user_form %}
+      {% if field.errors %}
+        {% for error in field.errors %}
+          <li><a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a></li>
+        {% endfor %}
+      {% endif %}
+  {% endfor %}
   <form method="POST">
     {% csrf_token %}
 
@@ -39,10 +53,11 @@
 
 
 
+
     <div class="grid">
       <button type="submit">{% trans "Submit" %}</button>
       <button type="reset" class="secondary">{% trans "Clear form" %}</button>
     </div>
   </form></article>
-  {% comment %} <script src= "{% static 'leden/scripts/phonenum.js' %}"></script> {% endcomment %}
+  <script src= "{% static 'leden/scripts/phonenum.js' %}"></script>
 {% endblock %}

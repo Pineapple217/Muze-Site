@@ -3,14 +3,19 @@
 {% load i18n %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'leden/css/profile.css' %}">
-<div class = "user-info">
-    {% if user.lid.profile_picture %}
-        <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
-    {% endif %}
+<article class = "user-info">
     
-    <a href="profile/edit"><img src="{% static 'icons/settings.svg' %}" alt="settings" class="svg-icon"></a>
+    <header class='profile'>
+        {% if user.lid.profile_picture %}
+            <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
+        {% endif %}
+        <hgroup>
+            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+            <h2><a href="profile/edit">{% trans "Edit" %}</a></h2>
+        </hgroup>
+    </header>
     {% include 'leden/userinfo.html' %}
-</div>
+</article>
 <br>
 <a href="password-change">{% trans "Change password" %}</a>
 

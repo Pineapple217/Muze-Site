@@ -3,26 +3,32 @@
 {% load i18n %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'leden/css/lid_overview.css' %}">
-<div class = "user-info">
-    {% if user.lid.profile_picture %}
-        <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
-    {% endif %}
+<article class = "user-info">
     
-    {% comment %} <a href="profile/edit"><img src="{% static 'icons/settings.svg' %}" alt="settings" class="svg-icon"></a> {% endcomment %}
+    <header class="profile">
+        {% if user.lid.profile_picture %}
+            <img src="{{ user.lid.profile_picture.url}}" alt="Profile picture" class ="pp-lid">
+        {% endif %}
+        <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+    </header>
     {% include 'leden/userinfo.html' %}
-</div>
+</article>
 
-<h1>{% trans "Statistics" %}</h1>
-<div class="lid-stats data-grid">
-    <p>{% blocktrans with x=months_per_shift %}Shifts in the last {{ x }} month{% endblocktrans %}</p>
-    <p>{{ shifts_in_xmonths }}</p>
+<article>
+    <header>
+        <h1>{% trans "Statistics" %}</h1>
+    </header>
+    <div class="data-grid">
+        <p>{% blocktrans with x=months_per_shift %}Shifts in the last {{ x }} month{% endblocktrans %}</p>
+        <p>{{ shifts_in_xmonths }}</p>
 
-    <p>{% trans "Total shifts done" %}</p>
-    <p>{{ total_shifts }}</p>
+        <p>{% trans "Total shifts done" %}</p>
+        <p>{{ total_shifts }}</p>
 
-    <p>{% trans "Days since last shift" %}</p>
-    <p>{{ days_since_last_shift }}</p>
-</div>
+        <p>{% trans "Days since last shift" %}</p>
+        <p>{{ days_since_last_shift }}</p>
+    </div>
+</article>
 
 
 {% comment %} <div class="upcomming-shifts shifts-link">

@@ -3,11 +3,17 @@
     grid-template-columns: max-content max-content;
     column-gap: 1rem;
     row-gap: 1rem;
-    border-left: 3px solid var(--primary);
-    padding: 0.75rem;
     max-width: max-content;
 }
 
 .data-grid p {
     margin: 0;
+}
+
+.userinfo {
+    max-width: 500px;
+}
+
+h1, hgroup {
+    margin-bottom: 0;
 }
