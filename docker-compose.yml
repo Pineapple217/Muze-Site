@@ -15,7 +15,9 @@ services:
     volumes:
       - static:/static
       - media:/app/media
-      - db:/app/db
+      - "./logs:./app/logs"
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     env_file:
       - .env
     build:
@@ -40,6 +42,8 @@ services:
       - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     networks:
       - db-network
 
