@@ -5,6 +5,7 @@ django_app/users
 /venv
 django_app/media
 /logs
+/db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
