@@ -4,6 +4,8 @@ networks:
   proxy-network:
     external: true
     name: proxy-network
+  db-network:
+    name: db-network
 
 services:
   django-gunicorn:
@@ -21,6 +23,7 @@ services:
     #   - "8000:8000"
     networks:
       - proxy-network
+      - db-network
     depends_on:
       - postgres-db
 
@@ -36,6 +39,8 @@ services:
       - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
+    networks:
+      - db-network
 
 volumes:
   static:
