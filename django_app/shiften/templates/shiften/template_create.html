@@ -7,8 +7,10 @@
 <h1>{% trans "Create template" %}</h1>
   <form method="POST">
     {% include  'form.html'%}
-    <button type="submit">{% trans "Submit" %}</button>
-    <button type="reset">{% trans "Clear" %}</button>
+    <div class="grid">
+      <button type="submit">{% trans "Submit" %}</button>
+      <button type="reset">{% trans "Clear" %}</button>
+    </div>
   </form>
 <script src="{% static 'shiften/scripts/editTemplate.js' %}" type="module"></script>
 {% endblock %}

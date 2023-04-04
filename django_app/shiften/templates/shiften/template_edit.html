@@ -12,9 +12,11 @@ function del() {
 </script>
 <h1>{% trans "Edit template" %}<span class="icon" onclick="del()">delete</span></h1>
   <form method="POST">
-      {% include 'form.html' %}
-    <button type="submit">{% trans "Save" %}</button>
-    <button type="reset">{% trans "Reset" %}</button>
+    {% include 'form.html' %}
+    <div class="grid">
+      <button type="submit">{% trans "Save" %}</button>
+      <button type="reset">{% trans "Reset" %}</button>
+    </div>  
   </form>
 <script src="{% static 'shiften/scripts/editTemplate.js' %}" type="module"></script>
 {% endblock %}
