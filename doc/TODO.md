@@ -1,33 +1,19 @@
-SOON
-
-- logs in volume steken
-- sommige posts moeten puts zijn
-- namen van dingen
-
 Main
 
 - export naar agenda van shiften
 - clear shifters knop
-- onbeschiibaar grondig testen
-- onbeschikbaar werkt nog niet deftig voor events
-- shiftlijst js kan wat herwerken gebruiken.
 - Sociale media integratie https://pypi.org/project/django-instagram/
 - discord webhook meldingen voor shifters en voor nieuwe leden
 
 Problemen voor later
 
 - image beveiliging
-- voor betere perfomance icons als svg opslaan in plaats van font
 - discord id zien mensen niet
 - global setting max size is nie zo dynamaic idk why
 
 Opmaak
 
-- svg ani aliasing
-- css voor icon knoppen centraler maken
-- forms
 - navigatie
-- ledenlijst scrolbar die hidden is en idk waarom
 
 Lage prior
 

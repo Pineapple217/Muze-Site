@@ -22,8 +22,6 @@ services:
       - .env
     build:
       context: .
-    # ports:
-    #   - "8000:8000"
     networks:
       - proxy-network
       - db-network
