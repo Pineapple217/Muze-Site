@@ -6,6 +6,7 @@ networks:
     name: proxy-network
   db-network:
     name: db-network
+    driver: bridge
 
 services:
   django-gunicorn:
