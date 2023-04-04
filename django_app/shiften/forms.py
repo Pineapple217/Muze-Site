@@ -146,6 +146,23 @@ class ShiftEditForm(forms.ModelForm):
         model = Shift
         fields = ('date', 'start', 'end', 'max_shifters', 'extra_info')
 
+# TODO werkt maar is nie super mooi doet wel wat het moet tho
+class SelectAttr(forms.Select):
+    def __init__(self, modify_classes=()):
+        super(SelectAttr, self).__init__()
+        # set data
+        self.modify_classes = modify_classes
+    def create_option(
+        self, name, value, label, selected, index, subindex=None, attrs=None
+    ):
+        option = super().create_option(
+            name, value, label, selected, index, subindex, attrs
+        )
+        option['attrs'].update({
+            'class': self.modify_classes[index]
+        })
+        return option
+
 class ShiftEditShiftersFrom(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -153,11 +170,16 @@ class ShiftEditShiftersFrom(forms.ModelForm):
 
         shift = self.instance
 
-        # options = [(lid.id, str(lid)) for lid in Lid.objects.all()]
         options = []
+        attr = []
+        attr.append('')
         for lid in Lid.objects.all():
+            # print(str(lid), lid.is_available(shift))
+            if lid.is_available(shift):
+                attr.append('')
+            else:
+                attr.append('grijs')
             s = str(lid)
-            # if 
             opt = (lid.id, s)
             options.append(opt)
         options.insert(0, ('None', ''))
@@ -167,7 +189,9 @@ class ShiftEditShiftersFrom(forms.ModelForm):
         for i in range(shift.max_shifters):
             field = self.fields[f'shifter-{i}'] = forms.ChoiceField(required=False,
                                                             choices = options,
-                                                            label='')
+                                                            label='',
+                                                            widget=SelectAttr(modify_classes=attr))
+                                                            # widget=forms.Select(attrs={'class': 'grijs'}))
             if i < shifters_len:
                 field.initial = (shifters[i].id, str(shifters[i]))
     

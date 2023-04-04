@@ -47,3 +47,7 @@ article.shift {
 li.current-user {
     color: var(--contrast);
 }
+
+.grijs {
+    color: var(--muted-color);
+}

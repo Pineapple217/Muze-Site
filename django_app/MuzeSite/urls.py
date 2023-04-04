@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('leden/', include('leden.urls')),
     path('shiften/', include('shiften.urls')),
-    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    # path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ] 
 
 if settings.DEBUG:

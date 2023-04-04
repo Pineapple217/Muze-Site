@@ -4,11 +4,15 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy as _l
+from datetime import datetime, time, timedelta
+from django.db.models import Q
 
 from simple_history.models import HistoricalRecords
 from simple_history import register
 
 from constance import config
+
+
 register(User)
 
 def file_size(value): # add this to some file where you can import it from
@@ -41,6 +45,30 @@ class Lid(models.Model):
     is_accepted = models.BooleanField(default=False)
     
     history = HistoricalRecords()
+
+    def is_available(self, shift) -> bool:
+        def is_next_day(time_s) -> bool:
+            return time(4, 0, 0) > time_s > time(0, 0, 0)
+        start = datetime.combine(shift.date + timedelta(days=1) if is_next_day(shift.start) else shift.date
+                                 , shift.start)
+        end = datetime.combine(shift.date + timedelta(days=1) if is_next_day(shift.end) else shift.date
+                               , shift.end)
+        shift_range = (start, end)
+        avail = self.onbeschikbaar_set.filter(
+            Q(start__lte=shift.date) & Q(end__gte=shift.date))
+        if avail:
+            return False
+
+        avail_rep = self.onbeschikbaarherhalend_set.filter(
+            Q(start_period__lte=start) & Q(end_period__gte=end))
+        if avail_rep:
+            for a in avail_rep:
+                if shift.date.isoweekday() == a.weekday:
+                    avail_start = datetime.combine(shift.date + timedelta(days=1) if is_next_day(a.start) else shift.date, a.start)
+                    avail_end = datetime.combine(shift.date + timedelta(days=1) if is_next_day(a.end) else shift.date, a.end)
+                    if not ((avail_end <= shift_range[0]) or (avail_start >= shift_range[1])):
+                        return False
+        return True
 
     def save(self, *args, **kwargs):
         super().save()

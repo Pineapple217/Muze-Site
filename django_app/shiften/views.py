@@ -179,13 +179,12 @@ def shift_edit_shifters(request, shift_id):
     form = ShiftEditShiftersFrom(request.POST or None, instance = shift)
     context['shift'] = shift
     context['form_edit_shifters'] = form
-    print('iets')
     if request.method == 'POST':
         if form.is_valid():
             form.clean()
             form.save()
             return render(request, "shiften/shiftlist/shifters.html", context)
-    pprint(get_aviable_shifters(shiftlist))
+    # pprint(get_aviable_shifters(shiftlist))
     return render(request, "shiften/shiftlist/shift_edit_shifters.html", context)
 
 @login_required
@@ -306,7 +305,7 @@ def available_edit(request, type, available_id):
                 av_form = AvailableRepForm(instance=av)
         case _:
             return HttpResponseBadRequest()
-    
+
     if not av.lid == request.user.lid:
         return HttpResponseForbidden()
     if request.method == 'POST' and av_form.is_valid():
@@ -318,6 +317,8 @@ def available_edit(request, type, available_id):
     # else:
     #     return HttpResponseForbidden()
     return render(request, "shiften/available/edit_rep.html", {'form': (av_form)})
+
+ 
 
 @login_required
 def  available_del(request, type, available_id):

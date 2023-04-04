@@ -59,7 +59,7 @@ class Shift(models.Model):
     extra_info = models.CharField(max_length=500, blank=True, null=True)
 
     shift_list = models.ForeignKey(Shiftlijst, on_delete=models.CASCADE)
-    history = HistoricalRecords()
+    history = HistoricalRecords(m2m_fields=[shifters])
 
     def __str__(self):
         try:
