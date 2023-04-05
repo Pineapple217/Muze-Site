@@ -229,7 +229,6 @@ def ical(request):
     if request.method == "POST":
         request.user.lid.ical_token = uuid.uuid4()
         request.user.lid.save()
-        print(request.user.lid.ical_token)
         response = HttpResponse()
         response.headers["HX-Refresh"] = "true"
         return response
