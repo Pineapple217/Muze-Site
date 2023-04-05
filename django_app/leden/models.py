@@ -49,6 +49,7 @@ class Lid(models.Model):
     discord_id = models.PositiveBigIntegerField(null=True, blank=True)
     media = models.BooleanField()
 
+    ical_token = models.UUIDField(null=True, blank=True)
     is_accepted = models.BooleanField(default=False)
 
     history = HistoricalRecords()

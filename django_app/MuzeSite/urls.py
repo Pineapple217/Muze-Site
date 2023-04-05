@@ -26,7 +26,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("leden/", include("leden.urls")),
     path("shiften/", include("shiften.urls")),
-    path("latest/feed.ics", ShiftFeed()),
+    path("ical/<uuid:ical_token>/feed.ics", ShiftFeed(), name="ical_feed"),
     # path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
