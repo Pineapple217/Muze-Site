@@ -223,7 +223,7 @@ def ical(request):
     if request.user.lid.ical_token:
         context[
             "url"
-        ] = f"{request.scheme}://{get_current_site(request)}/{reverse('ical_feed', kwargs={'ical_token': request.user.lid.ical_token})}"
+        ] = f"{request.scheme}://{get_current_site(request)}{reverse('ical_feed', kwargs={'ical_token': request.user.lid.ical_token})}"
     else:
         context["url"] = ""
     if request.method == "POST":
