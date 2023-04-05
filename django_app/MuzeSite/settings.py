@@ -15,91 +15,94 @@ from pathlib import Path
 import logging.config
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEPLOY = (os.getenv('DEPLOY', 'False') == 'True')
+DEPLOY = os.getenv("DEPLOY", "False") == "True"
 # DEPLOY = False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # die hier in deze file staat is niet meer secret en is alleen voor development
-if not DEPLOY: # AKABUG
-    SECRET_KEY = 'django-insecure-)(6i&+lg77#345nu(y4+0i9!gaam2w^ni3r2p-w&_b39b#r_vm'
+if not DEPLOY:  # AKABUG
+    SECRET_KEY = "django-insecure-)(6i&+lg77#345nu(y4+0i9!gaam2w^ni3r2p-w&_b39b#r_vm"
     DEBUG = True
-    HOST_URL = '127.0.0.1:8000'
-else: # DEPLOY
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    DEBUG = (os.getenv('DEBUG') == 'True')
-    HOST_URL = os.getenv('HOST_URL')
+    HOST_URL = "127.0.0.1:8000"
+else:  # DEPLOY
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    DEBUG = os.getenv("DEBUG") == "True"
+    HOST_URL = os.getenv("HOST_URL")
 
 if not DEPLOY:
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(',')
+    ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(",")
 
-DB_USER = os.getenv('DB_USER')
-DB_PASSWD = os.getenv('DB_PASSWD')
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT')
-DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv("DB_USER")
+DB_PASSWD = os.getenv("DB_PASSWD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
 
-CSRF_TRUSTED_ORIGINS = ['http://kaz.sgr20.be:50080','https://*.127.0.0.1', 'http://beta.jhdemuze.be:50080']
+CSRF_TRUSTED_ORIGINS = [
+    "http://kaz.sgr20.be:50080",
+    "https://*.127.0.0.1",
+    "http://beta.jhdemuze.be:50080",
+]
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',  # dit is legacy en word niet echt meer gebruikt
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'simple_history', #Simple history
-    'constance.backends.database', #live settings ding
-    'maintenance_mode',
-    'constance',
-    'leden',
-    'main',
-    'shiften',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",  # dit is legacy en word niet echt meer gebruikt
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "simple_history",  # Simple history
+    "constance.backends.database",  # live settings ding
+    "maintenance_mode",
+    "constance",
+    "leden",
+    "main",
+    "shiften",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'simple_history.middleware.HistoryRequestMiddleware', #Simple history
-    'maintenance_mode.middleware.MaintenanceModeMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",  # Simple history
+    "maintenance_mode.middleware.MaintenanceModeMiddleware",
 ]
 
-ROOT_URLCONF = 'MuzeSite.urls'
+ROOT_URLCONF = "MuzeSite.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR / 'templates'
-        ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'MuzeSite.wsgi.application'
+WSGI_APPLICATION = "MuzeSite.wsgi.application"
 
 
 # Database
@@ -112,13 +115,13 @@ WSGI_APPLICATION = 'MuzeSite.wsgi.application'
 #     }
 # }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER' : DB_USER,
-        'PASSWORD' : DB_PASSWD,
-        'HOST' : DB_HOST,
-        'PORT' : DB_PORT,
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_PASSWD,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
     }
 }
 
@@ -128,16 +131,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -146,9 +149,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 # LANGUAGE_CODE = 'nl-be'
-LANGUAGE_CODE = 'en-uk'
+LANGUAGE_CODE = "en-uk"
 
-TIME_ZONE = 'Europe/Brussels'
+TIME_ZONE = "Europe/Brussels"
 
 USE_I18N = True
 
@@ -157,14 +160,14 @@ USE_L10N = True
 USE_TZ = True
 
 FORMAT_MODULE_PATH = [
-    'MuzeSite.formats',
+    "MuzeSite.formats",
 ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 
-STATIC_ROOT ='/static/'
-STATIC_URL = '/static/'
+STATIC_ROOT = "/static/"
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
@@ -172,82 +175,83 @@ STATICFILES_DIRS = [
 ]
 
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',
+    BASE_DIR / "locale",
 ]
 
-LOGIN_URL = '/leden/login'
+LOGIN_URL = "/leden/login"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 # EMAIL_USE_TLS = True
 EMAIL_USE_SSL = True
-
 
 
 # Logging Configuration
 
 # Clear prev config
 LOGGING_CONFIG = None
-LOG_DIR = os.path.join(BASE_DIR, '../logs')
+LOG_DIR = os.path.join(BASE_DIR, "../logs")
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
 
 # Get loglevel from env
-LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+LOGLEVEL = os.getenv("DJANGO_LOGLEVEL", "info").upper()
 
-logging.config.dictConfig({
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} [{module}] {message}',
-            'style': '{',
+logging.config.dictConfig(
+    {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "verbose": {
+                "format": "{levelname} {asctime} [{module}] {message}",
+                "style": "{",
+            },
+            "simple": {
+                "format": "{levelname} {message}",
+                "style": "{",
+            },
         },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "formatter": "simple",
+            },
+            "file": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "filename": os.path.join(LOG_DIR, "warning.log"),
+                "maxBytes": 1024 * 1024 * 5,  # 5 MB
+                "backupCount": 5,
+                "level": "WARNING",
+                "formatter": "verbose",
+            },
+            "mail_admins": {
+                "level": "ERROR",
+                "class": "django.utils.log.AdminEmailHandler",
+                "include_html": True,
+            },
         },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+        "loggers": {
+            "": {
+                "level": LOGLEVEL,
+                "handlers": ["console", "file", "mail_admins"],
+            },
         },
-        'file': {
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(LOG_DIR, 'warning.log'),
-            'maxBytes': 1024 * 1024 * 5,  # 5 MB
-            'backupCount': 5,
-            'level': 'WARNING',
-            'formatter': 'verbose'
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,
-        },
-    },
-    'loggers': {
-        '': {
-            'level': LOGLEVEL,
-            'handlers': ['console', 'file', 'mail_admins'],
-        },
-    },
-})
+    }
+)
 
 
-CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
-CONSTANCE_DATABASE_PREFIX = 'constance:muze:'
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
+CONSTANCE_DATABASE_PREFIX = "constance:muze:"
 
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -255,9 +259,13 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # from constance import config
 # config.MIN_AGE
 CONSTANCE_CONFIG = {
-    'MIN_AGE': (15, 'Minimum leeft voor nieuwe leden'),
-    'MONTHS_PER_SHIFT': (3, 'months/shift a member is required to shift'),
-    'PP_MAX_SIZE_MB': (2, 'Aantal megabyte dat een profiel foto mag in nemen')
+    "MIN_AGE": (15, "Minimum leeft voor nieuwe leden"),
+    "MONTHS_PER_SHIFT": (3, "months/shift a member is required to shift"),
+    "PP_MAX_SIZE_MB": (2, "Aantal megabyte dat een profiel foto mag in nemen"),
+    "NEXT_DAY_BREAKPOINT": (
+        4,
+        "Het uur op waarom iets word gezien als de volgende dag ipv 00:00",
+    ),
 }
 
 # MAINTENANCE MODE

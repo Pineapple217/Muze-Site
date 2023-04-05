@@ -1,5 +1,6 @@
 Main
 
+- van function naar class based views gaan
 - export naar agenda van shiften
 - clear shifters knop
 - Sociale media integratie https://pypi.org/project/django-instagram/
@@ -13,7 +14,7 @@ Problemen voor later
 
 Opmaak
 
-- navigatie
+- alles
 
 Lage prior
 

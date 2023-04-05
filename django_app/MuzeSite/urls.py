@@ -19,13 +19,16 @@ from django.conf.urls.static import static
 from django.views.i18n import JavaScriptCatalog
 from django.conf import settings
 
+from shiften.ical import ShiftFeed
+
 urlpatterns = [
-    path('', include('main.urls')),
-    path('admin/', admin.site.urls),
-    path('leden/', include('leden.urls')),
-    path('shiften/', include('shiften.urls')),
+    path("", include("main.urls")),
+    path("admin/", admin.site.urls),
+    path("leden/", include("leden.urls")),
+    path("shiften/", include("shiften.urls")),
+    path("latest/feed.ics", ShiftFeed()),
     # path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
-] 
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
