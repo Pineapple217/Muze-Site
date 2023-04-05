@@ -5,8 +5,8 @@ from leden.models import Lid
 
 from .models import Shift
 
-from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
 
 
 class ShiftFeed(ICalFeed):
@@ -23,14 +23,26 @@ class ShiftFeed(ICalFeed):
         return lid.shift_set.all()
 
     def item_guid(self, item):
-        return "{}{}".format(item.id, "global_name")
+        return "{}{}".format(item.id, get_current_site(self.request))
 
     def item_title(self, item):
-
-        return "{}".format(str(item))
+        return "Shiften in De Muze"
+        # return "{}".format(str(item))
 
     def item_description(self, item):
-        return f"{self.request.scheme}://{get_current_site(self.request)}{item.shift_list.get_absolute_url()}"
+        desc = ""
+        desc += f"{self.request.scheme}://{get_current_site(self.request)}{item.shift_list.get_absolute_url()}\n"
+        desc += f"Shifters:\n"
+        for l in item.shifters.all():
+            desc += f"   {str(l)}\n"
+        desc += f"({item.shifters.count()}/{item.max_shifters})"
+        return desc
+
+    def timezone(self, item):
+        return settings.TIME_ZONE
+
+    def item_attendee(self, item):
+        return "Jules ;)"
 
     def item_start_datetime(self, item):
         return item.get_start_datetime()
