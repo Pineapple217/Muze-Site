@@ -8,7 +8,7 @@
 {% for lid in new %}
     <article class="userinfo">
         <header>
-            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+            <h1>{{ lid.user.first_name }} {{ lid.user.last_name }}</h1>
         </header>
         {% include 'leden/userinfo.html' with user=lid.user %}
         <footer>
