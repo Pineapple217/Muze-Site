@@ -1,7 +1,6 @@
 Main
 
 - van function naar class based views gaan
-- export naar agenda van shiften
 - clear shifters knop
 - Sociale media integratie https://pypi.org/project/django-instagram/
 - discord webhook meldingen voor shifters en voor nieuwe leden
@@ -27,7 +26,6 @@ Lage prior
 - 2fa
 - shiften bulk edit
 - Te lang nie geschift => mail
-- Ons bestuur overzicht
 
 Domme shift
 

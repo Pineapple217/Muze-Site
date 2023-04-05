@@ -2,7 +2,6 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
-{% comment %} <link rel="stylesheet" href="{% static 'leden/css/profile.css' %}"> {% endcomment %}
 <div>
     <a id="link" href="{{ url }}">{{ url }}</a>
     <button hx-post="{% url 'ical_token' %}"
