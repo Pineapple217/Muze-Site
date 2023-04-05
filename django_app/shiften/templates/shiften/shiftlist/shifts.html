@@ -4,7 +4,7 @@
         {% ifchanged shift.date %}
             </div>
             <h1 id='shiftdate'>{{ shift.date|date:"l j F Y"|capfirst }}</h1>
-            <div class="day grid">
+            <div class="day">
         {% endifchanged %}
         {% include "shiften/shiftlist/shift.html" %}
     {% endfor %}

@@ -68,6 +68,10 @@
     --switch-checked-background-color: var(--primary);
 }
 
+html {
+    scroll-padding-top: 6.5rem;
+}
+
 /* ::-webkit-scrollbar {
     width: 10px;
 }
@@ -102,9 +106,6 @@ body {
     padding-bottom: 4rem;
 }
 
-html {
-    scroll-padding-top: 10rem;
-}
 
 button {
     background-color: transparent;

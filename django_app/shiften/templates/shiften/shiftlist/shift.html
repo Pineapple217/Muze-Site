@@ -1,6 +1,7 @@
 {% load i18n %}
-<article class="shift">
+<article class="shift anchor" id="{{ shift.id }}"">
     <header>
+        <aside>
         <nav>
             <ul>
                 <li>
@@ -16,7 +17,7 @@
                     <li><a href="#" role="button"
                         hx-get="{% url 'shift_edit' shift.id %}"
                         hx-swap="none"
-                        >{% trans "Edit Shift" %}</a></li>
+                        >{% trans "Edit" %}</a></li>
                     <li><a href="#" role="button"
                         hx-get="{% url 'shift_edit_shifters' shift.id %}"
                         hx-swap="none"
@@ -24,6 +25,7 @@
                 </ul>
             {% endif %}
         </nav>
+    </aside>
     </header>
     <div id="shifters-{{ shift.id }}">
         {% include "shiften/shiftlist/shifters.html" %}

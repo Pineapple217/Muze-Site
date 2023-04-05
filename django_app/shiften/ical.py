@@ -3,8 +3,6 @@ from django_ical.views import ICalFeed
 
 from leden.models import Lid
 
-from .models import Shift
-
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
 

@@ -99,7 +99,7 @@ def userinfo(request):
     shifts = Shift.objects.filter(shifters__id=request.user.lid.id).order_by("date")
     today = datetime.date.today()
     shift_history = shifts.filter(date__lt=today).reverse()
-    upcomming_shifts = shifts.filter(date__gt=today)
+    upcomming_shifts = shifts.filter(date__gte=today)
     context = {
         "shift_history": shift_history,
         "upcomming_shifts": upcomming_shifts,

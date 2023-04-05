@@ -34,7 +34,13 @@ dialog#edit-shift article {
 
 article.shift {
     margin: 30px 0;
-    max-width: 650px;
+    /* max-width: fit-content; */
+    min-width: 33%;
+    flex-grow: 2;
+}
+
+article.shift nav {
+    display: flex;
 }
 
 #shiftdate {
@@ -51,4 +57,31 @@ li.current-user {
 
 .grijs {
     color: var(--muted-color);
+}
+
+.day {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    /* justify-content: space-around; */
+    gap: 20px;
+}
+
+* {
+    scroll-behavior: smooth !important;
+}
+
+.anchor:target {
+    animation-delay: 700ms;
+    animation-name: blinker;
+    animation-direction: normal;
+    animation-duration: 0.25s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
 }
