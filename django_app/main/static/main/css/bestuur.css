@@ -1,0 +1,12 @@
+/* img.pp {
+    width: 25%;
+} */
+.persoon {
+    width: 25%;
+}
+
+span {
+    display: table;
+    margin: 0 auto;
+    font-weight: bold;
+}
