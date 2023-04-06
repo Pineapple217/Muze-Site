@@ -9,6 +9,9 @@
     <div class="personen">
         {% for l in rvb %}
             <div class="persoon">
+                {% if l.lid.profile_picture %}
+                    <img src="{{ l.lid.profile_picture.url}}" alt="Profile picture" class ="pp">
+                {% endif %}
                 <span>{{ l.first_name }} {{ l.last_name }}</span>
             </div> 
         {% endfor %}
