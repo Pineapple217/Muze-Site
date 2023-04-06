@@ -10,7 +10,7 @@ from django.urls import reverse
 from .forms import AvailableForm, AvailableRepForm, ShiftAddForm, ShiftEditForm, ShiftEditShiftersFrom, ShiftlistCreateForm, ShiftlistCreateWithTemplateForm, ShiftlistEditForm, TemplateForm
 from shiften.models import Onbeschikbaar
 from leden.models import Lid
-from .functions import create_month_shiftlist, get_aviable_shifters
+from .functions import create_month_shiftlist
 from .models import OnbeschikbaarHerhalend, Shift, Shiftlijst, Template
 from django.utils.translation import gettext as _
 from django.utils import formats
@@ -125,7 +125,7 @@ def shift_signup(request, shift_id):
     return render(request, "shiften/shiftlist/shifters_replace_wrapper.html", context)
 
 @login_required()
-@permission_required('shiften.view_shift')
+@permission_required('shiften.add_shift')
 def shift_create(request, shiftlist_id):
     context = {}
     shiftlist = get_object_or_404(Shiftlijst, id  = shiftlist_id)
@@ -145,7 +145,7 @@ def shift_create(request, shiftlist_id):
     return render(request, "shiften/shiftlist/shift_create.html", context)
 
 @login_required()
-@permission_required('shiften.edit_shift')
+@permission_required('shiften.change_shift')
 def shift_edit(request, shift_id):
     context = {}
     shift = get_object_or_404(Shift, id  = shift_id)
@@ -171,7 +171,7 @@ def shift_delete(request, shift_id):
         return render(request, "shiften/shiftlist/shift_delete.html", context)
 
 @login_required
-@permission_required('shiften.edit_shift')
+@permission_required('shiften.change_shift')
 def shift_edit_shifters(request, shift_id):
     context = {}
     shift = get_object_or_404(Shift, id  = shift_id)
@@ -245,7 +245,7 @@ def add_template(request):
     return render(request, "shiften/template_create.html", {'form': (template_form)})
 
 @login_required    
-@permission_required('shiften.remove_template')
+@permission_required('shiften.delete_template')
 def template_del(request, template_id):
     template = get_object_or_404(Template, id=template_id)
     template.delete()
@@ -317,8 +317,6 @@ def available_edit(request, type, available_id):
     # else:
     #     return HttpResponseForbidden()
     return render(request, "shiften/available/edit_rep.html", {'form': (av_form)})
-
- 
 
 @login_required
 def  available_del(request, type, available_id):

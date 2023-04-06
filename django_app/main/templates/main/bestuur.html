@@ -6,21 +6,25 @@
 
 <article>
     <h3>{% trans "Raad van bestuur" %}</h3>
-    {% for l in rvb %}
-        <div>
-            <span>{{ l.first_name }} {{ l.last_name }}</span>
-        </div> 
-    {% endfor %}
+    <div class="personen">
+        {% for l in rvb %}
+            <div>
+                <span>{{ l.first_name }} {{ l.last_name }}</span>
+            </div> 
+        {% endfor %}
+    </div>
 </article>
 <article>
     <h3>{% trans "Stuurgroep" %}</h3>
-    {% for l in stuurgroep %}
-        <div class="persoon">
-            {% if user.lid.profile_picture %}
-                <img src="{{ l.lid.profile_picture.url}}" alt="Profile picture" class ="pp">
-            {% endif %}
-            <span>{{ l.first_name }} {{ l.last_name }}</span>
-        </div> 
-    {% endfor %}
+    <div class="personen">
+        {% for l in stuurgroep %}
+            <div class="persoon">
+                {% if l.lid.profile_picture %}
+                    <img src="{{ l.lid.profile_picture.url}}" alt="Profile picture" class ="pp">
+                {% endif %}
+                <span>{{ l.first_name }} {{ l.last_name }}</span>
+            </div> 
+        {% endfor %}
+    </div>
 </article>
 {% endblock %}
