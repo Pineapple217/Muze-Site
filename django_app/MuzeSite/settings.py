@@ -242,7 +242,7 @@ logging.config.dictConfig(
             },
         },
         "loggers": {
-            "": {
+            "django": {
                 "level": LOGLEVEL,
                 "handlers": ["console", "file", "mail_admins"],
             },
