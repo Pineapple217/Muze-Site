@@ -5,4 +5,4 @@ python manage.py collectstatic --no-input
 
 python manage.py runapscheduler &
 
-gunicorn MuzeSite.wsgi:application --bind 0.0.0.0:8000 --log-file=- --capture-output --log-level info
+gunicorn MuzeSite.wsgi:application --bind 0.0.0.0:8000 --log-file=- --capture-output --log-level info --access-logfile -
