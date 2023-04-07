@@ -44,9 +44,10 @@ def message_shifters():
             content += f"Van {shift.start.isoformat(timespec = 'minutes')} tot {shift.end.isoformat(timespec = 'minutes')}:"
             for lid in shift.shifters.all():
                 if lid.discord_id:
-                    content += f" <@{lid.discord_id}>"
+                    content += f" <@{lid.discord_id}>,"
                 else:
-                    content += f" {str(lid)}"
+                    content += f" {str(lid)},"
+            content = content[:-1]
 
             content += "\n"
 
