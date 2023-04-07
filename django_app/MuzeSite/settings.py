@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "simple_history",  # Simple history
     "constance.backends.database",  # live settings ding
     "maintenance_mode",
+    "django_apscheduler",
     "constance",
     "leden",
     "main",
@@ -272,3 +273,6 @@ CONSTANCE_CONFIG = {
 MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
 MAINTENANCE_MODE_IGNORE_STAFF = True
 MAINTENANCE_MODE_IGNORE_SUPERUSER = False
+
+# APSCHEDULER
+APSCHEDULER_DATETIME_FORMAT = "j F Y, G:i"

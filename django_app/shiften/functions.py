@@ -53,4 +53,4 @@ def message_shifters():
         webhook = DiscordWebhook(url=WEBHOOK_URL, content=content)
         response = webhook.execute()
     else:
-        logger.info("no shifts today")
+        logger.info("message shifters: no shifts today")
