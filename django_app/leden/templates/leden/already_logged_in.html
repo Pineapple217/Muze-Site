@@ -1,9 +1,10 @@
 {% extends 'base.html' %} {% block content %}
 <h1>Je bent al ingelogd</h1>
 <p>
-  De pagina die je probeerde te bekijken is alleenmaar beschikbaar als je nog
-  niet ingelogd bent.<br />
-  Jij bent ingelogd als {{ user.get_username }}.
+  {% blocktrans with name=user.get_username %}
+  The page you tried to view is only available if you are not logged in.<br />
+   You are logged in as {{ name }}. 
+  {% endblocktrans %}
 </p>
 <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
 {% endblock %}

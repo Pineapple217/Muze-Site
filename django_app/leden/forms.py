@@ -79,6 +79,7 @@ class LidSignUpForm(ModelForm):
         self.fields["tel"].widget.attrs[
             "pattern"
         ] = r"[+][0-9]{2,3}[ ][0-9]{3}([ ][0-9]{2}){3}"
+
         self.fields["media"].widget.attrs["role"] = "switch"
 
         for field_name in self.fields:
@@ -111,6 +112,12 @@ class LidSignUpForm(ModelForm):
             "residence": _l("Residence"),
             "discord_id": _l("Discord id"),
             "media": _l("Social media"),
+        }
+        help_texts = {
+            "discord_id": _l(
+                "This not your username of the number behind it, it is your User ID."
+            ),
+            "media": _l("JHDeMuze may use your photos on social media."),
         }
 
     def clean_date_of_birth(self, *args, **kwargs):

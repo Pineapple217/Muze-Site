@@ -1,0 +1,10 @@
+.fields {
+    margin-bottom: 30px;
+}
+
+small {
+    display: block;
+    width: 100%;
+    margin-bottom: var(--spacing);
+    color: var(--muted-color);
+}

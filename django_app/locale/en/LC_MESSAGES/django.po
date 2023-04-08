@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-08 16:04+0200\n"
+"POT-Creation-Date: 2023-04-08 15:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,67 +21,52 @@ msgstr ""
 #: .\leden\models.py:24
 #, python-format
 msgid "File too large. Size should not exceed %(max)s MB."
-msgstr "Bestand te groot. Grote mag niet over %(max)s MB zijn."
+msgstr ""
 
 #: .\leden\models.py:121
 msgid "Can add new members who applied for membership"
-msgstr "Kan nieuwe leden toevoegen die lidmaatschap hebben aangevraagd"
-
-#: .\leden\templates\leden\already_logged_in.html:4
-#, python-format
-msgid ""
-"\n"
-"  The page you tried to view is only available if you are not logged in.<br /"
-">\n"
-"   You are logged in as %(name)s. \n"
-"  "
 msgstr ""
-"\n"
-"  De pagina die u probeerde te bekijken is alleen beschikbaar als u niet "
-"bent ingelogd.<br />\n"
-"   Je bent ingelogd als %(name)s. \n"
-"  "
 
 #: .\leden\templates\leden\edit_profile.html:5
 msgid "Edit profile"
-msgstr "Bewerk profiel"
+msgstr ""
 
 #: .\leden\templates\leden\edit_profile.html:8
 #: .\shiften\templates\shiften\template_edit.html:17
 msgid "Save"
-msgstr "Opslaan"
+msgstr ""
 
 #: .\leden\templates\leden\edit_profile.html:9
 #: .\shiften\templates\shiften\template_edit.html:18
 msgid "Reset"
-msgstr "Reset"
+msgstr ""
 
 #: .\leden\templates\leden\lid_overview.html:19
 msgid "Statistics"
-msgstr "Statestieken"
+msgstr ""
 
 #: .\leden\templates\leden\lid_overview.html:22
 #, python-format
 msgid "Shifts in the last %(x)s month"
-msgstr "Shifts in de laaste %(x)s maand(en)"
+msgstr ""
 
 #: .\leden\templates\leden\lid_overview.html:25
 msgid "Total shifts done"
-msgstr "Totaal shiften gedaan"
+msgstr ""
 
 #: .\leden\templates\leden\lid_overview.html:28
 msgid "Days since last shift"
-msgstr "Dagen sins laaste shift"
+msgstr ""
 
 #: .\leden\templates\leden\new_leden.html:16
 msgid "Accept"
-msgstr "Aanvaarden"
+msgstr ""
 
 #: .\leden\templates\leden\new_leden.html:19
 #: .\shiften\templates\shiften\shiftlist\edit_shiftlist.html:40
 #: .\shiften\templates\shiften\shiftlist\shift_edit.html:44
 msgid "Delete"
-msgstr "verwijderen"
+msgstr ""
 
 #: .\leden\templates\leden\new_leden.html:27
 #: .\leden\templates\leden\signup.html:75
@@ -94,7 +79,7 @@ msgstr "verwijderen"
 #: .\shiften\templates\shiften\shiftlist\shift_edit_shifters.html:19
 #: .\shiften\templates\shiften\template_create.html:11
 msgid "Submit"
-msgstr "Indienen"
+msgstr ""
 
 #: .\leden\templates\leden\new_leden.html:28
 #: .\shiften\templates\shiften\available\create.html:12
@@ -107,17 +92,17 @@ msgstr "Indienen"
 #: .\shiften\templates\shiften\shiftlist\shift_edit.html:38
 #: .\shiften\templates\shiften\template_create.html:12
 msgid "Clear"
-msgstr "Leegmaken"
+msgstr ""
 
 #: .\leden\templates\leden\profile.html:14
 #: .\shiften\templates\shiften\shiftlist\shift.html:20
 msgid "Edit"
-msgstr "Bewerk"
+msgstr ""
 
 #: .\leden\templates\leden\profile.html:19
 #: .\leden\templates\registration\password\password_change.html:6
 msgid "Change password"
-msgstr "Wachtwoord wijzigen"
+msgstr ""
 
 #: .\leden\templates\leden\profile.html:20
 msgid "Generate ical link"
@@ -125,135 +110,124 @@ msgstr ""
 
 #: .\leden\templates\leden\profile.html:23
 msgid "Upcomming shifts"
-msgstr "Aankomende shifts"
+msgstr ""
 
 #: .\leden\templates\leden\profile.html:30
 msgid "Shift history"
-msgstr "Shift geschiedenis"
+msgstr ""
 
 #: .\leden\templates\leden\signup.html:7
 msgid "Sign up"
-msgstr "Aanmelden"
+msgstr ""
 
 #: .\leden\templates\leden\signup.html:76
 #: .\leden\templates\registration\password\password_change.html:10
 #: .\leden\templates\registration\password\password_reset.html:12
 msgid "Clear form"
-msgstr "Maak form leeg"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:6
 msgid "Username"
-msgstr "Gebruikersnaam"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:8
 msgid "Email"
-msgstr "Email"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:10
 msgid "Phone number"
-msgstr "Telefoonnummer"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:12
 msgid "Date of birth"
-msgstr "Geboortedatum"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:16
 msgid "Gender"
-msgstr "Gender"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:18
 msgid "Address"
-msgstr "Adres"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:20
 msgid "Residence"
-msgstr "Woonplaats"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:23
 msgid "Discord id"
-msgstr "Discord id"
+msgstr ""
 
 #: .\leden\templates\leden\userinfo.html:26
 msgid "Social media"
-msgstr "Sociale media"
+msgstr ""
 
 #: .\leden\templates\registration\login.html:8
 msgid "Your username and password didnt match. Please try agian."
-msgstr "Uw gebruikersnaam en password kloppen niet. Probeer opnieuw."
+msgstr ""
 
 #: .\leden\templates\registration\login.html:11
 msgid ""
 "Your account doesn't have access to this page. To proceed, please login with "
 "an account that has acces."
 msgstr ""
-"U account heeft geen toegang to deze pagina. Om verder te gaan, login in met "
-"een account dat toegang heeft."
 
 #: .\leden\templates\registration\login.html:17
 #: .\leden\templates\registration\login.html:20
 msgid "Login"
-msgstr "Login"
+msgstr ""
 
 #: .\leden\templates\registration\login.html:23
 msgid "Forgot your password?"
-msgstr "Wachtwoord vergeten?"
+msgstr ""
 
 #: .\leden\templates\registration\password\password_change.html:9
 msgid "Change"
-msgstr "Veranderen"
+msgstr ""
 
 #: .\leden\templates\registration\password\password_change_done.html:5
 msgid "Your password was changed."
-msgstr "U Wachtwoord is gewijzig."
+msgstr ""
 
 #: .\leden\templates\registration\password\password_reset.html:6
 msgid "Reset password"
-msgstr "Reset Wachtwoord"
+msgstr ""
 
 #: .\leden\templates\registration\password\password_reset_complete.html:5
 msgid "Your password has been set.  You may go ahead and log in now."
-msgstr "U Wachtwoord is ingestelt. U kan nu inloggen."
+msgstr ""
 
 #: .\leden\templates\registration\password\password_reset_complete.html:7
 msgid "Log in"
-msgstr "Log in"
+msgstr ""
 
 #: .\leden\templates\registration\password\password_reset_confirm.html:7
 msgid ""
 "Please enter your new password twice so we can verify you typed it in "
 "correctly."
 msgstr ""
-"Geef u nieuw wachtwoord twee keer in zodat we kunnen verifiëren dat uhet "
-"juist in typte."
 
 #: .\leden\templates\registration\password\password_reset_confirm.html:11
 msgid "Change my password"
-msgstr "Verdander mijn wachtwoord"
+msgstr ""
 
 #: .\leden\templates\registration\password\password_reset_confirm.html:16
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
 "used.  Please request a new password reset."
 msgstr ""
-"De wachtwoord reset link was ongeldig, mogelijks omdat die al eerder is "
-"gebruikt.Vraag een nieuw wachtwoord reset aan."
 
 #: .\leden\templates\registration\password\password_reset_done.html:5
 msgid ""
 "We’ve emailed you instructions for setting your password, if an account "
 "exists with the email you entered. You should receive them shortly."
 msgstr ""
-"We hebben u de instructies voor het instellen van u wachtwoord, als er een "
-"accountbestaat met het email dat u heeft ingegeven. U zou het binnenkort "
-"moeten ontvangen"
 
 #: .\leden\templates\registration\password\password_reset_done.html:7
 msgid ""
 "If you don’t receive an email, please make sure you’ve entered the address "
 "you registered with, and check your spam folder."
 msgstr ""
-"Als u geen email heeft ontvangen, zorg er dan voor dat u zeker bent dat u "
-"het juiste address heeft ingegeven, en controleer u spam map."
 
 #: .\leden\templates\registration\password\password_reset_email.html:2
 #, python-format
@@ -261,38 +235,36 @@ msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
 msgstr ""
-"U ontvangt deze email omdat u een wachtwoord reset heeft aangevraagt voor u "
-"account bij %(site_name)s."
 
 #: .\leden\templates\registration\password\password_reset_email.html:4
 msgid "Please go to the following page and choose a new password:"
-msgstr "Ga naar de volgende pagina en kies een nieuw wachtwoord."
+msgstr ""
 
 #: .\leden\templates\registration\password\password_reset_email.html:8
 msgid "Your username, in case you’ve forgotten:"
-msgstr "U gebruikersnaam, in het geval dat u deze vergeten was:"
+msgstr ""
 
 #: .\leden\templates\registration\password\password_reset_email.html:11
 #, python-format
 msgid "The %(site_name)s team"
-msgstr "Het %(site_name)s team"
+msgstr ""
 
 #: .\leden\views.py:64 .\leden\views.py:146
 msgid "Welkom to The Muze"
-msgstr "Welkom tot De Muze"
+msgstr ""
 
 #: .\leden\views.py:79
 #, python-brace-format
 msgid "{user.first_name} {user.last_name} wants to become a member"
-msgstr "{user.first_name} {user.last_name} wilt een lid worden"
+msgstr ""
 
 #: .\leden\views.py:85
 msgid "Succesfully signed up"
-msgstr "succesvol ingeschreven"
+msgstr ""
 
 #: .\leden\views.py:119
 msgid "Your profile is updated successfully"
-msgstr "Uw profiel is succesvol bijgewerkt"
+msgstr ""
 
 #: .\main\templates\main\bestuur.html:8
 msgid "Raad van bestuur"
@@ -303,10 +275,8 @@ msgid "Stuurgroep"
 msgstr ""
 
 #: .\main\templates\main\home.html:9
-#, fuzzy
-#| msgid "Discord id"
 msgid "Word lid"
-msgstr "Discord id"
+msgstr ""
 
 #: .\main\templates\main\home.html:11
 msgid ""
@@ -315,139 +285,137 @@ msgid ""
 msgstr ""
 
 #: .\main\templates\main\home.html:16
-#, fuzzy
-#| msgid "Discord id"
 msgid "Word Lid"
-msgstr "Discord id"
+msgstr ""
 
 #: .\shiften\forms.py:19
 msgid "Name"
-msgstr "Naam"
+msgstr ""
 
 #: .\shiften\forms.py:20
 msgid "Template"
-msgstr "Template"
+msgstr ""
 
 #: .\shiften\forms.py:50 .\shiften\forms.py:73
 msgid "Start"
-msgstr "Start"
+msgstr ""
 
 #: .\shiften\forms.py:51 .\shiften\forms.py:74
 msgid "End"
-msgstr "Einde"
+msgstr ""
 
 #: .\shiften\forms.py:52 .\shiften\forms.py:75
 msgid "Info"
-msgstr "Info"
+msgstr ""
 
 #: .\shiften\forms.py:70
 msgid "Start period"
-msgstr "Start periode"
+msgstr ""
 
 #: .\shiften\forms.py:71
 msgid "End period"
-msgstr "Einde periode"
+msgstr ""
 
 #: .\shiften\forms.py:72
 msgid "weekday"
-msgstr "weekdag"
+msgstr ""
 
 #: .\shiften\forms.py:81
 msgid "weekday must be between 1 and 7"
-msgstr "weekday moet tussen 1 en 7 zijn"
+msgstr ""
 
 #: .\shiften\models.py:19
 msgid "month"
-msgstr "maand"
+msgstr ""
 
 #: .\shiften\models.py:19
 msgid "event"
-msgstr "evenement"
+msgstr ""
 
 #: .\shiften\templates\shiften\available\create.html:8
 #: .\shiften\templates\shiften\available\overview.html:8
 msgid "Not available"
-msgstr "Niet beschikbaar"
+msgstr ""
 
 #: .\shiften\templates\shiften\available\create.html:11
 #: .\shiften\templates\shiften\available\create_rep.html:10
 #: .\shiften\templates\shiften\available\edit_rep.html:10
 msgid "Add"
-msgstr "Toevoegen"
+msgstr ""
 
 #: .\shiften\templates\shiften\available\create_rep.html:7
 msgid "Not available repeating"
-msgstr "Niet beschikbaar herhalend"
+msgstr ""
 
 #: .\shiften\templates\shiften\available\edit_rep.html:7
 msgid "not available edit"
-msgstr "niet beschikbaar bewerken"
+msgstr ""
 
 #: .\shiften\templates\shiften\available\overview.html:20
 msgid "Not availabilty repeating"
-msgstr "Niet beschikbaar herhalend"
+msgstr ""
 
 #: .\shiften\templates\shiften\home\add_shiftlist_normal.html:16
 msgid "Add shiftlist"
-msgstr "Shiftlijst toevoegen"
+msgstr ""
 
 #: .\shiften\templates\shiften\home\add_shiftlist_template.html:16
 #: .\shiften\templates\shiften\home\index.html:20
 msgid "Add Shiftlist (template)"
-msgstr "Shiftlijst toevoegen (template)"
+msgstr ""
 
 #: .\shiften\templates\shiften\home\index.html:11
 msgid "Shiftlists"
-msgstr "Shiftlijst"
+msgstr ""
 
 #: .\shiften\templates\shiften\home\index.html:16
 msgid "Add Shiftlist"
-msgstr "Shiftlijst toevoegen"
+msgstr ""
 
 #: .\shiften\templates\shiften\home\index.html:26
 #: .\shiften\templates\shiften\templates.html:7
 msgid "Templates"
-msgstr "Templates"
+msgstr ""
 
 #: .\shiften\templates\shiften\shiftlist\shift.html:24
 msgid "Edit Shifters"
-msgstr "Shifters bewerken"
+msgstr ""
 
 #: .\shiften\templates\shiften\shiftlist\shift.html:37
 msgid "Signup"
-msgstr "Aanmelden"
+msgstr ""
 
 #: .\shiften\templates\shiften\shiftlist\shift_edit_shifters.html:23
 msgid "Cancel"
-msgstr "Annuleren"
+msgstr ""
 
 #: .\shiften\templates\shiften\template_create.html:7
 msgid "Create template"
-msgstr "Maak template"
+msgstr ""
 
 #: .\shiften\templates\shiften\template_edit.html:9
 msgid "Are you sure want to delete this template"
-msgstr "Ben je zeker dat je deze template wilt verwijderen"
+msgstr ""
 
 #: .\shiften\templates\shiften\template_edit.html:13
 msgid "Edit template"
-msgstr "Bewerk template"
+msgstr ""
 
 #: .\shiften\views.py:226 .\shiften\views.py:240
 msgid "Template updated successfully"
-msgstr "Template succesvol bijgewerkt"
+msgstr ""
 
 #: .\shiften\views.py:273
 msgid "Available added"
-msgstr "beschikbaarheid toegevoegt"
+msgstr ""
 
 #: .\shiften\views.py:285
 msgid "Available repeating added"
-msgstr "Beschikbaarheid herhalend toegevoegt"
+msgstr ""
 
 #: .\shiften\views.py:313
 msgid "Availibility updated successfully"
-msgstr "Beschikbaarheid succesvol bijgewerkt"
+msgstr ""
 
 #: .\templates\navbar.html:34
 msgid "Thema"
@@ -464,117 +432,3 @@ msgstr ""
 #: .\templates\navbar.html:38
 msgid "Donker"
 msgstr ""
-
-#~ msgid "Format example +32 989 91 23 12."
-#~ msgstr "Formaat voorbeeld +32 989 91 23 12."
-
-#~ msgid "Street"
-#~ msgstr "Straat"
-
-#~ msgid "House nummer"
-#~ msgstr "Huisnummer"
-
-#~ msgid "Zipcode"
-#~ msgstr "Postcode"
-
-#~ msgid "Profile picture"
-#~ msgstr "Profiel foto"
-
-#~ msgid "Image size must be under %(max)s MB."
-#~ msgstr "Foto grote moet onder %(max)s MB zijn."
-
-#~ msgid "Male"
-#~ msgstr "Man"
-
-#~ msgid "Female"
-#~ msgstr "Vrouw"
-
-#~ msgid "Other"
-#~ msgstr "Andere"
-
-#~ msgid "Residenace"
-#~ msgstr "Woonplaats"
-
-#~ msgid "Please login"
-#~ msgstr "Login"
-
-#~ msgid "Shiftlist is succesfully deleted"
-#~ msgstr "Shiftlijst is succesvol verwijdert"
-
-#~ msgid "Welkom to the muze"
-#~ msgstr "Welkom tot de muze"
-
-#~ msgid "p.m."
-#~ msgstr "p.m."
-
-#~ msgid "a.m."
-#~ msgstr "a.m."
-
-#~ msgid "PM"
-#~ msgstr "PM"
-
-#~ msgid "AM"
-#~ msgstr "AM"
-
-#~ msgid "midnight"
-#~ msgstr "middernacht"
-
-#~ msgid "noon"
-#~ msgstr "middag"
-
-#~ msgid "Monday"
-#~ msgstr "Maandag"
-
-#~ msgid "Tuesday"
-#~ msgstr "Dinsdag"
-
-#~ msgid "Wednesday"
-#~ msgstr "Woensdag"
-
-#~ msgid "Thursday"
-#~ msgstr "Donderdag"
-
-#~ msgid "Friday"
-#~ msgstr "Vrijdag"
-
-#~ msgid "Saturday"
-#~ msgstr "Zaterdag"
-
-#~ msgid "Sunday"
-#~ msgstr "Zondag"
-
-#~ msgid "January"
-#~ msgstr "januari"
-
-#~ msgid "February"
-#~ msgstr "februari"
-
-#~ msgid "March"
-#~ msgstr "maart"
-
-#~ msgid "April"
-#~ msgstr "april"
-
-#~ msgid "May"
-#~ msgstr "mei"
-
-#~ msgid "June"
-#~ msgstr "juni"
-
-#~ msgid "July"
-#~ msgstr "juli"
-
-#~ msgid "August"
-#~ msgstr "augustus"
-
-#~ msgid "September"
-#~ msgstr "september"
-
-#~ msgid "October"
-#~ msgstr "october"
-
-#~ msgid "November"
-#~ msgstr "november"
-
-#~ msgid "December"
-#~ msgstr "december"

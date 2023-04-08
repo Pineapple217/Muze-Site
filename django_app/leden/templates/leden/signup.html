@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-  <!-- <link rel="stylesheet" href="{% static 'leden/css/signup.css' %}"> -->
+  <link rel="stylesheet" href="{% static 'leden/css/signup.css' %}">
   <article>
   <h1>{% trans "Sign up" %}</h1>
   {% for field in lid_form %}
@@ -20,6 +20,7 @@
       {% endif %}
   {% endfor %}
   <form method="POST">
+  <div class="fields">
     {% csrf_token %}
 
     {{ user_form.username }}
@@ -32,7 +33,14 @@
       {{ user_form.password1 }}
       {{ user_form.password2 }}
     </div>
+    {% comment %} <small>
+      {{ user_form.password1.help_text }}
+    </small> {% endcomment %}
+
     {{ lid_form.tel }}
+    <small>
+      {{ lid_form.tel.help_text }}
+    </small>
 
     {{ lid_form.date_of_birth }}
     {{ lid_form.gender }}
@@ -45,11 +53,19 @@
       {{ lid_form.zipcode }}
     </div>
     {{ lid_form.discord_id }}
+    <small>
+      {{ lid_form.discord_id.help_text }}
+      <a href="https://support.discord.com/hc/en-us/articles/206346498" target="_blank">Where can I find my User ID?</a>
+    </small>
 
     <label for="{{ lid_form.media.id_for_label }}">
       {{ lid_form.media.label }} 
-      {{ lid_form.media }}
+    {{ lid_form.media }}
     </label>
+    <small>
+      {{ lid_form.media.help_text }}
+    </small>
+  </div>
 
 
 
