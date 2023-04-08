@@ -31,11 +31,9 @@ DEPLOY = os.getenv("DEPLOY", "False") == "True"
 if not DEPLOY:  # AKABUG
     SECRET_KEY = "django-insecure-)(6i&+lg77#345nu(y4+0i9!gaam2w^ni3r2p-w&_b39b#r_vm"
     DEBUG = True
-    HOST_URL = "127.0.0.1:8000"
 else:  # DEPLOY
     SECRET_KEY = os.getenv("SECRET_KEY")
     DEBUG = os.getenv("DEBUG") == "True"
-    HOST_URL = os.getenv("HOST_URL")
 
 if not DEPLOY:
     ALLOWED_HOSTS = ["*"]

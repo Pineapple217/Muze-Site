@@ -175,12 +175,12 @@ def password_reset_request(request):
                     )
                     mail_context = {
                         "email": user.email,
-                        "domain": settings.HOST_URL,
+                        "domain": get_current_site(request),
                         "site_name": "Jeughuis De Muze",
                         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                         "user": user,
                         "token": default_token_generator.make_token(user),
-                        "protocol": "http",
+                        "protocol": request.scheme,
                     }
                     email = render_to_string(email_template_name, mail_context)
                     try:
