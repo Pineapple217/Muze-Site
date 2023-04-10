@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "simple_history",  # Simple history
     "constance.backends.database",  # live settings ding
+    "sass_processor",
     "maintenance_mode",
     "django_apscheduler",
     "constance",
@@ -274,3 +275,9 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = False
 
 # APSCHEDULER
 APSCHEDULER_DATETIME_FORMAT = "j F Y, G:i"
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "sass_processor.finders.CssFinder",
+]

@@ -1,8 +1,10 @@
 {% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
 <html data-theme="dark">
     <head>
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'pico.css/pico.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% sass_src 'css/main_sass.scss' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 

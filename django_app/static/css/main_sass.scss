@@ -1,0 +1,10 @@
+// Override default variables
+
+// $primary-500: #7afca1;
+// $primary-600: #6ce28f;
+// $primary-700: #55b472;
+$primary-500: #ffeb3b;
+$primary-600: #fdd835;
+$primary-700: #fbc02d;
+// Import Pico
+@import "../pico/scss/pico.scss";
