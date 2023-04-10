@@ -22,6 +22,7 @@ from django.db.models.query_utils import Q
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import get_object_or_404
 from constance import config
+from django.views import View
 import uuid
 from . import stats
 
