@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-08 16:04+0200\n"
+"POT-Creation-Date: 2023-04-12 16:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -277,20 +277,20 @@ msgstr "U gebruikersnaam, in het geval dat u deze vergeten was:"
 msgid "The %(site_name)s team"
 msgstr "Het %(site_name)s team"
 
-#: .\leden\views.py:64 .\leden\views.py:146
+#: .\leden\views.py:65 .\leden\views.py:147
 msgid "Welkom to The Muze"
 msgstr "Welkom tot De Muze"
 
-#: .\leden\views.py:79
+#: .\leden\views.py:80
 #, python-brace-format
 msgid "{user.first_name} {user.last_name} wants to become a member"
 msgstr "{user.first_name} {user.last_name} wilt een lid worden"
 
-#: .\leden\views.py:85
+#: .\leden\views.py:86
 msgid "Succesfully signed up"
 msgstr "succesvol ingeschreven"
 
-#: .\leden\views.py:119
+#: .\leden\views.py:120
 msgid "Your profile is updated successfully"
 msgstr "Uw profiel is succesvol bijgewerkt"
 
