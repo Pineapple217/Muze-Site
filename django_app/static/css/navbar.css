@@ -1,4 +1,4 @@
-.hero {
+.nav-con {
     /* border: 1px solid var(--contrast); */
     box-shadow: var(--card-box-shadow);
     background: var(--card-background-color);
@@ -6,4 +6,24 @@
 
 details[role=list] summary, a {
     color: var(--h1-color);
+}
+
+#burger {
+    vertical-align: bottom;
+}
+
+#burger-list {
+    position: absolute;
+    top: auto;
+    right: 9px;
+    top: 50px;
+}
+
+#burger-list>ul {
+    flex-direction: column;
+    width: fit-content;
+    box-shadow: var(--card-box-shadow);
+    background-color: var(--background-color);
+    align-items: start;
+    padding: 0px 10px;
 }

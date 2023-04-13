@@ -6,7 +6,8 @@
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
         <link rel="stylesheet" type="text/css" href="{% sass_src 'css/main_sass.scss' %}"/>
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" /> {% endcomment %}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>De Muze</title>
@@ -32,7 +33,6 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <!-- <script src="{% static '/scripts/colormode.js' %}"></script> -->
         <footer class="container">
             <small>
             &copy; {% now 'Y' %} Jeugdhuis de muze

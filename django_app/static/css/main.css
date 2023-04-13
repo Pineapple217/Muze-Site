@@ -115,11 +115,16 @@ a {
 
 }
 
+*/
+:root {
+    --phoneWidth: (max-width: 767px);
+    /* --tabletWidth: (max-width: 900px) */
+}
 
 .hidden {
     display: none !important
 }
-*/
+
 .messages {
     list-style-type: none;
     padding: 0;

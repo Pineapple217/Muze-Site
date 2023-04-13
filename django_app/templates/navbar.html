@@ -3,8 +3,8 @@
 {% load nav %}
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <!-- <input type="checkbox" id="nav-toggle" class="nav-toggle"> -->
-<div class="hero">
-    <nav class="container-fluid">
+<div class="nav-con">
+    <nav class="container-fluid desktop">
         <ul>
             <li>
                 <strong><a href="/">De Muze</a></strong>
@@ -52,19 +52,62 @@
             </li>
         </ul>
     </nav>
-    {% comment %} <nav class="container-fluid" aria-label="breadcrumb">
-        <ul class="breadcrumbs">
-            {% breadcrumbs as bc%}
-            {% for link in bc %}
-                <li><a href="{{ link.1 }}">{{ link.0 }}</a></li>
-            {% endfor %}
+    <nav class="container-fluid mobile">
+        <ul>
+            <li>
+                <strong><a href="/">De Muze</a></strong>
+            </li>
         </ul>
-    </nav> {% endcomment %}
-</div>
-<!-- <label for="nav-toggle" class="nav-toggle-label">
-    <span></span>
-</label> -->
+        <ul>
+            <li>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'user_profile' %}">{{ request.user.get_username }}</a>
+                {% else %}
+                    <a href="{% url 'login' %}?next={% url 'home' %}">Login</a>
+                    |
+                    <a href="{% url 'signup' %}?next={{ request.path }}">Word lid</a>
+                {% endif %}
 
-{% comment %} <span class="nav-icon">navigate_next</span> {% endcomment %}
+            </li>
+            <li>
+                <i class="material-icons" id="burger">menu</i>
+                <nav id="burger-list" class="hidden">
+                    <ul>
+                        {% if perms.leden.accept_lid or perms.leden.view_lid %}
+                            <li>
+                                <details role="list">
+                                <summary aria-haspopup="listbox" role="link">Leden</summary>
+                                <ul role="listbox">
+                                    {% if perms.leden.accept_lid %}<li><a href="/leden/new">New</a></li>{% endif %}
+                                    {% if perms.leden.view_lid %}<li><a href="/leden/ledenlijst">Lijst</a></li>{% endif %}
+                                </ul>
+                                </details>
+                            </li>
+                        {% endif %}
+                        <li><a href="/shiften">Shiften</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li><a href="/shiften/available">Beschikbaarheid</a></li>
+                        {% endif %}
+                        {% if request.user.is_staff %}
+                            <li><a href="/admin">Admin</a></li>
+                        {% endif %}
+                        <li>
+                            <details role="list">
+                                <summary aria-haspopup="listbox" role="link">{% trans "Thema" %}</summary>
+                                <ul role="listbox">
+                                    <li><a data-theme-switcher="auto">{% trans "Auto" %}</a></li>
+                                    <li><a data-theme-switcher="light">{% trans "Licht" %}</a></li>
+                                    <li><a data-theme-switcher="dark">{% trans "Donker" %}</a></li>
+                                </ul>
+                            </details> 
+                        </li>
+                        <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+                    </ul>
+                </nav>
+            </li>
+        </ul>
+    </nav>
+</div>
 
 <script src="{% static '/scripts/theme-switcher.js' %}"></script>
+<script src="{% static '/scripts/mobile-nav.js' %}"></script>
