@@ -4,3 +4,6 @@ $primary-hue: 150;
 
 // Import Pico
 @import "../pico/scss/pico.scss";
+:root {
+  --spacing: 1rem;
+}

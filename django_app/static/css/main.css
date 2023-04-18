@@ -18,16 +18,16 @@
 }
 
 
-/* :root {
-    --primary: #7afca1;
+:root {
+    /* --primary: #7afca1;
     --secondary: #06FB00;
     --accent: #168586;
-    --dark: #212124;
+    --dark: #212124; */
 
     --red: #ff5656;
     --button-primary: #dadada;
     --button-text: #000000;
-} */
+}
 
 /* ::-webkit-scrollbar {
     width: 10px;
@@ -45,11 +45,8 @@
     background: #555;
 } */
 
-/* 
-body, input, textarea, button {
-    font-family: 'Trebuchet MS', sans-serif;
-}
 
+/* 
 body {
     background: var(--body-bg);
     color: var(--body-color);
@@ -121,6 +118,10 @@ a {
     /* --tabletWidth: (max-width: 900px) */
 }
 
+main.container {
+    padding: 40px 0px;
+}
+
 .hidden {
     display: none !important
 }
@@ -165,12 +166,7 @@ ul.messages>li {
     border-color: var(--red);
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    height: 4rem;
-    width: 100%;
-    text-align: center;
-    color: gray;
-}
 */
+footer {
+    text-align: center;
+}

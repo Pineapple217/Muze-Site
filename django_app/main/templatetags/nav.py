@@ -4,17 +4,17 @@ from django.http import Http404
 
 register = template.Library()
 
+
 @register.simple_tag(takes_context=True)
 def breadcrumbs(context):
-    url = context['request'].path_info.split("/")
+    url = context["request"].path_info.split("/")
     crumbs = list(filter(None, url))
     out = []
     for i, c in enumerate(crumbs):
-        dest = "/" + "/".join(crumbs[:i+1])
+        dest = "/" + "/".join(crumbs[: i + 1])
         try:
-            resolve(dest + '/')
+            resolve(dest + "/")
         except Http404:
-            dest = '' 
+            dest = ""
         out.append([c, dest])
-    # print(out)
     return out
