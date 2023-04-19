@@ -31,6 +31,8 @@
    ```sh
    py .\django_app\manage.py createsuperuser
    ```
+7. .env file
+   zie [env.md](./env.md)
 
 ## Run server
 
