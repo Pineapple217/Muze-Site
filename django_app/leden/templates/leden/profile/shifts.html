@@ -3,21 +3,27 @@
 <div>
     {% include 'leden/profile/tabs.html' %}
 
-    <article>
-        <a href="password-change">{% trans "Change password" %}</a>
+    <div class="grid">
+        <article>
+            <header>
+                <h1>{% trans "Upcomming shifts" %}</h1>
+            </header>
+            <div class="upcomming-shifts shifts-link">
+                {% for shift in upcomming_shifts %}
+                <a href = "{% url 'shiftlist' shift.shift_list.id %}#{{ shift.id }}">{{ shift }}</a>
 
-        <div class="upcomming-shifts shifts-link">
-            <h1>{% trans "Upcomming shifts" %}</h1>
-            {% for shift in upcomming_shifts %}
-            <a href = "{% url 'shiftlist' shift.shift_list.id %}#{{ shift.id }}">{{ shift }}</a>
-
-            {% endfor %}
-        </div>
-        <div class="shift-history shifts-link">
-            <h1>{% trans "Shift history" %}</h1>
-            {% for shift in shift_history%}
-            <a href = "{% url 'shiftlist' shift.shift_list.id %}#{{ shift.id }}">{{ shift }}</a>
-            {% endfor %}
-        </div> 
-    </article>
+                {% endfor %}
+            </div>
+        </article>
+        <article>
+            <header>
+                <h1>{% trans "Shift history" %}</h1>
+            </header>
+            <div class="shift-history shifts-link">
+                {% for shift in shift_history%}
+                <a href = "{% url 'shiftlist' shift.shift_list.id %}#{{ shift.id }}">{{ shift }}</a>
+                {% endfor %}
+            </div> 
+        </article>
+    </div>
 </div>
