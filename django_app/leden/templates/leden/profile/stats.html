@@ -1,0 +1,21 @@
+{% load static %}
+{% load i18n %}
+<div>
+    {% include 'leden/profile/tabs.html' %}
+
+    <article>
+        <header>
+            <h1>{% trans "Statistics" %}</h1>
+        </header>
+        <div class="data-grid">
+            <p>{% blocktrans with x=months_per_shift %}Shifts in the last {{ x }} month{% endblocktrans %}</p>
+            <p>{{ shifts_in_xmonths }}</p>
+
+            <p>{% trans "Total shifts done" %}</p>
+            <p>{{ total_shifts }}</p>
+
+            <p>{% trans "Days since last shift" %}</p>
+            <p>{{ days_since_last_shift }}</p>
+        </div>
+    </article>
+</div>

@@ -9,9 +9,9 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail
 from django.urls import reverse
 from shiften.models import Shift
-from .models import Lid
+from leden.models import Lid
 from django.contrib.auth.models import User
-from .forms import LidUpdateForm, UserSignUpForm, LidSignUpForm, UserUpdateForm
+from leden.forms import LidUpdateForm, UserSignUpForm, LidSignUpForm, UserUpdateForm
 from django.utils.translation import gettext as _
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
@@ -22,9 +22,7 @@ from django.db.models.query_utils import Q
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import get_object_or_404
 from constance import config
-from django.views import View
-import uuid
-from . import stats
+from leden import stats
 
 
 def home(request):
@@ -93,19 +91,6 @@ def signup(request):
         )
     else:
         return render(request, "leden/already_logged_in.html")
-
-
-@login_required()
-def userinfo(request):
-    shifts = Shift.objects.filter(shifters__id=request.user.lid.id).order_by("date")
-    today = datetime.date.today()
-    shift_history = shifts.filter(date__lt=today).reverse()
-    upcomming_shifts = shifts.filter(date__gte=today)
-    context = {
-        "shift_history": shift_history,
-        "upcomming_shifts": upcomming_shifts,
-    }
-    return render(request, "leden/profile.html", context)
 
 
 @login_required
@@ -216,21 +201,3 @@ def lid_overview(request, lid_id):
         "days_since_last_shift": stats.days_since_last_shift(lid),
     }
     return render(request, "leden/lid_overview.html", context)
-
-
-@login_required
-def ical(request):
-    context = {}
-    if request.user.lid.ical_token:
-        context[
-            "url"
-        ] = f"{request.scheme}://{get_current_site(request)}{reverse('ical_feed', kwargs={'ical_token': request.user.lid.ical_token})}"
-    else:
-        context["url"] = ""
-    if request.method == "POST":
-        request.user.lid.ical_token = uuid.uuid4()
-        request.user.lid.save()
-        response = HttpResponse()
-        response.headers["HX-Refresh"] = "true"
-        return response
-    return render(request, "leden/ical_token.html", context)

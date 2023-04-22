@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load static %}
+<nav class="tab-control">
+      <ul>
+        <li><a class="active" hx-get="{% url 'userinfo' %}">{% trans "Userinfo" %}</a></li>
+        <li><a hx-get="{% url 'userstats' %}">{% trans "Stats" %}</a></li>
+        <li><a hx-get="{% url 'usershifts' %}">{% trans "Shifts" %}</a></li>
+        <li><a hx-get="{% url 'userical' %}">{% trans "iCal" %}</a></li>
+      </ul>
+</nav>

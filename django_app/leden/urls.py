@@ -1,5 +1,6 @@
-from django.urls import path
-from . import views
+from django.urls import include, path
+from .views import views
+from .views import profile
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -48,8 +49,19 @@ urlpatterns = [
     ),
     path("", views.home),
     path("ledenlijst", views.ledenlijst),
-    path("profile", views.userinfo, name="user_profile"),
-    path("profile/ical", views.ical, name="ical_token"),
+    path(
+        "profile/",
+        include(
+            [
+                path("", profile.index, name="user_profile"),
+                path("userinfo", profile.userinfo, name="userinfo"),
+                path("stats", profile.userstats, name="userstats"),
+                path("shifts", profile.usershifts, name="usershifts"),
+                path("ical", profile.userical, name="userical"),
+            ]
+        ),
+    ),
+    # path("profile/ical", views.ical, name="ical_token"),
     path("profile/edit", views.edit_profile),
     path("new", views.new_leden, name="new_leden"),
     path("<int:lid_id>", views.lid_overview),

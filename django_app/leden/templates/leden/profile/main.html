@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'leden/css/profile/main.css' %}">
+
+<div id="tabs" hx-get="{% url 'userinfo' %}" hx-trigger="load delay:50ms" hx-target="#tabs" hx-swap="innerHTML"></div>
+
+{% endblock %}
