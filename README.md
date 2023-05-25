@@ -18,3 +18,4 @@
 - [htmx](https://htmx.org/)
 - [Gunicorn](https://gunicorn.org/)
 - [Docker](https://www.docker.com/)
+- [PostgreSQL](https://www.postgresql.org/)
